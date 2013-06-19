@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <!-- <PatternLayout pattern="%highlight{%d [%t] %-5p%c{2}- %m%xEx%n}"/> -->
+             <PatternLayout pattern="%d %-5p [%t] - %m%n"/>
+        </Console>
+        <File name="MyFile" fileName="logs/app.log">
+            <PatternLayout>
+                <pattern>%d %-5p [%t] - %m%n</pattern>
+            </PatternLayout>
+        </File>
+        <Asynch name="Asynch">
+            <appender-ref ref="MyFile"/>
+        </Asynch>
+    </appenders>
+    <loggers>
+        <logger name="org.apache.log4j.xml" level="info"/>
+        <root level="debug">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="Asynch"/>
+        </root>
+    </loggers>
+</configuration>

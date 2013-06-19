@@ -1,0 +1,83 @@
+{
+	"Weapons": [
+		{
+			"name": "Small Knife",
+			"skills": ["Knife"],
+			"interface": "Knife",
+			"TL": "TL0",
+			"modes": [
+				{
+					"type": ["Swinging", -3, "Cutting"],
+					"reach": ["C", "1"],
+					"parry": "-1"
+				},
+				{
+					"type": ["Thrusting", -1, "Impaling"],
+					"reach": ["C"],
+					"parry": "-1"
+				}
+
+			],
+			"price": 30,
+			"weight": 0.5,
+			"minStrength": 5
+		},
+		{
+			"name": "Long Knife",
+			"skills": ["Knife"],
+			"interface": "Knife",
+			"TL": "TL0",
+			"modes": [
+				{
+					"type": ["Swinging", -3, "Cutting"],
+					"reach": ["C", "1"],
+					"parry": "-1"
+				},
+				{
+					"type": ["Thrusting", 0, "Impaling"],
+					"reach": ["C"],
+					"parry": "-1"
+				}
+
+			],
+			"price": 50,
+			"weight": 0.8,
+			"minStrength": 6
+		},
+		{
+			"name": "Wooden Stake",
+			"skills": ["Knife"],
+			"interface": "Knife",
+			"TL": "TL0",
+			"modes": [
+
+				{
+					"type": ["Thrusting", 0, "Impaling", 0.5],
+					"reach": ["C"],
+					"parry": "-1"
+				}
+
+			],
+			"price": 4,
+			"weight": 0.5,
+			"minStrength": 5
+		},
+		{
+			"name": "Kusari",
+			"skills": ["Kusari"],
+			"TL": "TL3",
+			"modes": [
+
+				{
+					"type": ["Swinging", 2, "Crushing"],
+					"reach": ["1-4*"],
+					"parry": "-2 U"
+				}
+
+			],
+			"price": 70,
+			"weight": 5,
+			"minStrength": 11
+		}
+	]
+}
