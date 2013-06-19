@@ -17,6 +17,9 @@
     <orderEntry type="library" name="lwjgl" level="project" />
     <orderEntry type="library" name="lwjgl_util" level="project" />
     <orderEntry type="library" name="TWL" level="project" />
+    <orderEntry type="library" name="lwjgl_util_applet" level="project" />
+    <orderEntry type="library" name="xpp3-1.1.4c" level="project" />
+    <orderEntry type="library" name="TWLEffects" level="project" />
   </component>
 </module>
 

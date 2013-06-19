@@ -9,13 +9,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created with IntelliJ IDEA.
- * User: oleksandr.sidko
- * Date: 17.02.13
- * Time: 18:26
- * To change this template use File | Settings | File Templates.
- */
+
 public class TheGame extends TWLStateBasedGame {
 
     public static final int TACTICAL_MAP_STATE = 0;
@@ -28,7 +22,7 @@ public class TheGame extends TWLStateBasedGame {
     @Override
     protected URL getThemeURL() {
         try {
-            return new File("res/layout/inventory/inventory.xml").toURI().toURL();
+            return new File("trunk/src/res/layout/inventory/inventory.xml").toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
