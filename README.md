@@ -1,11 +1,21 @@
-Java-GURPS-4e
-=============
+# Java GURPS 4e
 
 Java implementation of GURPS 4th edition rules.
+
 Development in progress.
 
+### Information
 
-=====
+Rules set is developed within package:
+  - \trunk\src\net\mortiy\gurps\rules
+
+Those rules are covered by tests from:
+  - \trunk\test\net\mortiy\gurps
+
+Within other packages I'm trying to develop some GUI tools.
+
+
+### Legal notices
 
 GURPS is a trademark of Steve Jackson Games, and its rules and art are copyrighted by Steve Jackson Games. 
 All rights are reserved by Steve Jackson Games. 
