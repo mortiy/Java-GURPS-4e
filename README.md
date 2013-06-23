@@ -4,6 +4,12 @@ Java implementation of GURPS 4th edition rules.
 
 Development in progress.
 
+### About
+
+The Generic Universal RolePlaying System, or GURPS, is a tabletop role-playing game system designed to allow for play in any game setting.
+
+Free (lite) version of 4th edition rules: <a href="#">GURPS - 4th Edition - Lite.pdf</a>
+
 ### Information
 
 Rules set is developed within package:
@@ -13,7 +19,6 @@ Those rules are covered by tests from:
   - \trunk\test\net\mortiy\gurps
 
 Within other packages I'm trying to develop some GUI tools.
-
 
 ### Legal notices
 

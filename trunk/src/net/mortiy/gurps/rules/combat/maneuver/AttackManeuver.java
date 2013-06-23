@@ -17,8 +17,8 @@ public class AttackManeuver extends Maneuver {
     private Weapon weapon;
     private Type attackType;
 
-    public AttackManeuver(Fighter fighter, Fighter targetFighter, Type attackType, Weapon weapon) {
-        super(fighter, ManeuverType.Attack);
+    public AttackManeuver(Fighter targetFighter, Type attackType, Weapon weapon) {
+        super(ManeuverType.Attack);
         this.targetFigher = targetFighter;
         this.attackType = attackType;
         this.weapon = weapon;

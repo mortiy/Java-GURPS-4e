@@ -13,8 +13,8 @@ import net.mortiy.gurps.rules.equipment.weapon.Weapon;
  */
 public class MoveAndAttackManeuver extends AttackManeuver {
 
-    public MoveAndAttackManeuver(Fighter fighter, Fighter targetFighter, AttackManeuver.Type attackType, Weapon weapon) {
-        super(fighter, targetFighter, attackType, weapon);
+    public MoveAndAttackManeuver(Fighter targetFighter, AttackManeuver.Type attackType, Weapon weapon) {
+        super(targetFighter, attackType, weapon);
         this.type = ManeuverType.MoveAndAttack;
     }
 }

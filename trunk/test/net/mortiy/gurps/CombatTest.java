@@ -2,12 +2,9 @@ package net.mortiy.gurps;
 
 import junit.framework.TestCase;
 import net.mortiy.gurps.rules.Character;
-import net.mortiy.gurps.rules.Combat;
+import net.mortiy.gurps.rules.combat.*;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.character.Body;
-import net.mortiy.gurps.rules.combat.Defense;
-import net.mortiy.gurps.rules.combat.Fighter;
-import net.mortiy.gurps.rules.combat.ManeuverType;
 import net.mortiy.gurps.rules.combat.maneuver.*;
 import net.mortiy.gurps.rules.equipment.Equipment;
 import net.mortiy.gurps.rules.equipment.ShieldItem;
@@ -82,62 +79,67 @@ public class CombatTest extends TestCase {
 
         Character c1 = new Character(100);
         c1.setName("Alpha");
+        Character c2 = new Character(100);
+        c2.setName("Beta");
 
         int basicMove = (int) c1.getBasicMove().getValue();
         float basicStep = basicMove / 10f;
         int fighterStep = (basicStep < 1) ? 1 : (int) Math.floor(basicStep);
 
-        Combat combat = new Combat(c1);
+        Combat combat = new Combat(c1, c2);
+
         final List<Fighter> fighters = combat.getFighters();
+
         Fighter fighter = fighters.get(0);
+        Fighter enemyFighter = fighters.get(1);
 
 
-        new DoNothingManeuver(fighter);
+        fighter.setManeuver(new DoNothingManeuver());
         assertEquals(0, fighter.getAvailableMoves());
 
-        new MoveManeuver(fighter);
+        fighter.setManeuver(new MoveManeuver());
         assertEquals(basicMove, fighter.getAvailableMoves());
 
-        new ChangePostureManeuver(fighter, Character.Posture.Crawling);
+        fighter.setManeuver(new ChangePostureManeuver(Character.Posture.Crawling));
         assertEquals(0, fighter.getAvailableMoves());
 
-        new AimManeuver(fighter);
+        fighter.setManeuver(new AimManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new EvaluateManeuver(fighter);
+        fighter.setManeuver(new EvaluateManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new AttackManeuver(fighter, fighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon());
+        fighter.setManeuver(new AttackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new FeintManeuver(fighter);
+        fighter.setManeuver(new FeintManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new AllOutAtackManeuver(fighter, fighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon());
+        fighter.setManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
-        new MoveAndAttackManeuver(fighter, fighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon());
+        fighter.setManeuver(new MoveAndAttackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
         assertEquals(basicMove, fighter.getAvailableMoves());
 
-        new AllOutDefenseManeuver(fighter, AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Parry);
+        fighter.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Parry));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new AllOutDefenseManeuver(fighter, AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Dodge);
+        fighter.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Dodge));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
-        new AllOutDefenseManeuver(fighter, AllOutDefenseManeuver.Type.DoubleDefense);
+        fighter.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new ConcentrateManeuver(fighter);
+        fighter.setManeuver(new ConcentrateManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new ReadyManeuver(fighter);
+        fighter.setManeuver(new ReadyManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new WaitManeuver(fighter, new FeintManeuver(fighter));
+        fighter.setManeuver(new WaitManeuver(new FeintManeuver()));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        new WaitManeuver(fighter, new AllOutAtackManeuver(fighter, fighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
+        fighter.setManeuver(new WaitManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon())));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
 
@@ -148,9 +150,11 @@ public class CombatTest extends TestCase {
         Character c1 = new Character(100);
         c1.setName("Alpha");
         c1.setBasicAttribute(Attribute.Dexterity, 16);
+
         Character c2 = new Character(100);
         c2.setName("Beta");
         c2.setBasicAttribute(Attribute.Dexterity, 14);
+
         Character c3 = new Character(100);
         c3.setName("Gamma");
         c3.setBasicAttribute(Attribute.Dexterity, 12);
@@ -189,19 +193,20 @@ public class CombatTest extends TestCase {
         assertTrue(f3.getCharacter() == c3);
 
         // Lets fighters attack each other:
-        new AttackManeuver(f1, f2, AttackManeuver.Type.Melee, sword1);
-        new AttackManeuver(f2, f3, AttackManeuver.Type.Ranged, sword2);
-        new AllOutDefenseManeuver(f3, AllOutDefenseManeuver.Type.DoubleDefense);
+        f1.setManeuver(new AttackManeuver(f2, AttackManeuver.Type.Melee, sword1));
+        f2.setManeuver(new AttackManeuver(f3, AttackManeuver.Type.Ranged, sword2));
+        f3.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
 
         assertEquals(Defense.Strategy.Dodge, f2.getDefense().getBestStrategy());
         assertEquals(Defense.Strategy.Block, f3.getDefense().getBestStrategy());
 
-        combat.init(1000);
-        combat.start(1);
-        new ChangePostureManeuver(f2, Character.Posture.Kneeling);
-        combat.start(1);
-        new AttackManeuver(f2, f3, AttackManeuver.Type.Melee, sword2);
-        combat.start(1);
+        CombatManager combatManager = new CombatManager(combat);
+
+        combatManager.performTurns(1);
+        f2.setManeuver(new ChangePostureManeuver(Character.Posture.Kneeling));
+        combatManager.performTurns(1);
+        f2.setManeuver(new AttackManeuver(f3, AttackManeuver.Type.Melee, sword2));
+        combatManager.performTurns(1);
 
     }
 

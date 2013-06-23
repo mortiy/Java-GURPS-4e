@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
  * To change this template use File | Settings | File Templates.
  */
 public class FeintManeuver extends Maneuver {
-    public FeintManeuver(Fighter fighter) {
-        super(fighter, ManeuverType.Feint);
+    public FeintManeuver() {
+        super(ManeuverType.Feint);
     }
 }

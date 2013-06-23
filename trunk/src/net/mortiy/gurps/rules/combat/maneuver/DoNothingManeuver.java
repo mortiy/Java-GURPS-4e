@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
  * To change this template use File | Settings | File Templates.
  */
 public class DoNothingManeuver extends Maneuver {
-    public DoNothingManeuver(Fighter fighter) {
-        super(fighter, ManeuverType.DoNothing);
+    public DoNothingManeuver() {
+        super(ManeuverType.DoNothing);
     }
 }

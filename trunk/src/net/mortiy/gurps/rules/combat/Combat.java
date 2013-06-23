@@ -1,8 +1,9 @@
-package net.mortiy.gurps.rules;
+package net.mortiy.gurps.rules.combat;
 
 import net.mortiy.gurps.Log;
+import net.mortiy.gurps.rules.Character;
 import net.mortiy.gurps.rules.attributes.Attribute;
-import net.mortiy.gurps.rules.combat.*;
+import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
 import net.mortiy.gurps.rules.combat.maneuver.*;
 import net.mortiy.gurps.rules.equipment.Item;
 import net.mortiy.gurps.rules.equipment.weapon.MeleeWeapon;
@@ -17,32 +18,21 @@ import net.mortiy.gurps.rules.table.rolls.SuccessRoll;
 import java.util.*;
 
 /**
- * Represents fight between two Characters
+ * Represents fight between several Characters
  */
 public class Combat {
 
-    private boolean isStarted = false;
-    private boolean isPaused = false;
-
-    private int maxTurns = 0;
-    private int turnCount = 0;
-
     private List<Fighter> fighters = new ArrayList<>();
-    private ListIterator<Fighter> fighterIterator;
-    private OnPauseListener onPauseListener;
-
-    private Fighter currentFighter;
-
-    public interface OnPauseListener {
-        public void onPause(Fighter fighter);
-    }
 
     public Combat(Character... fighters) {
         this(Arrays.asList(fighters));
     }
 
     public Combat(List<Character> characters) {
-        // Determine turns order by character's Basic Speed:
+
+        /**
+         * Determine turns order by character's Basic Speed:
+         */
         Collections.sort(characters, new Comparator<Character>() {
             public int compare(Character c1, Character c2) {
                 int result = c2.getBasicSpeed().compareTo(c1.getBasicSpeed());
@@ -53,16 +43,14 @@ public class Combat {
             }
         });
 
-        // Initialize starting maneuvers :
+        /**
+         * Initialize fighters and their starting maneuvers:
+         */
         for (Character character : characters) {
             Fighter fighter = new Fighter(character);
-            fighter.setManeuver(new DoNothingManeuver(fighter));
+            fighter.setManeuver(new DoNothingManeuver());
             this.fighters.add(fighter);
         }
-    }
-
-    public void setOnPauseListener(OnPauseListener onPauseListener) {
-        this.onPauseListener = onPauseListener;
     }
 
     public List<Fighter> getFighters() {
@@ -77,124 +65,28 @@ public class Combat {
     public void leaveCombat(Character character) {
         for (Fighter fighter : fighters) {
             if (fighter.getCharacter() == character) {
-                fighters.remove(character);
+                leaveCombat(fighter);
             }
         }
     }
 
-    /**
-     * Start combat:
-     */
-    public void init(int maxTurns) {
-        if (isStarted) {
-            Log.w("Combat", "Combat already started!");
-            return;
-        }
-        this.maxTurns = maxTurns;
-        new Thread() {
-            @Override
-            public void run() {
-                isStarted = true;
-            }
-        }.start();
-
-    }
-
-
-    public void start() {
-        start(-1);
-    }
-
-    /**
-     * Performs combat while for given number of turns or while
-     * there are active fighters present.
-     * @param turnsCounter
-     */
-    public void start(int turnsCounter) {
-        isPaused = false;
-
-        while (fighters.size() > 1 && !isPaused && ((turnsCounter == -1) || (turnsCounter-- > 0))) {
-            try {
-                if (!turn()) {
-                    return;
-                }
-            } catch (FighterHasNoManueverException e) {
-                Log.i("Combat", e.getMessage());
-                pause();
-                return;
-            } catch (ImpossibleManeuverException e) {
-                Log.i("Combat", e.getMessage());
-                pause();
-                return;
-            }
-        }
-    }
-
-    /**
-     * Pauses combat
-     */
-    public void pause() {
-        Log.i("Combat", "Combat is paused.");
-        isPaused = true;
-        if (onPauseListener != null) {
-            onPauseListener.onPause(currentFighter);
-        }
-    }
-
-    private boolean turn() throws FighterHasNoManueverException, ImpossibleManeuverException {
-        // Continue previous turn or start new
-        if (fighterIterator == null || !fighterIterator.hasNext()) {
-            if (turnCount < maxTurns) {
-                newTurn();
-            } else {
-                return false;
-            }
-        }
-        while (fighterIterator.hasNext()) {
-            if (isPaused) {
-                return false;
-            }
-            if (currentFighter == null) {
-                currentFighter = fighterIterator.next();
-            }
-            if (!currentFighter.isActive()) {
-                continue;
-            }
-            if (currentFighter.hasManeuver()) {
-                // Fighter executes maneuver:
-                resolveManeuver(currentFighter);
-            } else {
-                throw new FighterHasNoManueverException(String.format("Fighter '%s' requires maneuver. ", currentFighter.getCharacter().getName()));
-            }
-            currentFighter = null;
-        }
-        return true;
-    }
-
-    /**
-     * Starts new combat turn
-     */
-    private void newTurn() {
-        turnCount++;
-        _log("[Turn #%d]", turnCount);
-        currentFighter = null;
-        fighterIterator = fighters.listIterator();
+    public void leaveCombat(Fighter fighter) {
+        fighters.remove(fighter);
     }
 
     /**
      * Resolver fighter's maneuver
      * @param fighter
-     * @throws ImpossibleManeuverException
+     * @throws net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException
      */
-    private void resolveManeuver(Fighter fighter) throws ImpossibleManeuverException {
+    void resolveManeuver(Fighter fighter) throws ImpossibleManeuverException {
         Maneuver maneuver = fighter.getActiveManeuver();
 
         Character fighterCharacter = fighter.getCharacter();
         String fighterName = fighterCharacter.getName();
 
-        String combatMessage = String.format("'%s' performs <%s>", fighterName, maneuver.getType());
+        _log("'%s' performs <%s>", fighterName, maneuver.getType());
 
-        Log.i("Combat", combatMessage);
         switch (maneuver.getType()) {
 
             case DoNothing:
@@ -205,23 +97,23 @@ public class Combat {
                 Character.Posture posture = changePostureManeuver.getPosture();
                 _log("'%s' changed posture to '%s'", fighterName, posture);
                 fighterCharacter.changePosture(posture);
-                fighter.setManeuver(new DoNothingManeuver(fighter));
+                fighter.setManeuver(new DoNothingManeuver());
                 break;
             case Attack:
-                resolveAtackManeuver((AttackManeuver)maneuver);
+                resolveAtackManeuver(fighter, (AttackManeuver)maneuver);
                 break;
             case MoveAndAttack:
-                resolveAtackManeuver((MoveAndAttackManeuver) maneuver);
+                resolveAtackManeuver(fighter, (MoveAndAttackManeuver) maneuver);
                 break;
             case AllOutAttack:
-                resolveAtackManeuver((AllOutAtackManeuver) maneuver);
+                resolveAtackManeuver(fighter, (AllOutAtackManeuver) maneuver);
                 break;
         }
     }
 
 
-    private void resolveAtackManeuver(AttackManeuver attackManeuver) throws ImpossibleManeuverException {
-        Fighter fighter = attackManeuver.getFighter();
+    private void resolveAtackManeuver(Fighter fighter, AttackManeuver attackManeuver) throws ImpossibleManeuverException {
+
         Character fighterCharacter = fighter.getCharacter();
         Fighter targetFighter = attackManeuver.getTargetFigher();
 
@@ -394,23 +286,7 @@ public class Combat {
         Log.i("Combat", String.format(message, args));
     }
 
-    public Fighter getCurrentFighter() {
-        return currentFighter;
-    }
 
-    public int getCurrentTurn() {
-        return turnCount;
-    }
 
-    public class FighterHasNoManueverException extends Exception {
-        public FighterHasNoManueverException(String message) {
-            super(message);    //To change body of overridden methods use File | Settings | File Templates.
-        }
-    }
 
-    public class ImpossibleManeuverException extends Exception {
-        public ImpossibleManeuverException(String format, Object... args) {
-            super(String.format(format, args));    //To change body of overridden methods use File | Settings | File Templates.
-        }
-    }
 }

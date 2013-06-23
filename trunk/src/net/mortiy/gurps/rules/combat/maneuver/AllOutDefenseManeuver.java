@@ -17,12 +17,12 @@ public class AllOutDefenseManeuver extends Maneuver {
     AllOutDefenseManeuver.Type defenseType;
     Defense.Strategy defenseStrategy;
 
-    public AllOutDefenseManeuver(Fighter fighter, AllOutDefenseManeuver.Type defenseType) {
-        this(fighter, defenseType, null);
+    public AllOutDefenseManeuver(AllOutDefenseManeuver.Type defenseType) {
+        this(defenseType, null);
     }
 
-    public AllOutDefenseManeuver(Fighter fighter, AllOutDefenseManeuver.Type defenseType, Defense.Strategy defenseStrategy) {
-        super(fighter, ManeuverType.AllOutDefense);
+    public AllOutDefenseManeuver(AllOutDefenseManeuver.Type defenseType, Defense.Strategy defenseStrategy) {
+        super(ManeuverType.AllOutDefense);
         this.defenseType = defenseType;
         this.defenseStrategy = defenseStrategy;
     }

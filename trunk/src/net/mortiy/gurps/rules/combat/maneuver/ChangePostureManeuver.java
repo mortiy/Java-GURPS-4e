@@ -14,8 +14,8 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
  */
 public class ChangePostureManeuver extends Maneuver {
     Character.Posture posture;
-    public ChangePostureManeuver(Fighter fighter, Character.Posture posture) {
-        super(fighter, ManeuverType.ChangePosture);
+    public ChangePostureManeuver(Character.Posture posture) {
+        super(ManeuverType.ChangePosture);
         this.posture = posture;
     }
 

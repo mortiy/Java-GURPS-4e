@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
  * To change this template use File | Settings | File Templates.
  */
 public class ConcentrateManeuver extends Maneuver {
-    public ConcentrateManeuver(Fighter fighter) {
-        super(fighter, ManeuverType.Concentrate);
+    public ConcentrateManeuver() {
+        super(ManeuverType.Concentrate);
     }
 }

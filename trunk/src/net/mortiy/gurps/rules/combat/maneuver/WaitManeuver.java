@@ -13,8 +13,8 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
  */
 public class WaitManeuver extends Maneuver {
     Maneuver nextManeuver;
-    public WaitManeuver(Fighter fighter, Maneuver nextManeuver) {
-        super(fighter, ManeuverType.Wait);
+    public WaitManeuver(Maneuver nextManeuver) {
+        super(ManeuverType.Wait);
         this.nextManeuver = nextManeuver;
     }
 

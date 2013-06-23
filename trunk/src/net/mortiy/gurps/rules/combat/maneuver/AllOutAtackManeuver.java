@@ -13,8 +13,8 @@ import net.mortiy.gurps.rules.equipment.weapon.Weapon;
  */
 public class AllOutAtackManeuver extends AttackManeuver {
 
-    public AllOutAtackManeuver(Fighter fighter, Fighter targetFighter, AttackManeuver.Type attackType, Weapon weapon) {
-        super(fighter, targetFighter, attackType, weapon);
+    public AllOutAtackManeuver(Fighter targetFighter, AttackManeuver.Type attackType, Weapon weapon) {
+        super(targetFighter, attackType, weapon);
         this.type = ManeuverType.AllOutAttack;
     }
 }

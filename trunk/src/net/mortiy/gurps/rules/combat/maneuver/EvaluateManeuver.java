@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
  * To change this template use File | Settings | File Templates.
  */
 public class EvaluateManeuver extends Maneuver {
-    public EvaluateManeuver(Fighter fighter) {
-        super(fighter, ManeuverType.Evaluate);
+    public EvaluateManeuver() {
+        super(ManeuverType.Evaluate);
     }
 }
