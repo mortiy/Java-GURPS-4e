@@ -8,7 +8,7 @@ Development in progress.
 
 The Generic Universal RolePlaying System, or GURPS, is a tabletop role-playing game system designed to allow for play in any game setting.
 
-Get acquainted with free lite version of 4th edition rules: <a href="/blob/master/trunk/rules/GURPS%20-%204th%20Edition%20-%20Lite.pdf?raw=true">GURPS - 4th Edition - Lite.pdf</a>
+Get acquainted with free lite version of 4th edition rules: <a href="/trunk/rules/GURPS%20-%204th%20Edition%20-%20Lite.pdf?raw=true">GURPS - 4th Edition - Lite.pdf</a>
 
 ### Information
 
