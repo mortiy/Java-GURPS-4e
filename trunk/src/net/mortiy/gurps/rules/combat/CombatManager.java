@@ -3,6 +3,9 @@ package net.mortiy.gurps.rules.combat;
 import net.mortiy.gurps.Log;
 import net.mortiy.gurps.rules.combat.exceptions.FighterHasNoManueverException;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
+import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
+import net.mortiy.gurps.rules.combat.exceptions.RoundIsOverException;
+import net.mortiy.gurps.rules.combat.maneuver.DoNothingManeuver;
 
 import java.util.*;
 
@@ -15,104 +18,67 @@ public class CombatManager {
         public void onPause(Fighter fighter);
     }
 
-    private Combat combat;
-    private CombatState combatState;
-    private CombatLogger combatLogger;
+    protected Combat combat;
+    protected CombatState combatState;
+    protected CombatLogger combatLogger;
 
-    private OnPauseListener onPauseListener;
+    protected OnPauseListener onPauseListener;
+    protected Iterator<Fighter> fighterIterator;
 
-    private Iterator<Fighter> fighterIterator;
 
     public CombatManager(Combat combat) {
         this.combat = combat;
         this.combatState = new CombatState();
+
+        startNewRound();
     }
 
     public void setOnPauseListener(OnPauseListener onPauseListener) {
         this.onPauseListener = onPauseListener;
     }
 
-    public void performTurns(){
-        performTurns(-1);
-    }
+    public FighterTurn turn() throws FighterHasNoManueverException, ImpossibleManeuverException, RoundIsOverException, IsNotReadyException {
 
-    /**
-     * Performs combat while for given number of turns or while
-     * there are active fighters present.
-     *
-     * @param turnsCounter
-     */
-    public void performTurns(int turnsCounter) {
-
-        combatState.setPaused(true);
-        while (combat.getFighters().size() > 1 && !combatState.isPaused() && ((turnsCounter == -1) || (turnsCounter-- > 0))) {
-            try {
-                if (!turn()) {
-                    return;
-                }
-            } catch (FighterHasNoManueverException e) {
-                _log(e.getMessage());
-                pause();
-                return;
-            } catch (ImpossibleManeuverException e) {
-                _log(e.getMessage());
-                pause();
-                return;
-            }
+        if(isRoundOver()){
+            throw new RoundIsOverException();
         }
 
-    }
+        Fighter currentFighter = fighterIterator.next();
+        FighterTurn fighterTurn;
 
-    /**
-     * Pauses combat
-     */
-    public void pause() {
-        _log("Combat is paused.");
-        combatState.setPaused(true);
-        if (onPauseListener != null) {
-            onPauseListener.onPause(combatState.getCurrentFighter());
+        combatState.setCurrentFighter(currentFighter);
+
+        if (!currentFighter.isActive()) {
+            return new FighterTurn(currentFighter, new DoNothingManeuver());
         }
-    }
 
-    private boolean turn() throws FighterHasNoManueverException, ImpossibleManeuverException {
+        if (currentFighter.hasManeuver()) {
+            fighterTurn = new FighterTurn(currentFighter, currentFighter.getActiveManeuver());
 
-        // Continue previous turn or start new
-        if (fighterIterator == null || !fighterIterator.hasNext()) {
-            newTurn();
+            // Fighter executes maneuver:
+            ManeuverResult maneuverResult = combat.resolveManeuver(currentFighter);
+            fighterTurn.setManeuverResult(maneuverResult);
+        } else {
+            throw new FighterHasNoManueverException(String.format("Fighter '%s' requires maneuver. ", currentFighter.getCharacter().getName()));
         }
-        while (fighterIterator.hasNext()) {
-            if (combatState.isPaused()) {
-                return false;
-            }
-            if (!combatState.hasCurrentFighter()) {
-                combatState.setCurrentFighter(fighterIterator.next());
-            }
 
-            Fighter currentFighter = combatState.getCurrentFighter();
-
-            if (!currentFighter.isActive()) {
-                continue;
-            }
-            if (currentFighter.hasManeuver()) {
-                // Fighter executes maneuver:
-                combat.resolveManeuver(currentFighter);
-            } else {
-                throw new FighterHasNoManueverException(String.format("Fighter '%s' requires maneuver. ", currentFighter.getCharacter().getName()));
-            }
-        }
-        return true;
+        return fighterTurn;
     }
 
     /**
      * Starts new combat turn
      */
-    private void newTurn() {
-        combatState.newTurn();
-        _log("[Turn #%d]", combatState.getCurrentTurn());
+    public void startNewRound() {
+        combatState.newRound();
+        _log("[Round #%d]", combatState.getRound());
         fighterIterator = combat.getFighters().listIterator();
     }
 
-    private void _log(String message, Object... args) {
+    public boolean isRoundOver(){
+        return !fighterIterator.hasNext();
+    }
+
+    protected void _log(String message, Object... args) {
         Log.i("Combat Manager", String.format(message, args));
     }
 }

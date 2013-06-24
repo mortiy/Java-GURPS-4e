@@ -26,8 +26,6 @@ public class TimeModifier extends Modifier {
         }, timeInMilliseconds);
     }
 
-
-
     public TimerTask getTimerTask(){
         return  timerTask;
     }

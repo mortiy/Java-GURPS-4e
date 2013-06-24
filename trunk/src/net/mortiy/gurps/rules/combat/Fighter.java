@@ -28,7 +28,7 @@ public class Fighter implements GameMap.MapToken {
     private boolean isActive = true;
     private int usedMoves = 0;
 
-    private List<Item> readyList = new ArrayList<>();
+    private List<Preparable> readyList = new ArrayList<>();
 
     public Fighter(Character character) {
         this.character = character;
@@ -51,7 +51,7 @@ public class Fighter implements GameMap.MapToken {
         return defense;
     }
 
-    public List<Item> getReadyList(){
+    public List<Preparable> getReadyList(){
         return readyList;
     }
 
@@ -215,5 +215,10 @@ public class Fighter implements GameMap.MapToken {
     @Override
     public Image getImage() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Fighter '%s'", character.getName());
     }
 }

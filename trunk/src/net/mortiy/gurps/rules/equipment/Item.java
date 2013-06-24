@@ -1,6 +1,7 @@
 package net.mortiy.gurps.rules.equipment;
 
 import net.mortiy.gurps.rules.TechLevel;
+import net.mortiy.gurps.rules.combat.Preparable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,7 +10,7 @@ import net.mortiy.gurps.rules.TechLevel;
  * Time: 16:49
  * To change this template use File | Settings | File Templates.
  */
-public class Item {
+public class Item implements Preparable {
     protected TechLevel.Level techLevel;
     protected float weight = 0f;
     protected float cost = 0f;

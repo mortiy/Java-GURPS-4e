@@ -2,6 +2,7 @@ package net.mortiy.gurps.rules.traits;
 
 import net.mortiy.gurps.Reflection;
 import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.combat.Preparable;
 import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.modifiers.ValueModifier;
 
@@ -12,7 +13,7 @@ import java.util.*;
  * Represents character's Advantages and Disadvantes.
  * Trait is assigned to character immediately during instantiation.
  */
-public class Trait {
+public class Trait implements Preparable {
 
     private String name;
     private String description;

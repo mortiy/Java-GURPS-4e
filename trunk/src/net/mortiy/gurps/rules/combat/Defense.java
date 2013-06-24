@@ -8,6 +8,7 @@ import net.mortiy.gurps.rules.equipment.weapon.all.KnifeWeapon;
 import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.WhipMeleeWeapon;
+import net.mortiy.gurps.rules.skills.all.meleeweapon.whip.Kusari;
 
 //import net.mortiy.gurps.rules.equipment.weapon.all.KusariWeapon;
 
@@ -96,7 +97,8 @@ public class Defense {
                         parryModifier -= 1;
                     }
                     // Whip or Kusary are -2
-                    else if (weaponSkillClass.isAssignableFrom(WhipMeleeWeapon.class) ) {
+                    else if (weaponSkillClass.isAssignableFrom(WhipMeleeWeapon.class)
+                          || weaponSkillClass.isAssignableFrom(Kusari.class)) {
                         parryModifier -= 2;
                     }
                     // Quarterstaff gives +2

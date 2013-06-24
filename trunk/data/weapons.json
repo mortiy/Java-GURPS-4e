@@ -78,6 +78,23 @@
 			"price": 70,
 			"weight": 5,
 			"minStrength": 11
-		}
+		},
+        {
+            "name": "Monowire Whip",
+            "skills": ["MonowireWhip"],
+            "TL": "TL1",
+            "modes": [
+
+                {
+                    "type": ["Swinging", -2, "Cutting"],
+                    "reach": ["1-7*"],
+                    "parry": "-2 U"
+                }
+
+            ],
+            "price": 900,
+            "weight": 0.5,
+            "minStrength": 5
+        }
 	]
 }

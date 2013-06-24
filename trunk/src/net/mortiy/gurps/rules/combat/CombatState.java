@@ -8,11 +8,11 @@ public class CombatState {
     private boolean isPaused;
     private boolean isStarted;
     private Fighter currentFighter;
-    private int currentTurn = 0;
+    private int round = 0;
 
 
-    public void newTurn(){
-        currentTurn++;
+    public void newRound(){
+        round++;
         currentFighter = null;
     }
 
@@ -24,8 +24,8 @@ public class CombatState {
         return currentFighter;
     }
 
-    public int getCurrentTurn() {
-        return currentTurn;
+    public int getRound() {
+        return round;
     }
 
     public boolean isPaused() {

@@ -27,10 +27,7 @@ import net.mortiy.gurps.rules.traits.*;
 import org.newdawn.slick.Image;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Character entity
@@ -663,6 +660,9 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
         addTimeModifier(getAttribute(Attribute.Intelligence), -shockModifier, Time.TURN);
         addTimeModifier(getAttribute(Attribute.Dexterity), -shockModifier, Time.TURN);
 
+        // Remember quantity of physical states:
+        int physicalStatesCount = physicalStates.size();
+
         // Check for Major wound:
         // TODO: Knockdown (p. 30)
         if(injury > maxHP / 2){
@@ -736,6 +736,11 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
          */
         if (currentHP <= (-10 * maxHP) && !physicalStates.contains(PhysicalState.Destructed)) {
             physicalStates.add(PhysicalState.Destructed);
+        }
+
+        // Notify if physical states changes:
+        if(physicalStates.size() > physicalStatesCount){
+            Log.i("Character", String.format("%s is now %s", getName(), Arrays.toString(physicalStates.toArray())));
         }
 
     }

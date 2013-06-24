@@ -4,6 +4,7 @@ import net.mortiy.gurps.Log;
 import net.mortiy.gurps.rules.Character;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
+import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
 import net.mortiy.gurps.rules.combat.maneuver.*;
 import net.mortiy.gurps.rules.equipment.Item;
 import net.mortiy.gurps.rules.equipment.weapon.MeleeWeapon;
@@ -57,6 +58,10 @@ public class Combat {
         return fighters;
     }
 
+    public Fighter getFighter(int index) {
+        return fighters.get(index);
+    }
+
     /**
      * Removes character from the combat
      *
@@ -76,10 +81,12 @@ public class Combat {
 
     /**
      * Resolver fighter's maneuver
+     *
      * @param fighter
      * @throws net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException
+     *
      */
-    void resolveManeuver(Fighter fighter) throws ImpossibleManeuverException {
+    ManeuverResult resolveManeuver(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
         Maneuver maneuver = fighter.getActiveManeuver();
 
         Character fighterCharacter = fighter.getCharacter();
@@ -99,36 +106,42 @@ public class Combat {
                 fighterCharacter.changePosture(posture);
                 fighter.setManeuver(new DoNothingManeuver());
                 break;
+            case Ready:
+                ReadyManeuver readyManeuver = (ReadyManeuver) maneuver;
+                Preparable preparable = readyManeuver.getPreparable();
+                fighter.getReadyList().add(preparable);
+                break;
             case Attack:
-                resolveAtackManeuver(fighter, (AttackManeuver)maneuver);
-                break;
+                return resolveAtackManeuver(fighter, (AttackManeuver) maneuver);
             case MoveAndAttack:
-                resolveAtackManeuver(fighter, (MoveAndAttackManeuver) maneuver);
-                break;
+                return resolveAtackManeuver(fighter, (MoveAndAttackManeuver) maneuver);
             case AllOutAttack:
-                resolveAtackManeuver(fighter, (AllOutAtackManeuver) maneuver);
-                break;
+                return resolveAtackManeuver(fighter, (AllOutAtackManeuver) maneuver);
+
         }
+
+        return new ManeuverResult(ManeuverResult.Status.Failure);
+
     }
 
 
-    private void resolveAtackManeuver(Fighter fighter, AttackManeuver attackManeuver) throws ImpossibleManeuverException {
+    private ManeuverResult resolveAtackManeuver(Fighter fighter, AttackManeuver attackManeuver) throws ImpossibleManeuverException, IsNotReadyException {
 
         Character fighterCharacter = fighter.getCharacter();
         Fighter targetFighter = attackManeuver.getTargetFigher();
 
-        Item item = fighter.getActiveWeapon();
-        if (item == null) {
+        Item weapon = fighter.getActiveWeapon();
+        if (weapon == null) {
             throw new ImpossibleManeuverException("'%s' has no equipped weapon.", fighterCharacter.getName());
         }
-        if(!fighter.getReadyList().contains(item)){
-            return;
+        if (!fighter.getReadyList().contains(weapon)) {
+            throw new IsNotReadyException();
         }
         // Check if equipped item can be used as weapon:
-        if (item instanceof Weapon) {
+        if (weapon instanceof Weapon) {
 
             // If weapon is Muscle Powered:
-            if (item instanceof MeleeWeapon) {
+            if (weapon instanceof MeleeWeapon) {
 
 
                 Damage fightersDamage = damageRoll(fighter);
@@ -138,7 +151,7 @@ public class Combat {
                         // Critical hit can't be defended,
                         // so no defence roll by target fighter performed:
                         targetFighter.injure(fightersDamage);
-                        break;
+                        return new ManeuverResult(ManeuverResult.Status.Success);
                     case Success:
 
                         // Perform DEFENSE ROLL:
@@ -162,15 +175,15 @@ public class Combat {
                 }
             }
         } else {
-            throw new ImpossibleManeuverException("'%s' is not weapon.", item.getName());
+            throw new ImpossibleManeuverException("'%s' is not weapon.", weapon.getName());
         }
-
+        return new ManeuverResult(ManeuverResult.Status.Failure);
     }
-
 
 
     /**
      * Returns damage amount dealt by fighter with given weapon
+     *
      * @param fighter Attacking fighter
      * @return Damage object
      * @throws ImpossibleManeuverException
@@ -184,7 +197,7 @@ public class Combat {
         int basicDamage;
         RollFormula damageFormula;
         Damage.Type damageType = null;
-        if(weapon instanceof MusclePoweredMeleeWeapon){
+        if (weapon instanceof MusclePoweredMeleeWeapon) {
             MusclePoweredMeleeWeapon meeleeWeapon = (MusclePoweredMeleeWeapon) weapon;
             MusclePoweredDamage.Type physicalDamageType = meeleeWeapon.getActiveWeaponMode().getBasicType();
             damageType = meeleeWeapon.getActiveWeaponMode().getWeaponDamage().getDamageType();
@@ -245,6 +258,7 @@ public class Combat {
         return attackSuccessRoll.getRollResult();
 
     }
+
     public DiceRoller.RollResult defenseRoll(Fighter targetFighter) {
         // Resolve hit success:
         // Target fighter tries to perform defend roll:
@@ -254,13 +268,13 @@ public class Combat {
         String targetFighterName = targetFighter.getCharacter().getName();
 
         // Defense is unavailable for fighter who already performed AllOutAttack this turn:
-        if(activeManeuver.getType() == ManeuverType.AllOutAttack){
-                _log("'%s' performed earlier AllOutAttack so can not defended", targetFighterName);
+        if (activeManeuver.getType() == ManeuverType.AllOutAttack) {
+            _log("'%s' performed earlier AllOutAttack so can not defended", targetFighterName);
             return DiceRoller.RollResult.Failure;
         }
 
         Defense defense = targetFighter.getDefense();
-            _log("'%s' tries to defend with <%s>", targetFighterName, defense.getBestStrategy());
+        _log("'%s' tries to defend with <%s>", targetFighterName, defense.getBestStrategy());
         int defenseLevel = defense.getDefenseLevel();
         SuccessRoll defenseRoll = new SuccessRoll(defenseLevel).roll();
         DiceRoller.RollResult rollResult = defenseRoll.getRollResult();
@@ -285,8 +299,6 @@ public class Combat {
     private void _log(String message, Object... args) {
         Log.i("Combat", String.format(message, args));
     }
-
-
 
 
 }

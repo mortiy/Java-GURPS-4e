@@ -7,7 +7,10 @@ import net.mortiy.gurps.rules.character.Body;
 import net.mortiy.gurps.rules.character.Encumbrance;
 import net.mortiy.gurps.rules.equipment.Equipment;
 import net.mortiy.gurps.rules.equipment.Item;
+import net.mortiy.gurps.rules.equipment.ShieldItem;
+import net.mortiy.gurps.rules.equipment.all.SmallShield;
 import net.mortiy.gurps.rules.equipment.weapon.all.ShortswordWeapon;
+import net.mortiy.gurps.rules.skills.all.Shield;
 
 /**
  * Test Character's equipment and encumbrance that it causes
@@ -43,6 +46,26 @@ public class EquipmentTest extends TestCase {
         equipment.putItem(new Item("Very Heavy Thing", TechLevel.Level.TL0, 0,80f));
         assertEquals("Ensure equipment weight", 165f, equipment.getTotalWeight());
         assertEquals("Character's Encumbrance at Equipment weight 165 lbs.", Encumbrance.ExtraHeavy, character.getEncumbrance());
+
+
+    }
+
+    public void testEquipPossibility(){
+
+        Character c1 = new Character(100);
+        c1.setName("Alpha");
+        Character c2 = new Character(100);
+        c1.setName("Beta");
+
+        ShortswordWeapon sword = new ShortswordWeapon();
+        ShieldItem smallShield = new SmallShield();
+
+        c1.getEquipment().putItem(sword);
+        assertTrue("Character can equip item that he owns", c1.equip(sword, Body.Part.RightHand));
+        assertFalse("Character can't equip item that he doesn't own", c1.equip(smallShield, Body.Part.RightHand));
+
+        // TODO: Prevent same item be able to put in different equipments:
+        c2.getEquipment().putItem(sword);
 
 
     }

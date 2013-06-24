@@ -79,6 +79,7 @@ public class CombatTest extends TestCase {
 
         Character c1 = new Character(100);
         c1.setName("Alpha");
+
         Character c2 = new Character(100);
         c2.setName("Beta");
 
@@ -133,7 +134,7 @@ public class CombatTest extends TestCase {
         fighter.setManeuver(new ConcentrateManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new ReadyManeuver());
+        fighter.setManeuver(new ReadyManeuver(fighter.getActiveWeapon()));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
         fighter.setManeuver(new WaitManeuver(new FeintManeuver()));
@@ -145,41 +146,28 @@ public class CombatTest extends TestCase {
 
     }
 
+    public void testDefenseStrategy() throws Exception {
+        Combat combat = createTestCombat();
+
+        Fighter alphaFast = combat.getFighter(0);
+        Fighter betaSmart = combat.getFighter(1);
+        Fighter gammaStrong = combat.getFighter(2);
+
+        alphaFast.setManeuver(new MoveManeuver());
+        assertEquals(Defense.Strategy.Dodge, alphaFast.getDefense().getBestStrategy());
+
+        betaSmart.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
+        assertEquals(Defense.Strategy.Block, betaSmart.getDefense().getBestStrategy());
+
+        gammaStrong.setManeuver(new AttackManeuver(gammaStrong, AttackManeuver.Type.Ranged, betaSmart.getActiveWeapon()));
+        assertEquals(Defense.Strategy.Block, gammaStrong.getDefense().getBestStrategy());
+
+
+    }
+
     public void testCombat() throws Exception {
-        // Create characters:
-        Character c1 = new Character(100);
-        c1.setName("Alpha");
-        c1.setBasicAttribute(Attribute.Dexterity, 16);
 
-        Character c2 = new Character(100);
-        c2.setName("Beta");
-        c2.setBasicAttribute(Attribute.Dexterity, 14);
-
-        Character c3 = new Character(100);
-        c3.setName("Gamma");
-        c3.setBasicAttribute(Attribute.Dexterity, 12);
-
-        // Create weapons:
-        ShortswordWeapon sword1 = new ShortswordWeapon();
-        ShortswordWeapon sword2 = new ShortswordWeapon();
-        ShieldItem smallShield = new SmallShield();
-
-        // Equip first character:
-        c1.getEquipment().putItem(sword1);
-        assertTrue("Character can equip item that he owns", c1.equip(sword1, Body.Part.RightHand));
-        assertFalse("Character can't equip item that he doesn't own", c1.equip(sword2, Body.Part.RightHand));
-
-        // Equip second character:
-        c2.getEquipment().putItem(sword2);
-        assertTrue("Character can equip item that he owns", c2.equip(sword2, Body.Part.RightHand));
-
-        c3.getEquipment().putItem(smallShield);
-        assertTrue("Character can equip item that he owns", c3.equip(smallShield, Body.Part.LeftHand));
-        c3.addSkill(new Shield(c3, Shield.Speciality.Shield), 16);
-
-        // Initialize combat:
-        final Combat combat = new Combat(c1, c2, c3);
-
+        Combat combat = createTestCombat();
 
         // Check that fighters ordered according to their Basic Speed
         final List<Fighter> fighters = combat.getFighters();
@@ -188,30 +176,27 @@ public class CombatTest extends TestCase {
         Fighter f2 = fighters.get(1);
         Fighter f3 = fighters.get(2);
 
-        assertTrue(f1.getCharacter() == c1);
-        assertTrue(f2.getCharacter() == c2);
-        assertTrue(f3.getCharacter() == c3);
-
-        // Lets fighters attack each other:
-        f1.setManeuver(new AttackManeuver(f2, AttackManeuver.Type.Melee, sword1));
-        f2.setManeuver(new AttackManeuver(f3, AttackManeuver.Type.Ranged, sword2));
-        f3.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
-
-        assertEquals(Defense.Strategy.Dodge, f2.getDefense().getBestStrategy());
-        assertEquals(Defense.Strategy.Block, f3.getDefense().getBestStrategy());
-
         CombatManager combatManager = new CombatManager(combat);
 
-        combatManager.performTurns(1);
-        f2.setManeuver(new ChangePostureManeuver(Character.Posture.Kneeling));
-        combatManager.performTurns(1);
-        f2.setManeuver(new AttackManeuver(f3, AttackManeuver.Type.Melee, sword2));
-        combatManager.performTurns(1);
+        FighterTurn fighterTurn;
+
+        fighterTurn = combatManager.turn(); // f1
+        assertEquals(f1, fighterTurn.getFighter());
+
+        fighterTurn = combatManager.turn(); // f2
+        assertEquals(f2, fighterTurn.getFighter());
+
+        fighterTurn = combatManager.turn(); // f3
+        assertEquals(f3, fighterTurn.getFighter());
+
+        combatManager.startNewRound();
+
+        combatManager.turn();
 
     }
 
     public void testAttackModifiers() throws Exception {
-        Combat combat = getTestCombat();
+        Combat combat = createTestCombat();
         List<Fighter> fighters = combat.getFighters();
 
         Fighter alpha = fighters.get(0);
@@ -238,14 +223,66 @@ public class CombatTest extends TestCase {
 
     }
 
-    private Combat getTestCombat(){
-        Character c1 = new Character(100);
-        c1.setName("Alpha");
+    public void testCombatDamage() throws Exception {
+        Combat combat = createTestCombat();
+        CombatManager combatManager = new CombatManager(combat);
 
-        Character c2 = new Character(100);
-        c1.setName("Beta");
+        Fighter f1 = combat.getFighter(0);
+        Fighter f2 = combat.getFighter(1);
 
-        return new Combat(c1, c2);
+        f1.setManeuver(new ReadyManeuver(f1.getActiveWeapon()));
+        combatManager.turn();
+        assertTrue("Fighters 1 active weapon should be ready now", f1.getReadyList().contains(f1.getActiveWeapon()));
+        combatManager.turn(); // Skip Fighters 2 turn;
+
+        f1.setManeuver(new AttackManeuver(f2, AttackManeuver.Type.Melee, f1.getActiveWeapon()));
+        while(f2.getCharacter().getHitpoints().getCurrentValue() > 0){
+            FighterTurn fighterTurn = combatManager.turn();
+            fighterTurn.getManeuverResult();
+            f2.getCharacter().getHitpoints();
+            if(combatManager.isRoundOver()){
+                combatManager.startNewRound();
+            }
+        }
+
+    }
+
+    private Combat createTestCombat() throws Exception {
+
+        Character c1 = new Character(150);
+        c1.setBasicAttribute(Attribute.Dexterity, 16);
+        c1.setName("Alpha Fast");
+
+        Character c2 = new Character(150);
+        c2.setBasicAttribute(Attribute.Intelligence, 16);
+        c2.setName("Beta Smart");
+
+        Character c3 = new Character(150);
+        c3.setBasicAttribute(Attribute.Strength, 16);
+        c3.setName("Gamma Strong");
+
+        // Create equipment:
+        ShortswordWeapon sword1 = new ShortswordWeapon();
+        ShortswordWeapon sword2 = new ShortswordWeapon();
+        ShortswordWeapon sword3 = new ShortswordWeapon();
+        ShieldItem smallShield = new SmallShield();
+
+        // Equip first character:
+        c1.getEquipment().putItem(sword1);
+        c1.equip(sword1, Body.Part.RightHand);
+
+        // Equip second character:
+        c2.getEquipment().putItem(sword2);
+        c2.equip(sword2, Body.Part.RightHand);
+        c2.equip(smallShield, Body.Part.LeftHand);
+        c2.addSkill(new Shield(c3, Shield.Speciality.Shield), 16);
+
+        //Equip third character:
+        c3.getEquipment().putItem(sword3);
+        c3.getEquipment().putItem(smallShield);
+        c3.equip(sword3, Body.Part.RightHand);
+
+        return new Combat(c1, c2, c3);
     }
 
 
