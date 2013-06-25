@@ -5,6 +5,10 @@ import net.mortiy.gurps.rules.Character;
 import net.mortiy.gurps.rules.combat.*;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.combat.exceptions.FighterHasNoManueverException;
+import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
+import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
+import net.mortiy.gurps.rules.combat.exceptions.RoundIsOverException;
 import net.mortiy.gurps.rules.combat.maneuver.*;
 import net.mortiy.gurps.rules.equipment.Equipment;
 import net.mortiy.gurps.rules.equipment.ShieldItem;
@@ -25,13 +29,12 @@ import java.util.List;
  */
 public class CombatTest extends TestCase {
 
-    public void testRulebookScenario() throws NotEnoughCharacterPointsException {
+    public void testRulebookScenario() throws NotEnoughCharacterPointsException, FighterHasNoManueverException, RoundIsOverException, ImpossibleManeuverException, IsNotReadyException {
 
         // Louis:
         Character louis = new Character(100);
         louis.setBasicAttribute(Attribute.Strength, 11);
         louis.setName("Louis LeBlanc");
-
         louis.getEquipment().putAndEquipItem(new ShortswordWeapon(), Body.Part.RightHand);
 
         // Louis has Shortsword-15, and there are no adverse conditions that would give him a skill penalty;
@@ -42,7 +45,10 @@ public class CombatTest extends TestCase {
         pierre.setName("Pierre");
         pierre.getEquipment().putAndEquipItem(new ShortswordWeapon(), Body.Part.RightHand);
         pierre.getEquipment().putAndEquipItem(new SmallShield(), Body.Part.LeftHand);
+
+        // However, Pierre is wearing cloth armor, which has DR 1.
         pierre.getEquipment().putAndEquipItem(new ClothArmor(), Body.Part.Torso);
+        assertEquals(1, pierre.getEquipment().getResistance(Body.Part.Torso, Damage.Type.Crushing));
 
         pierre.addSkill(new Shield(pierre, Shield.Speciality.Shield), 12);
         pierre.addSkill(new Shortsword(pierre), 11);
@@ -69,13 +75,28 @@ public class CombatTest extends TestCase {
         Defense.Strategy bestPierresDefenseStrategy = new Defense(pierreFighter).getBestStrategy();
         assertEquals("Ensure that <Block> is best defense strategy for Pierre", Defense.Strategy.Block, bestPierresDefenseStrategy);
 
-        // Put fighters on the map
+        // TODO: Move game map distances to separate test:
+        // Put fighters on the map:
         gameMap.putToken(louisFighter, 5, 6);
         gameMap.putToken(pierreFighter, 7, 6);
 
         // Check distance between map tokens:
         assertEquals("Distance between two fighters.", 2.0, gameMap.getDistance(louisFighter, pierreFighter));
 
+        CombatManager combatManager = new CombatManager(combat);
+
+        // Prepare weapons:
+        louisFighter.setManeuver(new ReadyManeuver(louisFighter.getActiveWeapon()));
+        pierreFighter.setManeuver(new ReadyManeuver(pierreFighter.getActiveWeapon()));
+        combatManager.turn();
+
+        combatManager.startNewRound();
+
+        // Prepare weapons:
+        louisFighter.setManeuver(new AttackManeuver(pierreFighter, AttackManeuver.Type.Melee, pierreFighter.getActiveWeapon()));
+        pierreFighter.setManeuver(new AttackManeuver(louisFighter, AttackManeuver.Type.Melee, pierreFighter.getActiveWeapon()));
+
+        combatManager.turn();
     }
 
 

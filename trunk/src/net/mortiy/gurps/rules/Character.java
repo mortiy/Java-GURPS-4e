@@ -746,22 +746,6 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
 
     }
 
-    /**
-     * Return charachter's resistance to given damage type
-     * TODO: Damage Resistance (DR) calculation
-     *
-     * @param damageType Damage Type
-     */
-    public int getResistance(Body.Part bodyPart, Damage.Type damageType) {
-        Item item = getEquipment().getEquipedItem(bodyPart);
-        if(item instanceof ArmorItem){
-            ArmorItem armorItem = (ArmorItem) item;
-            return armorItem.getDamageResistance(damageType);
-        }
-        return 0;
-    }
-
-
     public boolean changePosture(Posture posture) {
         this.posture = posture;
         return true;
@@ -814,6 +798,12 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
         public SkillClassNotFoundException(String format) {
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s [HP=%.0f]", getName(), getHitpoints().getCurrentValue());
+    }
+
 
     // endregion
 }

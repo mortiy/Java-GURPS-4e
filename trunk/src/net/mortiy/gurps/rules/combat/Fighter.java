@@ -177,32 +177,45 @@ public class Fighter implements GameMap.MapToken {
      */
     public void injure(Body.Part bodyPart, Damage damage) {
         // TODO: Use "armor divisor"
-        // TODO: Use target fighter DR
+        // TODO: Improve target fighter DR
 
         // Calc penetrating damage:
-        int penetratingDamage = damage.getDamageAmount() - character.getResistance(bodyPart, damage.getDamageType());
+        int damageResistance = character.getEquipment().getResistance(bodyPart, damage.getDamageType());
+
+        Log.i("Fighter", "'%s' got %s", getCharacter().getName(), damage);
+
+        if(damageResistance > 0){
+            Log.i("Fighter", "'%s' armor absorbs %d damage", getCharacter().getName(), damageResistance);
+        }
+
+        int penetratingDamage = damage.getDamageAmount() - damageResistance;
 
         // Calc wounding modifier:
-        float woundingModifier = 1.0f;
+        float woundingMultiplier = 1.0f;
         switch(damage.getDamageType()){
             case SmallPiercing:
-                woundingModifier = 0.5f;
+                woundingMultiplier = 0.5f;
                 break;
             case LargePiercing:
             case Cutting:
-                woundingModifier = 1.5f;
+                woundingMultiplier = 1.5f;
                 break;
             case Impaling:
-                woundingModifier = 2.0f;
+                woundingMultiplier = 2.0f;
                 break;
         }
 
-        // Injury:
-        int injury = (int) Math.floor(penetratingDamage * woundingModifier);
+        if(woundingMultiplier != 1.0f){
+            Log.i("Fighter", "%s damage is multiplied by %.1f", damage.getDamageType(), woundingMultiplier);
 
-        Log.i("Fighter", "Fighter '%s' got %s", getCharacter().getName(), damage);
-        character.injure(injury < 1 ? 1 : injury);
-        Log.i("Fighter", "Fighter '%s' has %.1f HP now", getCharacter().getName(), getCharacter().getHitpoints().getCurrentValue());
+        }
+
+        // Injury:
+        int injury = (int) Math.floor(penetratingDamage * woundingMultiplier);
+        int actualInjury = injury < 1 ? 1 : injury;
+
+        character.injure(actualInjury);
+        Log.i("Fighter", "'%s' injured by %d and has %.1f HP now", getCharacter().getName(), actualInjury, getCharacter().getHitpoints().getCurrentValue());
     }
 
     public Weapon getActiveWeapon() {

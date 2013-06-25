@@ -10,6 +10,7 @@ import net.mortiy.gurps.rules.traits.Trait;
 
 public class ReadyManeuver extends Maneuver {
     Preparable preparable;
+
     public ReadyManeuver(Preparable preparable) {
         super(ManeuverType.Ready);
         this.preparable = preparable;

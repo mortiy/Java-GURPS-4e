@@ -2,6 +2,7 @@ package net.mortiy.gurps.rules.equipment;
 import net.mortiy.gurps.Log;
 import net.mortiy.gurps.rules.Character;
 import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.combat.Damage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,6 +95,21 @@ public class Equipment extends Container {
             }
         }
         return items;
+    }
+
+
+    /**
+     * Return character's resistance on given body part for given damage type
+     * @param bodyPart Body Part
+     * @param damageType Damage Type
+     */
+    public int getResistance(Body.Part bodyPart, Damage.Type damageType) {
+        // TODO: Damage Resistance (DR) calculation
+        Item item = getEquipedItem(bodyPart);
+        if(item instanceof ArmorItem){
+            return ((ArmorItem) item).getDamageResistance(damageType);
+        }
+        return 0;
     }
 
 }

@@ -40,6 +40,11 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
         Character fighterCharacter = fighter.getCharacter();
         Fighter targetFighter = getTargetFigher();
 
+        if(fighter.equals(targetFighter)){
+            Log.i("Attack Maneuver", "%s attacks himself!", fighterCharacter.getName());
+
+        }
+
         Item weapon = fighter.getActiveWeapon();
         if (weapon == null) {
             throw new ImpossibleManeuverException("'%s' has no equipped weapon.", fighterCharacter.getName());
@@ -235,6 +240,6 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
     }
 
     private void _log(String message, Object... args) {
-        Log.i("Attack Maneuver", String.format(message, args));
+        Log.i("Attack Maneuver", message, args);
     }
 }
