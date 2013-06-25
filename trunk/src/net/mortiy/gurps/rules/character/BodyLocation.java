@@ -1,4 +1,4 @@
-package net.mortiy.gurps.rules.combat;
+package net.mortiy.gurps.rules.character;
 
 
 /**
@@ -12,7 +12,7 @@ package net.mortiy.gurps.rules.combat;
  * less) vulnerable to specific damage
  * types. There are a few exceptions:
  */
-public enum HitLocation {
+public enum BodyLocation {
     Torso(0),
     Vitals(-3),
     Skull(-7),
@@ -20,14 +20,16 @@ public enum HitLocation {
     Face(-5),
     Neck(-5),
     Groin(-3),
-    Arm(-2),
-    Leg(-2),
+    LeftArm(-2),
+    RightArm(-2),
+    LeftLeg(-2),
+    RightLeg(-2),
     Hand(-4),
     Feet(-4);
 
     private int modifier;
 
-    private HitLocation(int modifier) {
+    private BodyLocation(int modifier) {
         this.modifier = modifier;
     }
 

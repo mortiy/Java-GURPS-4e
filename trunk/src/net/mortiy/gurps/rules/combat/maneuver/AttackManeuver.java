@@ -2,6 +2,7 @@ package net.mortiy.gurps.rules.combat.maneuver;
 
 import net.mortiy.gurps.Log;
 import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.character.BodyLocation;
 import net.mortiy.gurps.rules.combat.*;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
 import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
@@ -19,12 +20,19 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
     private Fighter targetFigher;
     private Weapon weapon;
     private Type attackType;
+    private BodyLocation bodyLocation;
+
 
     public AttackManeuver(Fighter targetFighter, Type attackType, Weapon weapon) {
+        this(targetFighter, attackType, weapon, BodyLocation.Torso);
+    }
+
+    public AttackManeuver(Fighter targetFighter, Type attackType, Weapon weapon, BodyLocation bodyLocation) {
         super(ManeuverType.Attack);
         this.targetFigher = targetFighter;
         this.attackType = attackType;
         this.weapon = weapon;
+        this.bodyLocation = bodyLocation;
     }
 
     @Override

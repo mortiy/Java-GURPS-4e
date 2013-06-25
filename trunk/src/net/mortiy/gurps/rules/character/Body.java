@@ -5,14 +5,32 @@ import java.util.List;
 
 public class Body {
     public enum Part {
-        Head,
-        Torso,
-        LeftHand,
-        RightHand,
-        LeftLeg,
-        RightLeg
+        Torso(0),
+        Vitals(-3),
+        Skull(-7),
+        Eye(-9),
+        Face(-5),
+        Neck(-5),
+        Groin(-3),
+        LeftArm(-2),
+        RightArm(-2),
+        LeftHand(-4),
+        RightHand(-4),
+        LeftLeg(-2),
+        RightLeg(-2),
+        Feet(-4);
 
+        private int modifier;
+
+        private Part(int modifier) {
+            this.modifier = modifier;
+        }
+
+        public int getModifier() {
+            return modifier;
+        }
     }
+
     float height;
     float weight;
     int sizeModifier;

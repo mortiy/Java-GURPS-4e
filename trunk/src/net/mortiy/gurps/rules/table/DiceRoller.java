@@ -2,10 +2,6 @@ package net.mortiy.gurps.rules.table;
 
 import net.mortiy.gurps.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 public class DiceRoller {
 
@@ -38,35 +34,7 @@ public class DiceRoller {
             return value;
         }
     }
-    public class DiceRollResult {
-        private int total = 0;
-        private List<Integer> rolls = new ArrayList<Integer>();
-        private List<Integer> modifiers = new ArrayList<Integer>();
 
-        DiceRollResult(Integer... modifiers) {
-            this.modifiers = Arrays.asList(modifiers);
-        }
-
-        private void addRoll(Integer roll){
-            rolls.add(roll);
-        }
-
-        public List<Integer> getRolls() {
-            return rolls;
-        }
-
-        public int getTotal(){
-            if(total == 0){
-                for(Integer i : rolls){
-                    total += i;
-                }
-                for(Integer modifier : modifiers){
-                    total += modifier;
-                }
-            }
-            return total;
-        }
-    }
     public DiceRollResult roll(Dice dice){
         return roll(1, dice, 0);
     }
@@ -75,9 +43,14 @@ public class DiceRoller {
         return roll(1, dice, modifiers);
     }
 
-    public DiceRollResult roll(RollFormula formula){
-        return roll(formula.getDiceQuantity(), Dice6D, formula.getModifier());
+    public DiceRollResult roll(RollFormula formula, Integer ... modifiers){
+        int modifier = formula.getModifier();
+        for(Integer m : modifiers){
+            modifier += m;
+        }
+        return roll(formula.getDiceQuantity(), Dice6D, modifier);
     }
+
 
     public DiceRollResult roll(int quantity, Dice dice, Integer... modifiers){
         DiceRollResult diceRollResult = new DiceRollResult(modifiers);
@@ -86,7 +59,7 @@ public class DiceRoller {
         }
         for(int i = 0; i < quantity; i++){
             int rollNumber = dice.roll();
-            diceRollResult.rolls.add(rollNumber);
+            diceRollResult.addRoll(rollNumber);
         }
 
         return diceRollResult;

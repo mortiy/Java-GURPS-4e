@@ -2,6 +2,7 @@ package net.mortiy.gurps.rules.combat;
 
 
 import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.equipment.ShieldItem;
 import net.mortiy.gurps.rules.equipment.weapon.MusclePoweredMeleeWeapon;
 import net.mortiy.gurps.rules.equipment.weapon.Weapon;
 import net.mortiy.gurps.rules.equipment.weapon.all.KnifeWeapon;
@@ -32,7 +33,7 @@ public class Defense {
     private void determineBestStrategy() {
         int bestStrategyLevel = 0;
         for (Strategy strategy : Strategy.values()) {
-            int strategyLevel = getStrategyLevel(strategy);
+            int strategyLevel = getDefenseStrategyLevel(strategy);
             //Log.i("Defense", String.format("'%s': %s = %d", fighter.getCharacter().getName(), strategy, strategyLevel));
             if (strategyLevel > bestStrategyLevel) {
                 bestStrategyLevel = strategyLevel;
@@ -42,7 +43,7 @@ public class Defense {
         }
     }
 
-    public static Strategy getStrategy(int strategyIndex) {
+    public static Strategy getDefenseStrategy(int strategyIndex) {
         return strategies[strategyIndex];
     }
 
@@ -50,23 +51,21 @@ public class Defense {
         return bestStrategy;
     }
 
+
     public int getBestStrategyLevel() {
-        return getStrategyLevel(bestStrategy);
+        return getDefenseStrategyLevel(bestStrategy);
     }
 
-    private int getStrategyLevel(Strategy strategy) {
+    public int getDefenseStrategyLevel(Strategy strategy) {
         Character character = fighter.getCharacter();
         int strategyLevel = 0;
         switch (strategy) {
             case Dodge:
-                // TODO: Sacrificial dodge
-                // TODO: Acrobatic dodge
-                // TODO: Vehicular dodge
+                // TODO: Sacrificial, Acrobatic, Vehicular dodges
                 strategyLevel = (int) character.getDodge().getValue();
                 break;
 
             case Block:
-                // TODO: Influence of equipment on blocking (e.g. Small Shield gives +1)
 
                 int blockSkillLevel = 0;
                 if (character.hasLearntSkill("Shield (Shield)")) {
@@ -78,9 +77,13 @@ public class Defense {
                     if (cloakSkillLevel > blockSkillLevel) {
                         blockSkillLevel = cloakSkillLevel;
                     }
-
                 }
-                strategyLevel = (int) Math.floor(blockSkillLevel / 2f + 3);
+                strategyLevel += (int) Math.floor(blockSkillLevel / 2f + 3);
+
+                if(character.getEquipment().hasEquipped(ShieldItem.class)){
+                    strategyLevel += 1;
+                }
+
                 break;
 
             case Parry:

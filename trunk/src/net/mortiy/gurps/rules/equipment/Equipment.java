@@ -30,10 +30,17 @@ public class Equipment extends Container {
 
     public boolean equipItem(Item item, Body.Part bodyPart){
         if(contains(item)){
+            if(item instanceof ArmorItem){
+                ArmorItem armorItem = (ArmorItem) item;
+                if(!armorItem.isSuitableFor(bodyPart)){
+                    Log.w("Equipment", String.format("'%s' can't wear '%s' on '%s'.", character.getName(), item.getName(), bodyPart));
+                    return false;
+                }
+            }
             equipment.put(bodyPart, item);
             return true;
         }
-        Log.w("Equipment", String.format("Character doesn't own '%s' to equip it.", item.getName()));
+        Log.w("Equipment", String.format("'%s' doesn't own '%s' to equip it.", character.getName(), item.getName()));
         return false;
     }
 
@@ -52,9 +59,10 @@ public class Equipment extends Container {
         if(equipment.containsKey(bodyPart)){
             equipment.remove(bodyPart);
             return true;
+        } else {
+            Log.w("Equipment", String.format("'%s' has nothing equipped on '%s'.", character.getName(), bodyPart.toString()));
+            return false;
         }
-        Log.w("Equipment", String.format("Character has nothing equipped on '%s'.", bodyPart.toString()));
-        return false;
     }
 
     public Item getEquipedItem(Body.Part bodyPart){

@@ -23,7 +23,6 @@ public class GameMap {
         public Point(double x, double y) {
             super(x, y);
         }
-
     }
 
     Map<MapToken, Point> tokens = new HashMap<>();

@@ -1,6 +1,7 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
+import net.mortiy.gurps.rules.table.DiceRollResult;
 import net.mortiy.gurps.rules.table.DiceRoller;
 import net.mortiy.gurps.rules.table.RollFormula;
 import net.mortiy.gurps.rules.table.rolls.SuccessRoll;
@@ -18,7 +19,7 @@ public class DiceRollerTest extends TestCase {
     public void testDiceRoller() throws Exception {
 
         final int NUMBER_OF_ROLLS = 10;
-        DiceRoller.DiceRollResult rollResult = diceRoller.roll(NUMBER_OF_ROLLS, DiceRoller.Dice6D);
+        DiceRollResult rollResult = diceRoller.roll(NUMBER_OF_ROLLS, DiceRoller.Dice6D);
         assertEquals("Check if RollResult contains correct number of rolls", NUMBER_OF_ROLLS, rollResult.getRolls().size());
 
         for(int i = 0, j = 1000; i < j; i++){

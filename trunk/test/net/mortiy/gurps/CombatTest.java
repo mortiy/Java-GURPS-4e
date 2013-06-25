@@ -10,8 +10,10 @@ import net.mortiy.gurps.rules.equipment.Equipment;
 import net.mortiy.gurps.rules.equipment.ShieldItem;
 import net.mortiy.gurps.rules.equipment.all.LargeShield;
 import net.mortiy.gurps.rules.equipment.all.SmallShield;
+import net.mortiy.gurps.rules.equipment.armor.ClothArmor;
 import net.mortiy.gurps.rules.equipment.weapon.Weapon;
 import net.mortiy.gurps.rules.equipment.weapon.all.ShortswordWeapon;
+import net.mortiy.gurps.rules.exceptions.NotEnoughCharacterPointsException;
 import net.mortiy.gurps.rules.map.GameMap;
 import net.mortiy.gurps.rules.skills.all.Shield;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.sword.Shortsword;
@@ -19,18 +21,20 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.sword.Shortsword;
 import java.util.List;
 
 /**
- * Combat test
+ * Combat tests
  */
 public class CombatTest extends TestCase {
 
-    public void testRulebookScenario(){
+    public void testRulebookScenario() throws NotEnoughCharacterPointsException {
 
         // Louis:
         Character louis = new Character(100);
-        louis.setName("Louis");
+        louis.setBasicAttribute(Attribute.Strength, 11);
+        louis.setName("Louis LeBlanc");
 
         louis.getEquipment().putAndEquipItem(new ShortswordWeapon(), Body.Part.RightHand);
 
+        // Louis has Shortsword-15, and there are no adverse conditions that would give him a skill penalty;
         louis.addSkill(new Shortsword(louis), 15);
 
         // Pierre:
@@ -38,11 +42,10 @@ public class CombatTest extends TestCase {
         pierre.setName("Pierre");
         pierre.getEquipment().putAndEquipItem(new ShortswordWeapon(), Body.Part.RightHand);
         pierre.getEquipment().putAndEquipItem(new SmallShield(), Body.Part.LeftHand);
-
+        pierre.getEquipment().putAndEquipItem(new ClothArmor(), Body.Part.Torso);
 
         pierre.addSkill(new Shield(pierre, Shield.Speciality.Shield), 12);
         pierre.addSkill(new Shortsword(pierre), 11);
-
 
         assertTrue(pierre.hasLearntSkill("Shield (Shield)"));
 
@@ -57,6 +60,11 @@ public class CombatTest extends TestCase {
         // Check that we have correct fighters:
         assertEquals(louis, louisFighter.getCharacter());
         assertEquals(pierre, pierreFighter.getCharacter());
+
+        // Pierre has a Dodge of 8, Shield-12 (giving him a Block of 9)
+        Defense piereDefense = pierreFighter.getDefense();
+        assertEquals(10, piereDefense.getDefenseStrategyLevel(Defense.Strategy.Block));
+        assertEquals(8, piereDefense.getDefenseStrategyLevel(Defense.Strategy.Parry));
 
         Defense.Strategy bestPierresDefenseStrategy = new Defense(pierreFighter).getBestStrategy();
         assertEquals("Ensure that <Block> is best defense strategy for Pierre", Defense.Strategy.Block, bestPierresDefenseStrategy);
@@ -73,6 +81,7 @@ public class CombatTest extends TestCase {
 
     /**
      * Test for available fighter moves in yards for given Combat Maneuver
+     *
      * @throws Exception
      */
     public void testMovement() throws Exception {
@@ -116,7 +125,7 @@ public class CombatTest extends TestCase {
         fighter.setManeuver(new FeintManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
+        fighter.setManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon(), AllOutAtackManeuver.MeleeOption.Determined));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
         fighter.setManeuver(new MoveAndAttackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
@@ -140,7 +149,7 @@ public class CombatTest extends TestCase {
         fighter.setManeuver(new WaitManeuver(new FeintManeuver()));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new WaitManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon())));
+        fighter.setManeuver(new WaitManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon(), AllOutAtackManeuver.MeleeOption.Determined)));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
 
@@ -236,11 +245,9 @@ public class CombatTest extends TestCase {
         combatManager.turn(); // Skip Fighters 2 turn;
 
         f1.setManeuver(new AttackManeuver(f2, AttackManeuver.Type.Melee, f1.getActiveWeapon()));
-        while(f2.getCharacter().getHitpoints().getCurrentValue() > 0){
-            FighterTurn fighterTurn = combatManager.turn();
-            fighterTurn.getManeuverResult();
-            f2.getCharacter().getHitpoints();
-            if(combatManager.isRoundOver()){
+        while (f2.getCharacter().getHitpoints().getCurrentValue() > 0) {
+            combatManager.turn();
+            if (combatManager.isRoundOver()) {
                 combatManager.startNewRound();
             }
         }
@@ -284,8 +291,6 @@ public class CombatTest extends TestCase {
 
         return new Combat(c1, c2, c3);
     }
-
-
 
 
 }
