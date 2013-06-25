@@ -2,7 +2,10 @@ package net.mortiy.gurps.rules.combat.maneuver;
 
 import net.mortiy.gurps.rules.combat.Fighter;
 import net.mortiy.gurps.rules.combat.Maneuver;
+import net.mortiy.gurps.rules.combat.ManeuverResult;
 import net.mortiy.gurps.rules.combat.ManeuverType;
+import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
+import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,5 +17,10 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
 public class FeintManeuver extends Maneuver {
     public FeintManeuver() {
         super(ManeuverType.Feint);
+    }
+
+    @Override
+    public ManeuverResult resolve(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

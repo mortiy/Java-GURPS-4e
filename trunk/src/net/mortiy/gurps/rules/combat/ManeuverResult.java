@@ -2,7 +2,7 @@ package net.mortiy.gurps.rules.combat;
 
 public class ManeuverResult {
 
-    enum Status {
+    public enum Status {
         Success,
         Failure
     }

@@ -22,9 +22,7 @@ import java.util.List;
 public class Fighter implements GameMap.MapToken {
     private Character character;
     private Maneuver activeManeuver;
-    private Fighter targetFighter;
     private Defense defense;
-    private Weapon activeWeapon;
     private boolean isActive = true;
     private int usedMoves = 0;
 

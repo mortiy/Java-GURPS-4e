@@ -1,8 +1,12 @@
 package net.mortiy.gurps.rules.combat.maneuver;
 
+import net.mortiy.gurps.Log;
 import net.mortiy.gurps.rules.combat.Fighter;
 import net.mortiy.gurps.rules.combat.Maneuver;
+import net.mortiy.gurps.rules.combat.ManeuverResult;
 import net.mortiy.gurps.rules.combat.ManeuverType;
+import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
+import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,5 +18,11 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
 public class DoNothingManeuver extends Maneuver {
     public DoNothingManeuver() {
         super(ManeuverType.DoNothing);
+    }
+
+    @Override
+    public ManeuverResult resolve(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
+        Log.i("Do Nothing Maneuver", "%s doesn nothing.", fighter.getCharacter().getName());
+        return new ManeuverResult(ManeuverResult.Status.Success);
     }
 }

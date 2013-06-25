@@ -1,9 +1,8 @@
 package net.mortiy.gurps.rules.combat.maneuver;
 
-import net.mortiy.gurps.rules.combat.Defense;
-import net.mortiy.gurps.rules.combat.Fighter;
-import net.mortiy.gurps.rules.combat.Maneuver;
-import net.mortiy.gurps.rules.combat.ManeuverType;
+import net.mortiy.gurps.rules.combat.*;
+import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
+import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,5 +43,11 @@ public class AllOutDefenseManeuver extends Maneuver {
 
     public Defense.Strategy getDefenseStrategy() {
         return defenseStrategy;
+    }
+
+
+    @Override
+    public ManeuverResult resolve(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

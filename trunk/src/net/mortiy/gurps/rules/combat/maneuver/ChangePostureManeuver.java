@@ -1,9 +1,13 @@
 package net.mortiy.gurps.rules.combat.maneuver;
 
+import net.mortiy.gurps.Log;
 import net.mortiy.gurps.rules.Character;
 import net.mortiy.gurps.rules.combat.Fighter;
 import net.mortiy.gurps.rules.combat.Maneuver;
+import net.mortiy.gurps.rules.combat.ManeuverResult;
 import net.mortiy.gurps.rules.combat.ManeuverType;
+import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
+import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,13 +17,17 @@ import net.mortiy.gurps.rules.combat.ManeuverType;
  * To change this template use File | Settings | File Templates.
  */
 public class ChangePostureManeuver extends Maneuver {
-    Character.Posture posture;
+    private Character.Posture posture;
     public ChangePostureManeuver(Character.Posture posture) {
         super(ManeuverType.ChangePosture);
         this.posture = posture;
     }
 
-    public Character.Posture getPosture() {
-        return posture;
+    @Override
+    public ManeuverResult resolve(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
+        Log.i("Change Posture Maneuver", "'%s' changed posture to '%s'", fighter.getCharacter().getName(), posture);
+        fighter.getCharacter().changePosture(posture);
+        fighter.setManeuver(new DoNothingManeuver());
+        return new ManeuverResult(ManeuverResult.Status.Success);
     }
 }
