@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public class Equipment extends Container {
 
-
     public interface ItemType{};
 
     private Character character;

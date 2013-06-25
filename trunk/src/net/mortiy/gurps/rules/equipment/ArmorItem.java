@@ -2,18 +2,11 @@ package net.mortiy.gurps.rules.equipment;
 
 import net.mortiy.gurps.rules.TechLevel;
 import net.mortiy.gurps.rules.character.Body;
-import net.mortiy.gurps.rules.character.BodyLocation;
+import net.mortiy.gurps.rules.combat.Damage;
 
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: oleksandr.sidko
- * Date: 25.06.13
- * Time: 23:10
- * To change this template use File | Settings | File Templates.
- */
 public class ArmorItem extends Item {
 
     protected DamageResistance damageResistance;
@@ -25,8 +18,8 @@ public class ArmorItem extends Item {
         this.damageResistance = damageResistance;
     }
 
-    public DamageResistance getDamageResistance(){
-        return damageResistance;
+    public int getDamageResistance(Damage.Type damageType){
+        return damageResistance.getResistance(damageType);
     }
     public boolean isSuitableFor(Body.Part bodyPart){
         return bodyLocations.contains(bodyPart);

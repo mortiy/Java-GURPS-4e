@@ -14,6 +14,7 @@ import net.mortiy.gurps.rules.character.Build;
 import net.mortiy.gurps.rules.character.Encumbrance;
 import net.mortiy.gurps.rules.character.Size;
 import net.mortiy.gurps.rules.combat.Damage;
+import net.mortiy.gurps.rules.equipment.ArmorItem;
 import net.mortiy.gurps.rules.equipment.Equipment;
 import net.mortiy.gurps.rules.equipment.Item;
 import net.mortiy.gurps.rules.exceptions.NotEnoughCharacterPointsException;
@@ -751,8 +752,13 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
      *
      * @param damageType Damage Type
      */
-    public int getResistance(Damage.Type damageType) {
-        return 1;
+    public int getResistance(Body.Part bodyPart, Damage.Type damageType) {
+        Item item = getEquipment().getEquipedItem(bodyPart);
+        if(item instanceof ArmorItem){
+            ArmorItem armorItem = (ArmorItem) item;
+            return armorItem.getDamageResistance(damageType);
+        }
+        return 0;
     }
 
 

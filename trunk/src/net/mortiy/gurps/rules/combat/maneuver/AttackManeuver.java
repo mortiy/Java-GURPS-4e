@@ -2,7 +2,7 @@ package net.mortiy.gurps.rules.combat.maneuver;
 
 import net.mortiy.gurps.Log;
 import net.mortiy.gurps.rules.Character;
-import net.mortiy.gurps.rules.character.BodyLocation;
+import net.mortiy.gurps.rules.character.Body;
 import net.mortiy.gurps.rules.combat.*;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
 import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
@@ -20,19 +20,19 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
     private Fighter targetFigher;
     private Weapon weapon;
     private Type attackType;
-    private BodyLocation bodyLocation;
+    private Body.Part bodyPart;
 
 
     public AttackManeuver(Fighter targetFighter, Type attackType, Weapon weapon) {
-        this(targetFighter, attackType, weapon, BodyLocation.Torso);
+        this(targetFighter, attackType, weapon, Body.Part.Torso);
     }
 
-    public AttackManeuver(Fighter targetFighter, Type attackType, Weapon weapon, BodyLocation bodyLocation) {
+    public AttackManeuver(Fighter targetFighter, Type attackType, Weapon weapon, Body.Part bodyPart) {
         super(ManeuverType.Attack);
         this.targetFigher = targetFighter;
         this.attackType = attackType;
         this.weapon = weapon;
-        this.bodyLocation = bodyLocation;
+        this.bodyPart = bodyPart;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
                     case CriticalSuccess:
                         // Critical hit can't be defended,
                         // so no defence roll by target fighter performed:
-                        targetFighter.injure(fightersDamage);
+                        targetFighter.injure(bodyPart, fightersDamage);
                         return new ManeuverResult(ManeuverResult.Status.Success);
                     case Success:
 
@@ -72,7 +72,7 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
                                 break;
                             case CriticalFailure:
                             case Failure:
-                                targetFighter.injure(fightersDamage);
+                                targetFighter.injure(bodyPart, fightersDamage);
                                 break;
                         }
                         break;

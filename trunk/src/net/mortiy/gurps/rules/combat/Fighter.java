@@ -175,12 +175,12 @@ public class Fighter implements GameMap.MapToken {
      DR at all. Reduce the victim’s current HP total by the injury sustained.
      * @param damage
      */
-    public void injure(Damage damage) {
+    public void injure(Body.Part bodyPart, Damage damage) {
         // TODO: Use "armor divisor"
         // TODO: Use target fighter DR
 
         // Calc penetrating damage:
-        int penetratingDamage = damage.getDamageAmount() - character.getResistance(damage.getDamageType());
+        int penetratingDamage = damage.getDamageAmount() - character.getResistance(bodyPart, damage.getDamageType());
 
         // Calc wounding modifier:
         float woundingModifier = 1.0f;
