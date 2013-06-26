@@ -1,5 +1,5 @@
 
-package net.mortiy.gurps.game;
+package net.mortiy.gurps.game.twl;
 
 import de.matthiasmann.twl.ActionMap;
 import de.matthiasmann.twl.Widget;

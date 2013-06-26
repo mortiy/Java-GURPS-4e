@@ -1,4 +1,4 @@
-package net.mortiy.gurps.game.map;
+package net.mortiy.gurps.game.map.hex;
 
 /**
 * Created with IntelliJ IDEA.

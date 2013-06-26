@@ -18,14 +18,14 @@ import java.util.List;
 public class MusclePoweredMeleeWeapon extends MeleeWeapon {
 
     public MusclePoweredMeleeWeapon(
-            String name, Class requiredSkill[], TechLevel.Level techLevel,
+            String name, Class requiredSkill[], TechLevel techLevel,
             MusclePoweredMeleeWeaponMode weaponModes[],
             int cost, float weight, int minStrength) {
         this(name, requiredSkill, techLevel, Arrays.asList(weaponModes), cost, weight, minStrength);
     }
 
     public MusclePoweredMeleeWeapon(
-            String name, Class requiredSkill[], TechLevel.Level techLevel,
+            String name, Class requiredSkill[], TechLevel techLevel,
             List<? extends WeaponMode> damageTypes,
             int cost, float weight, int minStrength) {
 

@@ -86,26 +86,31 @@ public class CombatTest extends TestCase {
         CombatManager combatManager = new CombatManager(combat);
 
         // Prepare weapons:
-        louisFighter.setManeuver(new ReadyManeuver(louisFighter.getActiveWeapon()));
-        pierreFighter.setManeuver(new ReadyManeuver(pierreFighter.getActiveWeapon()));
+        louisFighter.setNextManeuver(new ReadyManeuver(louisFighter.getActiveWeapon()));
+        combatManager.turn();
+        pierreFighter.setNextManeuver(new ReadyManeuver(pierreFighter.getActiveWeapon()));
         combatManager.turn();
 
         combatManager.startNewRound();
 
         // Prepare weapons:
-        louisFighter.setManeuver(new AttackManeuver(pierreFighter, AttackManeuver.Type.Melee, pierreFighter.getActiveWeapon()));
-        pierreFighter.setManeuver(new AttackManeuver(louisFighter, AttackManeuver.Type.Melee, pierreFighter.getActiveWeapon()));
-
+        louisFighter.setNextManeuver(new AttackManeuver(pierreFighter, AttackManeuver.Type.Melee, pierreFighter.getActiveWeapon()));
+        combatManager.turn();
+        pierreFighter.setNextManeuver(new AttackManeuver(louisFighter, AttackManeuver.Type.Melee, pierreFighter.getActiveWeapon()));
         combatManager.turn();
     }
 
+
+    public void testCombatMovement() throws Exception{
+
+    }
 
     /**
      * Test for available fighter moves in yards for given Combat Maneuver
      *
      * @throws Exception
      */
-    public void testMovement() throws Exception {
+    public void testManeuverAvailableMoves() throws Exception {
 
         Character c1 = new Character(100);
         c1.setName("Alpha");
@@ -124,53 +129,52 @@ public class CombatTest extends TestCase {
         Fighter fighter = fighters.get(0);
         Fighter enemyFighter = fighters.get(1);
 
-
-        fighter.setManeuver(new DoNothingManeuver());
+        fighter.setNextManeuver(new DoNothingManeuver());
         assertEquals(0, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new MoveManeuver());
+        fighter.setNextManeuver(new MoveManeuver());
         assertEquals(basicMove, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new ChangePostureManeuver(Character.Posture.Crawling));
+        fighter.setNextManeuver(new ChangePostureManeuver(Character.Posture.Crawling));
         assertEquals(0, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new AimManeuver());
+        fighter.setNextManeuver(new AimManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new EvaluateManeuver());
+        fighter.setNextManeuver(new EvaluateManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new AttackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
+        fighter.setNextManeuver(new AttackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new FeintManeuver());
+        fighter.setNextManeuver(new FeintManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon(), AllOutAtackManeuver.MeleeOption.Determined));
+        fighter.setNextManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon(), AllOutAtackManeuver.MeleeOption.Determined));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
-        fighter.setManeuver(new MoveAndAttackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
+        fighter.setNextManeuver(new MoveAndAttackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon()));
         assertEquals(basicMove, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Parry));
+        fighter.setNextManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Parry));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Dodge));
+        fighter.setNextManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.IncreasedDefense, Defense.Strategy.Dodge));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
-        fighter.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
+        fighter.setNextManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new ConcentrateManeuver());
+        fighter.setNextManeuver(new ConcentrateManeuver());
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new ReadyManeuver(fighter.getActiveWeapon()));
+        fighter.setNextManeuver(new ReadyManeuver(fighter.getActiveWeapon()));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new WaitManeuver(new FeintManeuver()));
+        fighter.setNextManeuver(new WaitManeuver(new FeintManeuver()));
         assertEquals(fighterStep, fighter.getAvailableMoves());
 
-        fighter.setManeuver(new WaitManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon(), AllOutAtackManeuver.MeleeOption.Determined)));
+        fighter.setNextManeuver(new WaitManeuver(new AllOutAtackManeuver(enemyFighter, AttackManeuver.Type.Melee, fighter.getActiveWeapon(), AllOutAtackManeuver.MeleeOption.Determined)));
         assertEquals((int) Math.floor(basicMove / 2f), fighter.getAvailableMoves());
 
 
@@ -183,13 +187,13 @@ public class CombatTest extends TestCase {
         Fighter betaSmart = combat.getFighter(1);
         Fighter gammaStrong = combat.getFighter(2);
 
-        alphaFast.setManeuver(new MoveManeuver());
+        alphaFast.setNextManeuver(new MoveManeuver());
         assertEquals(Defense.Strategy.Dodge, alphaFast.getDefense().getBestStrategy());
 
-        betaSmart.setManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
+        betaSmart.setNextManeuver(new AllOutDefenseManeuver(AllOutDefenseManeuver.Type.DoubleDefense));
         assertEquals(Defense.Strategy.Block, betaSmart.getDefense().getBestStrategy());
 
-        gammaStrong.setManeuver(new AttackManeuver(gammaStrong, AttackManeuver.Type.Ranged, betaSmart.getActiveWeapon()));
+        gammaStrong.setNextManeuver(new AttackManeuver(gammaStrong, AttackManeuver.Type.Ranged, betaSmart.getActiveWeapon()));
         assertEquals(Defense.Strategy.Block, gammaStrong.getDefense().getBestStrategy());
 
 
@@ -260,12 +264,12 @@ public class CombatTest extends TestCase {
         Fighter f1 = combat.getFighter(0);
         Fighter f2 = combat.getFighter(1);
 
-        f1.setManeuver(new ReadyManeuver(f1.getActiveWeapon()));
+        f1.setNextManeuver(new ReadyManeuver(f1.getActiveWeapon()));
         combatManager.turn();
         assertTrue("Fighters 1 active weapon should be ready now", f1.getReadyList().contains(f1.getActiveWeapon()));
         combatManager.turn(); // Skip Fighters 2 turn;
 
-        f1.setManeuver(new AttackManeuver(f2, AttackManeuver.Type.Melee, f1.getActiveWeapon()));
+        f1.setNextManeuver(new AttackManeuver(f2, AttackManeuver.Type.Melee, f1.getActiveWeapon()));
         while (f2.getCharacter().getHitpoints().getCurrentValue() > 0) {
             combatManager.turn();
             if (combatManager.isRoundOver()) {

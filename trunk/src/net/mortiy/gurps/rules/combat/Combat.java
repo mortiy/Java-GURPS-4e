@@ -6,15 +6,6 @@ import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
 import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
 import net.mortiy.gurps.rules.combat.maneuver.*;
-import net.mortiy.gurps.rules.equipment.Item;
-import net.mortiy.gurps.rules.equipment.weapon.MeleeWeapon;
-import net.mortiy.gurps.rules.equipment.weapon.MusclePoweredMeleeWeapon;
-import net.mortiy.gurps.rules.equipment.weapon.Weapon;
-import net.mortiy.gurps.rules.equipment.weapon.statistics.MusclePoweredDamage;
-import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.table.DiceRoller;
-import net.mortiy.gurps.rules.table.RollFormula;
-import net.mortiy.gurps.rules.table.rolls.SuccessRoll;
 
 import java.util.*;
 
@@ -49,7 +40,7 @@ public class Combat {
          */
         for (Character character : characters) {
             Fighter fighter = new Fighter(character);
-            fighter.setManeuver(new DoNothingManeuver());
+            fighter.setNextManeuver(new DoNothingManeuver());
             this.fighters.add(fighter);
         }
     }
@@ -87,7 +78,7 @@ public class Combat {
      *
      */
     ManeuverResult resolveManeuver(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
-        Maneuver maneuver = fighter.getActiveManeuver();
+        Maneuver maneuver = fighter.getNextManeuver();
 
         Character fighterCharacter = fighter.getCharacter();
         String fighterName = fighterCharacter.getName();

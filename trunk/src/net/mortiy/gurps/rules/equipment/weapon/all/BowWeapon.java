@@ -14,7 +14,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class BowWeapon extends RangedWeapon {
-    public BowWeapon(String name, TechLevel.Level techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
+    public BowWeapon(String name, TechLevel techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
         super(name, techLevel, damageTypes, cost, weight);
     }
 }

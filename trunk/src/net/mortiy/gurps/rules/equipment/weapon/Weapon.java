@@ -21,7 +21,7 @@ public abstract class Weapon extends Item {
     protected int minStrength;
 
 
-    public Weapon(String name, TechLevel.Level techLevel, List<? extends WeaponMode> weaponModes, float cost, float weight) {
+    public Weapon(String name, TechLevel techLevel, List<? extends WeaponMode> weaponModes, float cost, float weight) {
         super(name, techLevel, cost, weight);
         this.weaponModes = weaponModes;
         activeWeaponMode = weaponModes.get(0);

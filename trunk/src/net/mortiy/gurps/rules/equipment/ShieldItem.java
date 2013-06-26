@@ -22,7 +22,7 @@ public class ShieldItem extends Item {
     protected Type shieldType;
     protected FirearmRangedWeapon.Legality legality;
 
-    public ShieldItem(String name, TechLevel.Level techLevel, Type shieldType, int defenseBonus, FirearmRangedWeapon.Legality legality, float cost, float weight) {
+    public ShieldItem(String name, TechLevel techLevel, Type shieldType, int defenseBonus, FirearmRangedWeapon.Legality legality, float cost, float weight) {
         super(name, techLevel, cost, weight);
         this.shieldType = shieldType;
         this.defenseBonus = defenseBonus;

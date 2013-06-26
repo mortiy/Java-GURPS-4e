@@ -1,5 +1,7 @@
 package net.mortiy.gurps.game.map;
 
+import net.mortiy.gurps.game.map.hex.Hex;
+import net.mortiy.gurps.game.map.hex.HexMap;
 import net.mortiy.gurps.rules.map.GameMap;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Input;

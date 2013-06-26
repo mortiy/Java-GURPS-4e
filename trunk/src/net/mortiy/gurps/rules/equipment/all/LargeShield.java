@@ -13,6 +13,6 @@ import net.mortiy.gurps.rules.equipment.weapon.FirearmRangedWeapon;
  */
 public class LargeShield extends ShieldItem {
     public LargeShield() {
-        super("Large Shield", TechLevel.Level.TL0, Type.Shield, 3, FirearmRangedWeapon.Legality.LC4, 90, 25);
+        super("Large Shield", TechLevel.TL0, Type.Shield, 3, FirearmRangedWeapon.Legality.LC4, 90, 25);
     }
 }

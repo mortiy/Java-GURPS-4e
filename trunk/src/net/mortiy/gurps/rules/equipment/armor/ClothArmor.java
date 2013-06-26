@@ -11,7 +11,7 @@ public class ClothArmor extends ArmorItem {
     public ClothArmor() {
         super(
                 "Cloth Armor",
-                TechLevel.Level.TL0,
+                TechLevel.TL0,
                 new Body.Part[]{ Body.Part.Torso, Body.Part.Groin },
                 new DamageResistance(1),  // DR
                 30, // Cost

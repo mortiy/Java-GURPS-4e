@@ -140,7 +140,7 @@ public class CharacterTest extends TestCase {
          & ISWAT trainers corrected this deficiency. He currently functions at TL8,
          & which is standard in the Infinite Worlds setting. The cost to be at the campaign-average tech level is 0 points.
          */
-        dai.setTechLevel(TechLevel.Level.TL8);
+        dai.setTechLevel(TechLevel.TL8);
 
         /**
          * Dai is familiar with Yrth’s culture and knows one of its languages:

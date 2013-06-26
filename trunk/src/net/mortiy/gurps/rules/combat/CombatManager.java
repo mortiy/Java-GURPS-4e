@@ -22,7 +22,6 @@ public class CombatManager {
     protected CombatState combatState;
     protected CombatLogger combatLogger;
 
-    protected OnPauseListener onPauseListener;
     protected Iterator<Fighter> fighterIterator;
 
 
@@ -33,9 +32,6 @@ public class CombatManager {
         startNewRound();
     }
 
-    public void setOnPauseListener(OnPauseListener onPauseListener) {
-        this.onPauseListener = onPauseListener;
-    }
 
     public FighterTurn turn() throws FighterHasNoManueverException, ImpossibleManeuverException, RoundIsOverException, IsNotReadyException {
 
@@ -44,7 +40,6 @@ public class CombatManager {
         }
 
         Fighter currentFighter = fighterIterator.next();
-        FighterTurn fighterTurn;
 
         combatState.setCurrentFighter(currentFighter);
 
@@ -52,12 +47,15 @@ public class CombatManager {
             return new FighterTurn(currentFighter, new DoNothingManeuver());
         }
 
+        FighterTurn fighterTurn;
+
         if (currentFighter.hasManeuver()) {
-            fighterTurn = new FighterTurn(currentFighter, currentFighter.getActiveManeuver());
+            fighterTurn = new FighterTurn(currentFighter, currentFighter.getNextManeuver());
 
             // Fighter executes maneuver:
             ManeuverResult maneuverResult = combat.resolveManeuver(currentFighter);
             fighterTurn.setManeuverResult(maneuverResult);
+
         } else {
             throw new FighterHasNoManueverException(String.format("Fighter '%s' requires maneuver. ", currentFighter.getCharacter().getName()));
         }
@@ -70,7 +68,7 @@ public class CombatManager {
      */
     public void startNewRound() {
         combatState.newRound();
-        _log("[Round #%d]", combatState.getRound());
+        _log("============== [Round #%d] =========================", combatState.getRound());
         fighterIterator = combat.getFighters().listIterator();
     }
 

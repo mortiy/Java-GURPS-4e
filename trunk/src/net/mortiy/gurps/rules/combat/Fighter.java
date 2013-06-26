@@ -6,7 +6,6 @@ import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.character.Body;
 import net.mortiy.gurps.rules.combat.maneuver.AllOutDefenseManeuver;
 import net.mortiy.gurps.rules.combat.maneuver.WaitManeuver;
-import net.mortiy.gurps.rules.equipment.Item;
 import net.mortiy.gurps.rules.equipment.TwoHanded;
 import net.mortiy.gurps.rules.equipment.all.LargeShield;
 import net.mortiy.gurps.rules.equipment.weapon.Weapon;
@@ -21,7 +20,7 @@ import java.util.List;
  */
 public class Fighter implements GameMap.MapToken {
     private Character character;
-    private Maneuver activeManeuver;
+    private Maneuver nextManeuver;
     private Defense defense;
     private boolean isActive = true;
     private int usedMoves = 0;
@@ -37,12 +36,12 @@ public class Fighter implements GameMap.MapToken {
         return character;
     }
 
-    public void setManeuver(Maneuver maneuver) {
-        this.activeManeuver = maneuver;
+    public void setNextManeuver(Maneuver maneuver) {
+        this.nextManeuver = maneuver;
     }
 
-    public Maneuver getActiveManeuver() {
-        return activeManeuver;
+    public Maneuver getNextManeuver() {
+        return nextManeuver;
     }
 
     public Defense getDefense() {
@@ -54,7 +53,7 @@ public class Fighter implements GameMap.MapToken {
     }
 
     public boolean hasManeuver() {
-        return activeManeuver != null;
+        return nextManeuver != null;
     }
 
     public boolean isActive() {
@@ -65,12 +64,12 @@ public class Fighter implements GameMap.MapToken {
         isActive = active;
     }
 
-    public void reset(){
+    public void resetMoves(){
         usedMoves = 0;
     }
 
     public int getAvailableMoves(){
-        return getAvailableMovesForManeuver(activeManeuver);
+        return getAvailableMovesForManeuver(nextManeuver);
     }
 
     private int getAvailableMovesForManeuver(Maneuver maneuver){
@@ -121,8 +120,7 @@ public class Fighter implements GameMap.MapToken {
                 totalMoves = (int) Math.floor(basicMove / 2f);
                 break;
             case MoveAndAttack:
-                // TODO: -2 on any rolls the GM required to avoid falling,
-                // tripping over obstacles, etc.
+                // TODO: -2 on any rolls the GM required to avoid falling, tripping over obstacles, etc.
                 totalMoves = basicMove;
                 break;
             case Wait:

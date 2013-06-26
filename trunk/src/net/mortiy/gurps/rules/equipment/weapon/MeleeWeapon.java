@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class MeleeWeapon extends Weapon {
 
-    public MeleeWeapon(String name, TechLevel.Level techLevel, List<? extends WeaponMode> weaponModes, float cost, float weight) {
+    public MeleeWeapon(String name, TechLevel techLevel, List<? extends WeaponMode> weaponModes, float cost, float weight) {
         super(name, techLevel, weaponModes, cost, weight);
     }
 

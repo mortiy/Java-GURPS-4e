@@ -1,6 +1,7 @@
 package net.mortiy.gurps.game;
 
 import net.mortiy.gurps.game.states.map.TacticalMapState;
+import net.mortiy.gurps.game.twl.TWLStateBasedGame;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;

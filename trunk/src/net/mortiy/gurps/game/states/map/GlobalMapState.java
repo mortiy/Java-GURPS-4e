@@ -1,6 +1,6 @@
 package net.mortiy.gurps.game.states.map;
 
-import net.mortiy.gurps.game.BasicTWLGameState;
+import net.mortiy.gurps.game.twl.BasicTWLGameState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;

@@ -12,6 +12,6 @@ import net.mortiy.gurps.rules.equipment.Item;
  */
 public class Money extends Item {
     public Money() {
-        super("Money", TechLevel.Level.TL0, 1, 0);
+        super("Money", TechLevel.TL0, 1, 0);
     }
 }

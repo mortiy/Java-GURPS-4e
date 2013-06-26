@@ -1,4 +1,4 @@
-package net.mortiy.gurps.game.map;
+package net.mortiy.gurps.game.map.hex;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Graphics;

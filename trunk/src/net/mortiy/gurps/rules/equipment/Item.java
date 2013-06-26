@@ -11,13 +11,13 @@ import net.mortiy.gurps.rules.combat.Preparable;
  * To change this template use File | Settings | File Templates.
  */
 public class Item implements Preparable {
-    protected TechLevel.Level techLevel;
+    protected TechLevel techLevel;
     protected float weight = 0f;
     protected float cost = 0f;
     protected float size = 0f;
     protected String name;
 
-    public Item(String name, TechLevel.Level techLevel, float cost, float weight) {
+    public Item(String name, TechLevel techLevel, float cost, float weight) {
         this.name = name;
         this.techLevel = techLevel;
         this.cost = cost;

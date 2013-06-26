@@ -8,7 +8,6 @@ import net.mortiy.gurps.rules.utils.Converter;
  * User: oleksandr.sidko
  * Date: 09.12.12
  * Time: 19:22
- * To change this template use File | Settings | File Templates.
  */
 public class ConverterTest extends TestCase {
     public void testConverter() throws Exception {

@@ -13,6 +13,6 @@ import net.mortiy.gurps.rules.equipment.weapon.FirearmRangedWeapon;
  */
 public class SmallShield extends ShieldItem {
     public SmallShield() {
-        super("Small Shield", TechLevel.Level.TL0, Type.Shield, 1, FirearmRangedWeapon.Legality.LC4, 40, 8);
+        super("Small Shield", TechLevel.TL0, Type.Shield, 1, FirearmRangedWeapon.Legality.LC4, 40, 8);
     }
 }

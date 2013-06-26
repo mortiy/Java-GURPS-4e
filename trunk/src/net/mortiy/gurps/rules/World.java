@@ -15,11 +15,11 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class World {
-    TechLevel.Level techLevel;
+    TechLevel techLevel;
     private List<Character> characters = new ArrayList<Character>();
     private static Time time = Time.getInstance();
 
-    public World(TechLevel.Level techLevel) {
+    public World(TechLevel techLevel) {
         this.techLevel = techLevel;
     }
 
@@ -46,7 +46,7 @@ public class World {
         if(character.hasTrait("Wealth")){
             wealthMultiplier = ((Wealth)character.getTrait("Wealth")).getWealthMultiplier();
         }
-        int startingWealth = Math.round(TechLevel.getStartingWealth(techLevel) * wealthMultiplier);
+        int startingWealth = Math.round(techLevel.getStartingWealth() * wealthMultiplier);
         // Put corresponding amount of money into his equipment
         character.getEquipment().putItem(new Money(), startingWealth);
 

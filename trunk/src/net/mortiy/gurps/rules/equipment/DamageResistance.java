@@ -7,6 +7,7 @@ import java.util.Map;
 
 /**
  * Represents armor's damage resistance (p. 282)
+ * TODO: Improve resistance handling.
  */
 public class DamageResistance {
     protected Map<Damage.Type, Integer> damageResistances = new HashMap<>();

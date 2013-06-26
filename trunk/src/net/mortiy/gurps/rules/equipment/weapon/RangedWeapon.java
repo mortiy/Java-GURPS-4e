@@ -52,7 +52,7 @@ public class RangedWeapon extends Weapon {
 
     protected  int bulk;
 
-    public RangedWeapon(String name, TechLevel.Level techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
+    public RangedWeapon(String name, TechLevel techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
         super(name, techLevel, damageTypes, cost, weight);
     }
 

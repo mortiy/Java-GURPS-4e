@@ -1,4 +1,4 @@
-package net.mortiy.gurps.game;
+package net.mortiy.gurps.game.twl;
 
 import de.matthiasmann.twl.DesktopArea;
 import de.matthiasmann.twl.Event;

@@ -1,5 +1,7 @@
 package net.mortiy.gurps.game.map;
 
+import net.mortiy.gurps.game.map.hex.HexMap;
+import net.mortiy.gurps.game.map.hex.HexPoint;
 import org.newdawn.slick.util.pathfinding.Path;
 
 import java.util.HashMap;

@@ -24,11 +24,11 @@ public class FirearmRangedWeapon extends RangedWeapon {
     protected Legality legalityClass;
     protected int recoil;
 
-    public FirearmRangedWeapon(String name, TechLevel.Level techLevel, WeaponMode damageTypes[], float cost, float weight) {
+    public FirearmRangedWeapon(String name, TechLevel techLevel, WeaponMode damageTypes[], float cost, float weight) {
         this(name, techLevel, Arrays.asList(damageTypes), cost, weight);
     }
 
-    public FirearmRangedWeapon(String name, TechLevel.Level techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
+    public FirearmRangedWeapon(String name, TechLevel techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
         super(name, techLevel, damageTypes, cost, weight);
     }
 

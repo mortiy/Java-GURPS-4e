@@ -27,7 +27,7 @@ public class ChangePostureManeuver extends Maneuver {
     public ManeuverResult resolve(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
         Log.i("Change Posture Maneuver", "'%s' changed posture to '%s'", fighter.getCharacter().getName(), posture);
         fighter.getCharacter().changePosture(posture);
-        fighter.setManeuver(new DoNothingManeuver());
+        fighter.setNextManeuver(new DoNothingManeuver());
         return new ManeuverResult(ManeuverResult.Status.Success);
     }
 }

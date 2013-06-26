@@ -12,7 +12,7 @@ public class ArmorItem extends Item {
     protected DamageResistance damageResistance;
     protected List<Body.Part> bodyLocations;
 
-    public ArmorItem(String name, TechLevel.Level techLevel, Body.Part bodyLocations[], DamageResistance damageResistance, float cost, float weight) {
+    public ArmorItem(String name, TechLevel techLevel, Body.Part bodyLocations[], DamageResistance damageResistance, float cost, float weight) {
         super(name, techLevel, cost, weight);
         this.bodyLocations = Arrays.asList(bodyLocations);
         this.damageResistance = damageResistance;

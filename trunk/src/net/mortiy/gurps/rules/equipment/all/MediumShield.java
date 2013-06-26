@@ -13,6 +13,6 @@ import net.mortiy.gurps.rules.equipment.weapon.FirearmRangedWeapon;
  */
 public class MediumShield extends ShieldItem {
     public MediumShield() {
-        super("Medium Shield", TechLevel.Level.TL0, Type.Shield, 2, FirearmRangedWeapon.Legality.LC4, 60, 15);
+        super("Medium Shield", TechLevel.TL0, Type.Shield, 2, FirearmRangedWeapon.Legality.LC4, 60, 15);
     }
 }

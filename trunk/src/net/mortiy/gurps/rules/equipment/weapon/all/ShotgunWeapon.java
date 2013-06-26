@@ -13,7 +13,7 @@ import net.mortiy.gurps.rules.skills.all.Shotgun;
  * To change this template use File | Settings | File Templates.
  */
 public class ShotgunWeapon extends FirearmRangedWeapon {
-    public ShotgunWeapon(String name, TechLevel.Level techLevel, WeaponMode weaponDamage, float cost, float weight) {
+    public ShotgunWeapon(String name, TechLevel techLevel, WeaponMode weaponDamage, float cost, float weight) {
         super(name, techLevel, new WeaponMode[] {weaponDamage}, cost, weight);
         requiredSkills = new Class[] { Shotgun.class };
     }

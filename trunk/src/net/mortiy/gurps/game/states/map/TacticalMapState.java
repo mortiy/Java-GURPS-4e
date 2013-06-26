@@ -10,8 +10,12 @@ package net.mortiy.gurps.game.states.map;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.ResizableFrame;
-import net.mortiy.gurps.game.BasicTWLGameState;
-import net.mortiy.gurps.game.RootPane;
+import net.mortiy.gurps.game.map.hex.Hex;
+import net.mortiy.gurps.game.map.hex.HexMap;
+import net.mortiy.gurps.game.map.hex.HexPathfinder;
+import net.mortiy.gurps.game.map.hex.HexPoint;
+import net.mortiy.gurps.game.twl.BasicTWLGameState;
+import net.mortiy.gurps.game.twl.RootPane;
 import net.mortiy.gurps.game.map.*;
 import net.mortiy.gurps.game.states.inventory.InventoryPanel;
 import net.mortiy.gurps.rules.Character;

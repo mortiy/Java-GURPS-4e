@@ -20,7 +20,7 @@ public class ShortswordWeapon extends MusclePoweredMeleeWeapon {
         super(
                 "Shortsword",                         // Weapon name
                 new Class[]{Shortsword.class}, // Required skill's classes
-                TechLevel.Level.TL2,           // Weapon tech level
+                TechLevel.TL2,           // Weapon tech level
                 new MusclePoweredMeleeWeaponMode[]{     // Available damage types
                         new MusclePoweredMeleeWeaponMode(
                                 MusclePoweredDamage.Type.Swinging,

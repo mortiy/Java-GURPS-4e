@@ -27,7 +27,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.mortiy.gurps.game;
+package net.mortiy.gurps.game.twl;
 
 import de.matthiasmann.twl.GUI;
 import org.lwjgl.opengl.Display;

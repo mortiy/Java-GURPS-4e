@@ -98,7 +98,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
     private Build build = Build.Average;
     private Size size = Size.Normal;
     private Set<PhysicalState> physicalStates = new HashSet<>();
-    private TechLevel.Level techLevel;
+    private TechLevel techLevel;
 
     private World.Language nativeLanguage;
     private Posture posture = Posture.Standing;
@@ -277,7 +277,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
         this.size = size;
     }
 
-    public void setTechLevel(TechLevel.Level techLevel) {
+    public void setTechLevel(TechLevel techLevel) {
         this.techLevel = techLevel;
     }
 

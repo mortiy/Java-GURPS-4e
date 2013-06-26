@@ -32,7 +32,7 @@ public class Generator {
     private final String CODEMODEL_PACKAGE = "net.mortiy.gurps.rules";
     private final String EQUIPMENT_WEAPONS_ALL = CODEMODEL_PACKAGE + ".equipment.weapon.all";
     private final String EQUIPMENT_MELEE_DAMAGE = PACKAGE + ".equipment.weapon.statistics.MusclePoweredMeleeWeaponMode";
-    private final String TECH_LEVEL = PACKAGE + ".TechLevel.Level";
+    private final String TECH_LEVEL = PACKAGE + ".TechLevel";
     private final String MUSCLE_WEAPON_DAMAGE_TYPE = PACKAGE + ".equipment.weapon.statistics.MusclePoweredDamage";
     private final String DAMAGE_TYPE = PACKAGE + ".combat.Damage";
     private final String PARRY_TYPE = PACKAGE + ".equipment.weapon.statistics.Parry";

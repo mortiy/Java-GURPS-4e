@@ -1,5 +1,6 @@
-package net.mortiy.gurps.game.map;
+package net.mortiy.gurps.game.map.hex;
 
+import net.mortiy.gurps.game.map.Token;
 import org.newdawn.slick.geom.Polygon;
 
 import java.util.ArrayList;

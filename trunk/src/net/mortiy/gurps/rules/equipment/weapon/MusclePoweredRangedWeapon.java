@@ -13,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class MusclePoweredRangedWeapon extends RangedWeapon {
-    public MusclePoweredRangedWeapon(String name, TechLevel.Level techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
+    public MusclePoweredRangedWeapon(String name, TechLevel techLevel, List<WeaponMode> damageTypes, float cost, float weight) {
         super(name, techLevel, damageTypes, cost, weight);
     }
 }

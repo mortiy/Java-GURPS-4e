@@ -1,5 +1,8 @@
 package net.mortiy.gurps.game.map;
 
+import net.mortiy.gurps.game.map.hex.HexMap;
+import net.mortiy.gurps.game.map.hex.HexPathfinder;
+
 /**
  * Created with IntelliJ IDEA.
  * User: oleksandr.sidko

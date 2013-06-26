@@ -6,6 +6,7 @@ import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
 import net.mortiy.gurps.rules.combat.exceptions.RoundIsOverException;
 
 public class AutoCombatManager extends CombatManager {
+
     public AutoCombatManager(Combat combat) {
         super(combat);
     }
@@ -30,11 +31,11 @@ public class AutoCombatManager extends CombatManager {
                 pause();
                 return false;
             } catch (RoundIsOverException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
                 pause();
                 return false;
             } catch (IsNotReadyException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
                 pause();
                 return false;
             }
@@ -49,9 +50,6 @@ public class AutoCombatManager extends CombatManager {
     public void pause() {
         _log("Combat is paused.");
         combatState.setPaused(true);
-        if (onPauseListener != null) {
-            onPauseListener.onPause(combatState.getCurrentFighter());
-        }
     }
 
 

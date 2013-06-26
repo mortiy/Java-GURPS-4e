@@ -7,13 +7,6 @@ import net.mortiy.gurps.rules.equipment.weapon.statistics.MusclePoweredMeleeWeap
 import net.mortiy.gurps.rules.equipment.weapon.statistics.MusclePoweredDamage;
 import net.mortiy.gurps.rules.table.RollFormula;
 
-/**
- * Created with IntelliJ IDEA.
- * User: oleksandr.sidko
- * Date: 22.12.12
- * Time: 14:36
- * To change this template use File | Settings | File Templates.
- */
 public class WeaponTest extends TestCase {
     public void testMusclePoweredWeapon() throws Exception {
         Character character = new Character(250);

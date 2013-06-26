@@ -145,7 +145,7 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
 
         _log("'%s' has weapon skill '%s' level at %d", fighterName, weaponSkill.getName(), skillLevel);
 
-        int attackModifiers = fighter.getAttackModifier(fighter.getActiveManeuver().getType(), weapon);
+        int attackModifiers = fighter.getAttackModifier(fighter.getNextManeuver().getType(), weapon);
 
         SuccessRoll attackSuccessRoll = weaponSkill.successRoll(attackModifiers);
 
@@ -176,7 +176,7 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
         // Target fighter tries to perform defend roll:
         // TODO: Defence Roll
 
-        Maneuver activeManeuver = targetFighter.getActiveManeuver();
+        Maneuver activeManeuver = targetFighter.getNextManeuver();
         String targetFighterName = targetFighter.getCharacter().getName();
 
         // Defense is unavailable for fighter who already performed AllOutAttack this turn:

@@ -19,7 +19,7 @@ public class KickWeapon extends MusclePoweredMeleeWeapon {
         super(
                 "Kick",                         // Weapon name
                 new Class[]{}, // Required skill's classes
-                TechLevel.Level.TL0,           // Weapon tech level
+                TechLevel.TL0,           // Weapon tech level
                 new MusclePoweredMeleeWeaponMode[]{     // Available weapon modes
                         new MusclePoweredMeleeWeaponMode(
                                 MusclePoweredDamage.Type.Thrusting,
