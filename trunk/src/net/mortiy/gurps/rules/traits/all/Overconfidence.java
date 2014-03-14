@@ -3,7 +3,7 @@ package net.mortiy.gurps.rules.traits.all;
 import net.mortiy.gurps.rules.modifiers.ReactionModifier;
 import net.mortiy.gurps.rules.traits.Disadvantage;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.SelfControlDisadvantage;
 
 /**
@@ -20,14 +20,14 @@ import net.mortiy.gurps.rules.traits.SelfControlDisadvantage;
  * experienced NPCs.
  */
 public class Overconfidence extends SelfControlDisadvantage implements Disadvantage {
-    public Overconfidence(Character character, Frequency frequency) {
-        super(character, "Overconfidence", -5, frequency);
+    public Overconfidence(Individual individual, Frequency frequency) {
+        super(individual, "Overconfidence", -5, frequency);
 
         addModifier(
-                new ReactionModifier(character, new ReactionModifier.ReactionDeterminator() {
+                new ReactionModifier(individual, new ReactionModifier.ReactionDeterminator() {
                     @Override
-                    public float determineReaction(Character character) {
-                        if (character.getAge() > 30) {
+                    public float determineReaction(Individual individual) {
+                        if (individual.getAge() > 30) {
                             return -2;
                         } else {
                             return +2;

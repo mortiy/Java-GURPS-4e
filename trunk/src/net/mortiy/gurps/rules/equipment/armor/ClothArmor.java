@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.equipment.armor;
 
 import net.mortiy.gurps.rules.TechLevel;
-import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.individual.Body;
 import net.mortiy.gurps.rules.equipment.ArmorItem;
 import net.mortiy.gurps.rules.equipment.DamageResistance;
 
@@ -11,7 +11,7 @@ public class ClothArmor extends ArmorItem {
     public ClothArmor() {
         super(
                 "Cloth Armor",
-                TechLevel.TL0,
+                TechLevel.TL1,
                 new Body.Part[]{ Body.Part.Torso, Body.Part.Groin },
                 new DamageResistance(1),  // DR
                 30, // Cost

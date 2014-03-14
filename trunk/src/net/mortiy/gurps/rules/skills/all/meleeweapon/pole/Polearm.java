@@ -1,8 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.pole;
 
-import net.mortiy.gurps.rules.attributes.Attribute;
-import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
 
 /**
@@ -17,8 +15,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
  * parry.
  */
 public class Polearm extends PoleMeleeWeapon {
-    public Polearm(Character character) {
-        super(character, "Polearm");
+    public Polearm(Individual individual) {
+        super(individual, "Polearm");
         try {
             setDefault("Spear", -4);
             setDefault("Staff", -4);

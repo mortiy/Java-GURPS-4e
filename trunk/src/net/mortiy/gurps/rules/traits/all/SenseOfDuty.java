@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Disadvantage;
 import net.mortiy.gurps.rules.traits.FixedTrait;
 
@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.traits.FixedTrait;
  * To change this template use File | Settings | File Templates.
  */
 public class SenseOfDuty extends FixedTrait implements Disadvantage {
-    public SenseOfDuty(Character character) {
-        super(character, "Sense of Duty ", -5);
+    public SenseOfDuty(Individual individual) {
+        super(individual, "Sense of Duty ", -5);
     }
 }

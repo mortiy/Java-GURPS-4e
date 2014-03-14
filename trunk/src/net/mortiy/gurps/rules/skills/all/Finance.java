@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.skills.Skill;
  * To change this template use File | Settings | File Templates.
  */
 public class Finance extends Skill {
-    public Finance(net.mortiy.gurps.rules.Character character) {
-        super(character, "Finance", Attribute.Intelligence, Difficulty.Hard);
+    public Finance(Individual individual) {
+        super(individual, "Finance", Attribute.Intelligence, Difficulty.Hard);
     }
 }

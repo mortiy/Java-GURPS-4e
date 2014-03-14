@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.attributes.secondary;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
 
@@ -14,12 +15,12 @@ import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
  * TODO: You burn FP gradually during strenuous activity. Disease, heat, hunger, missed sleep, and the like can also sap FP.
  */
 public class FatiguePoints extends SecondaryCharacteristic {
-    public FatiguePoints(net.mortiy.gurps.rules.Character character) {
-        super(character);
+    public FatiguePoints(Individual individual) {
+        super(individual);
         levelCost = 3;
     }
 
     public float getValue() {
-        return level + character.getAttribute(Attribute.Health).getValue();
+        return level + individual.getAttribute(Attribute.Health).getValue();
     }
 }

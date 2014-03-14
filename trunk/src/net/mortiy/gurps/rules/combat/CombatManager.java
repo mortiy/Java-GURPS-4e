@@ -57,7 +57,7 @@ public class CombatManager {
             fighterTurn.setManeuverResult(maneuverResult);
 
         } else {
-            throw new FighterHasNoManueverException(String.format("Fighter '%s' requires maneuver. ", currentFighter.getCharacter().getName()));
+            throw new FighterHasNoManueverException(String.format("Fighter '%s' requires maneuver. ", currentFighter.getIndividual().getName()));
         }
 
         return fighterTurn;

@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +10,7 @@ import net.mortiy.gurps.rules.Character;
  * To change this template use File | Settings | File Templates.
  */
 public class FixedTrait extends Trait {
-    public FixedTrait(Character character, String name, Integer cost) {
-        super(character, name, CostType.Fixed, cost);
+    public FixedTrait(Individual individual, String name, Integer cost) {
+        super(individual, name, CostType.Fixed, cost);
     }
 }

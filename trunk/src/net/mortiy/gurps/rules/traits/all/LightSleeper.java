@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Disadvantage;
 import net.mortiy.gurps.rules.traits.FixedTrait;
 
@@ -14,7 +13,7 @@ import net.mortiy.gurps.rules.traits.FixedTrait;
  */
 public class LightSleeper extends FixedTrait implements Disadvantage {
 
-    public LightSleeper(Character character) {
-        super(character, "Light Sleeper", -5);
+    public LightSleeper(Individual individual) {
+        super(individual, "Light Sleeper", -5);
     }
 }

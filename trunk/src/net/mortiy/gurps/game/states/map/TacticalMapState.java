@@ -12,13 +12,12 @@ import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.ResizableFrame;
 import net.mortiy.gurps.game.map.hex.Hex;
 import net.mortiy.gurps.game.map.hex.HexMap;
-import net.mortiy.gurps.game.map.hex.HexPathfinder;
 import net.mortiy.gurps.game.map.hex.HexPoint;
 import net.mortiy.gurps.game.twl.BasicTWLGameState;
 import net.mortiy.gurps.game.twl.RootPane;
 import net.mortiy.gurps.game.map.*;
 import net.mortiy.gurps.game.states.inventory.InventoryPanel;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.StateBasedGame;
@@ -34,7 +33,6 @@ public class TacticalMapState extends BasicTWLGameState {
     Path path;
     MapUI mapUI;
     MapLogic mapLogic;
-    HexPathfinder pathfinder;
 
     ResizableFrame frame;
     Image grassImage;
@@ -63,6 +61,8 @@ public class TacticalMapState extends BasicTWLGameState {
         frame.setResizableAxis(ResizableFrame.ResizableAxis.NONE);
         frame.add(new InventoryPanel(5, 2));
 
+
+
         rp.add(frame);
 
         return rp;
@@ -88,8 +88,8 @@ public class TacticalMapState extends BasicTWLGameState {
         mapLogic = new MapLogic(hexMap);
         mapUI = new MapUI(mapLogic, hexMap);
 
-        Character charA = new Character(100);
-        Character charB = new Character(100);
+        Individual charA = new Individual(100);
+        Individual charB = new Individual(100);
         Token charTokenA = new CharacterToken(charA);
         Token charTokenB = new CharacterToken(charB);
         hexMap.putToken(hexMap.get(new HexPoint(4, 2)), charTokenA);
@@ -110,11 +110,13 @@ public class TacticalMapState extends BasicTWLGameState {
         g.setLineWidth(2);
         g.setColor(Color.white);
 
+
         for (int x = 0; x < gc.getWidth(); x += grassImage.getWidth()) {
             for (int y = 0; y < gc.getHeight(); y += grassImage.getHeight()) {
                 grassImage.draw(x, y);
             }
         }
+
 
         // Render map tokens:
         Map<Hex, List<Token>> tokensMap = hexMap.getTokensMap();
@@ -130,12 +132,12 @@ public class TacticalMapState extends BasicTWLGameState {
         }
 
         // Render movement path:
-//        if(path != null){
-//            for(int i = 0; i < path.getLength(); i++){
-//                Path.Step step = path.getStep(i);
-//                g.fill(hexMap.get(new HexPoint(step.getX(), step.getY())).getPolygon());
-//            }
-//        }
+        if(path != null){
+            for(int i = 0; i < path.getLength(); i++){
+                Path.Step step = path.getStep(i);
+                g.fill(hexMap.get(new HexPoint(step.getX(), step.getY())).getPolygon());
+            }
+        }
 
         //
 
@@ -173,6 +175,7 @@ public class TacticalMapState extends BasicTWLGameState {
             g.draw(activePolygon);
         }
 
+
     }
 
 
@@ -182,6 +185,11 @@ public class TacticalMapState extends BasicTWLGameState {
         mapUI.mouseClicked(button, x, y);
     }
 
+    @Override
+    public void keyReleased(int key, char c) {
+        super.keyReleased(key, c);    //To change body of overridden methods use File | Settings | File Templates.
+        mapUI.keyReleased(key, c);
+    }
 
     @Override
     public void mouseMoved(int oldX, int oldY, int newX, int newY) {

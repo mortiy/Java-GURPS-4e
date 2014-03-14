@@ -3,13 +3,6 @@ package net.mortiy.gurps.game.map;
 import net.mortiy.gurps.game.map.hex.HexMap;
 import net.mortiy.gurps.game.map.hex.HexPathfinder;
 
-/**
- * Created with IntelliJ IDEA.
- * User: oleksandr.sidko
- * Date: 17.02.13
- * Time: 23:56
- * To change this template use File | Settings | File Templates.
- */
 public class MapLogic {
     HexPathfinder pathfinder;
     HexMap hexMap;
@@ -28,4 +21,6 @@ public class MapLogic {
     public Mover getMover() {
         return mover;
     }
+
+
 }

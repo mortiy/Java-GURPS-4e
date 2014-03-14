@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.sword;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.SwordMeleeWeapon;
 
 /**
@@ -16,8 +16,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.SwordMeleeWeapon;
  */
 public class TwoHandedSword extends SwordMeleeWeapon {
 
-    public TwoHandedSword(Character character) {
-        super(character, "Two-Handed Sword");
+    public TwoHandedSword(Individual individual) {
+        super(individual, "Two-Handed Sword");
         try {
             setDefault("Force Sword", -4);
             setDefault("Broadsword", -4);

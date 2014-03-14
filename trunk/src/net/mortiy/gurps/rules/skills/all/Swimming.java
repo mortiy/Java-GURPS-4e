@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.skills.all;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.skills.SkillDefault;
@@ -17,8 +16,8 @@ import net.mortiy.gurps.rules.skills.SkillDefault;
  * Note that Swimming does not cover high diving – that’s Sports(Diving).
  */
 public class Swimming extends Skill {
-    public Swimming(Character character) {
-        super(character, "Swimming", Attribute.Health, Difficulty.Easy);
+    public Swimming(Individual individual) {
+        super(individual, "Swimming", Attribute.Health, Difficulty.Easy);
         skillDefaults.add(
                 new SkillDefault(Attribute.Health, -4)
         );

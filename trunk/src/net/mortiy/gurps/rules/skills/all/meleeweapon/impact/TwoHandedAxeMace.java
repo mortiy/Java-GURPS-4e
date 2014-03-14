@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.impact;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.ImpactMeleeWeapon;
 
 /**
@@ -10,8 +11,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.ImpactMeleeWeapon;
  * bat, battleaxe, maul, or warhammer.
  */
 public class TwoHandedAxeMace extends ImpactMeleeWeapon {
-    public TwoHandedAxeMace(net.mortiy.gurps.rules.Character character) {
-        super(character, "Two-Handed Axe/Mace");
+    public TwoHandedAxeMace(Individual individual) {
+        super(individual, "Two-Handed Axe/Mace");
         try {
             setDefault("Polearm", -4);
             setDefault("Two-Handed Flail", -4);

@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.TimeModifier;
 import net.mortiy.gurps.rules.attributes.Attribute;
@@ -24,8 +24,8 @@ import net.mortiy.gurps.rules.utils.Converter;
  * you have visited it previously in person).
  */
 public class Warp extends FixedTrait implements Advantage, Exotic, Modifier.IModifiable {
-    public Warp(Character character) {
-        super(character, "Warp", 100);
+    public Warp(Individual individual) {
+        super(individual, "Warp", 100);
     }
 
     float jumpRangeLimit = 0;
@@ -97,9 +97,9 @@ public class Warp extends FixedTrait implements Advantage, Exotic, Modifier.IMod
     public void activate(Converter.Value distanceValue, Converter.Value time) {
         int distancePenalty = getDistancePenalty(distanceValue);
         int preparationModifier = getPreparationTimeModifier(time);
-        float characterModifiers = character.getModifiersList(this).getTotal();
+        float characterModifiers = individual.getModifiersList(this).getTotal();
 
-        Intelligence IQ = (Intelligence) character.getBasicAttribute(Attribute.Intelligence);
+        Intelligence IQ = (Intelligence) individual.getBasicAttribute(Attribute.Intelligence);
 
         int rollAgainst = IQ.getLevel() + distancePenalty + preparationModifier + (int) characterModifiers;
         SimpleRoll roll = new SimpleRoll(rollAgainst);
@@ -115,7 +115,7 @@ public class Warp extends FixedTrait implements Advantage, Exotic, Modifier.IMod
      * are at -5 to use it again in the next 10 minutes.
      */
     public void warpFail() {
-        TimeModifier timeModifier = new TimeModifier(character, this, -5, 10 * 60f);
+        TimeModifier timeModifier = new TimeModifier(individual, this, -5, 10 * 60f);
         addModifier(timeModifier);
     }
 

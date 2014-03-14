@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.equipment.weapon.statistics;
 
 import net.mortiy.gurps.Log;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.table.RollFormula;
 
@@ -22,12 +22,12 @@ public class MusclePoweredDamage  {
         Swinging
     }
 
-    public static RollFormula getDamageFormula(Character character, Type type) {
+    public static RollFormula getDamageFormula(Individual individual, Type type) {
         switch (type) {
             case Thrusting:
-                return getThrustDamage(character);
+                return getThrustDamage(individual);
             case Swinging:
-                return getSwingDamage(character);
+                return getSwingDamage(individual);
             default:
                 Log.w("Damage", "Unknown damage type: " + type);
                 return new RollFormula(1);
@@ -35,8 +35,8 @@ public class MusclePoweredDamage  {
 
     }
 
-    private static RollFormula getThrustDamage(Character character) {
-        int strengthLevel = character.getBasicAttribute(Attribute.Strength).getLevel();
+    private static RollFormula getThrustDamage(Individual individual) {
+        int strengthLevel = individual.getBasicAttribute(Attribute.Strength).getLevel();
         int diceQuantity;
         int modifier;
 
@@ -55,8 +55,8 @@ public class MusclePoweredDamage  {
         return new RollFormula(diceQuantity, modifier);
     }
 
-    private static RollFormula getSwingDamage(Character character) {
-        int strengthLevel = character.getBasicAttribute(Attribute.Strength).getLevel();
+    private static RollFormula getSwingDamage(Individual individual) {
+        int strengthLevel = individual.getBasicAttribute(Attribute.Strength).getLevel();
         int diceQuantity = 1;
         int modifier;
 

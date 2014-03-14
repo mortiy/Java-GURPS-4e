@@ -22,8 +22,8 @@ import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
  * weapon away!
  */
 public class Tonfa extends MeleeWeapon {
-    public Tonfa(net.mortiy.gurps.rules.Character character) {
-        super(character, "Tonfa", Difficulty.Average);
+    public Tonfa(Individual individual) {
+        super(individual, "Tonfa", Difficulty.Average);
         try {
             setDefault("Shortsword", -3);
         } catch (UnknownSkillDefaultSkillException e) {

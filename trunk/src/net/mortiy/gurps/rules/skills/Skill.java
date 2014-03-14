@@ -2,7 +2,7 @@ package net.mortiy.gurps.rules.skills;
 
 import net.mortiy.gurps.Log;
 import net.mortiy.gurps.Reflection;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.CharacterAttribute;
@@ -55,15 +55,17 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
     }
 
 
-    private String name;
-    private String speciality;
-    protected Attribute attribute;
-    protected Difficulty difficulty;
-    protected Character character;
+    private final String name;
+    private final String speciality;
+    protected final Attribute attribute;
+    protected final Difficulty difficulty;
+    protected final Individual individual;
+
     private int level = 0;
-    private Set<Skill> prerequisites = new HashSet<Skill>();
-    protected List<SkillDefault> skillDefaults = new ArrayList<SkillDefault>();
-    private static Map<String, Class> skillsClassesMap = new HashMap<String, Class>();
+    private final Set<Skill> prerequisites = new HashSet<>();
+    protected final List<SkillDefault> skillDefaults = new ArrayList<>();
+    private final static Map<String, Class> skillsClassesMap = new HashMap<>();
+
     static {
         try {
             List<Class> skillsClasses = Reflection.getClasses("net.mortiy.gurps.rules.skills.all");
@@ -77,18 +79,18 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
         }
     }
 
-    public Skill(Character character, String name, Attribute attribute, Difficulty difficulty) {
-        this(character, name, "", attribute, difficulty);
+    public Skill(Individual individual, String name, Attribute attribute, Difficulty difficulty) {
+        this(individual, name, "", attribute, difficulty);
     }
 
-    public Skill(Character character, String name, String speciality, Attribute attribute, Difficulty difficulty) {
-        this.character = character;
+    public Skill(Individual individual, String name, String speciality, Attribute attribute, Difficulty difficulty) {
+        this.individual = individual;
         this.name = name;
         this.speciality = speciality;
         this.attribute = attribute;
         this.difficulty = difficulty;
 
-        character.addSkill(this);
+        individual.addSkill(this);
     }
 
     public boolean hasSpeciality() {
@@ -100,21 +102,13 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
     }
 
     public static String getKey(Skill skill) {
-        String skillKey = "";
+        String skillKey;
         if (skill.hasSpeciality()) {
             skillKey = String.format("%s (%s)", skill.getName(), skill.getSpeciality());
         } else {
             skillKey = String.format("%s", skill.getName());
         }
         return skillKey;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public void setAttribute(Attribute attribute) {
-        this.attribute = attribute;
     }
 
     /**
@@ -125,7 +119,7 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
     public void setLevel(int level) {
 
         int skillCost = getCost(level);
-        float remainingPoints = character.getRemainingPoints() + getCost(this.level);
+        float remainingPoints = individual.getRemainingPoints() + getCost(this.level);
         if (remainingPoints < skillCost) {
             Log.w("Skill", String.format("Characters remaining %.1f points, but skill cost is %d", remainingPoints, skillCost));
         }
@@ -203,7 +197,7 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
         if(difficulty == Difficulty.Unknown || attribute == Attribute.Unknown){
             return 0;
         }
-        CharacterAttribute skillAttribute = character.getAttribute(attribute); // 15
+        CharacterAttribute skillAttribute = individual.getAttribute(attribute); // 15
         int levelDifference = Math.round(desiredLevel - skillAttribute.getValue()); // 0
         int costIndex = levelDifference + difficulty.ordinal();
 
@@ -232,7 +226,7 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
             // Check it skill has default at all
             if (skillDefaults.size() > 0) {
                 SkillDefault bestDefaultValue = findBestSkillDefault();
-                skillLevel = bestDefaultValue.getLevel(character) + bestDefaultValue.modifier;
+                skillLevel = bestDefaultValue.getLevel(individual) + bestDefaultValue.modifier;
             }
         }
 
@@ -245,7 +239,7 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
      * @return Returns skill level
      */
     public int getDefaultSkillLevel(SkillDefault skillDefault) {
-        return skillDefault.getLevel(character) + skillDefault.modifier;
+        return skillDefault.getLevel(individual) + skillDefault.modifier;
     }
 
 
@@ -267,7 +261,7 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
      * @return Trained skill level with applied modifiers
      */
     public int getLevel() {
-        return (int) Math.floor(level + character.getTotalModifier(this));
+        return (int) Math.floor(level + individual.getTotalModifier(this));
     }
 
     public String getName() {
@@ -279,7 +273,7 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
     }
 
     public void setDefault(String skillName, int modifier) throws UnknownSkillDefaultSkillException {
-        Skill skill = character.getSkill(skillName);
+        Skill skill = individual.getSkill(skillName);
         skillDefaults.add(
                 new SkillDefault(skill, modifier)
         );

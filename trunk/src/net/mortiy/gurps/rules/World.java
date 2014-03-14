@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class World {
     TechLevel techLevel;
-    private List<Character> characters = new ArrayList<Character>();
+    private List<Individual> individuals = new ArrayList<Individual>();
     private static Time time = Time.getInstance();
 
     public World(TechLevel techLevel) {
@@ -36,21 +36,21 @@ public class World {
 
     // region Characters
 
-    public void addCharacter(Character character){
+    public void addCharacter(Individual individual){
         // First of all, clear characters equipment:
-        Equipment equipment = character.getEquipment();
+        Equipment equipment = individual.getEquipment();
         equipment.clear();
 
         // Determine and set starting wealth:
         float wealthMultiplier = 1f;
-        if(character.hasTrait("Wealth")){
-            wealthMultiplier = ((Wealth)character.getTrait("Wealth")).getWealthMultiplier();
+        if(individual.hasTrait("Wealth")){
+            wealthMultiplier = ((Wealth) individual.getTrait("Wealth")).getWealthMultiplier();
         }
         int startingWealth = Math.round(techLevel.getStartingWealth() * wealthMultiplier);
         // Put corresponding amount of money into his equipment
-        character.getEquipment().putItem(new Money(), startingWealth);
+        individual.getEquipment().putItem(new Money(), startingWealth);
 
-        characters.add(character);
+        individuals.add(individual);
     }
 
     // endregion

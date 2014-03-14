@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.fencing;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
 
 /**
@@ -16,8 +17,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
  * Knife skill. Defaults
  */
 public class MainGauche extends FencingMeleeWeapon {
-    public MainGauche(net.mortiy.gurps.rules.Character character) {
-        super(character, "Main-Gauche");
+    public MainGauche(Individual individual) {
+        super(individual, "Main-Gauche");
         try {
             setDefault("Jitte/Sai", -4);
             setDefault("Knife", -4);

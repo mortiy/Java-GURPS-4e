@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.combat;
 
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.equipment.ShieldItem;
 import net.mortiy.gurps.rules.equipment.weapon.MusclePoweredMeleeWeapon;
 import net.mortiy.gurps.rules.equipment.weapon.Weapon;
@@ -57,30 +57,30 @@ public class Defense {
     }
 
     public int getDefenseStrategyLevel(Strategy strategy) {
-        Character character = fighter.getCharacter();
+        Individual individual = fighter.getIndividual();
         int strategyLevel = 0;
         switch (strategy) {
             case Dodge:
                 // TODO: Sacrificial, Acrobatic, Vehicular dodges
-                strategyLevel = (int) character.getDodge().getValue();
+                strategyLevel = (int) individual.getDodge().getValue();
                 break;
 
             case Block:
 
                 int blockSkillLevel = 0;
-                if (character.hasLearntSkill("Shield (Shield)")) {
-                    int shieldSkillLevel = character.getSkill("Shield (Shield)").getLevel();
+                if (individual.hasLearntSkill("Shield (Shield)")) {
+                    int shieldSkillLevel = individual.getSkill("Shield (Shield)").getLevel();
                     blockSkillLevel = shieldSkillLevel;
                 }
-                if (character.hasLearntSkill("Cloak")) {
-                    int cloakSkillLevel = character.getSkill("Cloak").getLevel();
+                if (individual.hasLearntSkill("Cloak")) {
+                    int cloakSkillLevel = individual.getSkill("Cloak").getLevel();
                     if (cloakSkillLevel > blockSkillLevel) {
                         blockSkillLevel = cloakSkillLevel;
                     }
                 }
                 strategyLevel += (int) Math.floor(blockSkillLevel / 2f + 3);
 
-                if(character.getEquipment().hasEquipped(ShieldItem.class)){
+                if(individual.getEquipment().hasEquipped(ShieldItem.class)){
                     strategyLevel += 1;
                 }
 
@@ -109,7 +109,7 @@ public class Defense {
                         parryModifier += 2;
                     }
 
-                    Skill weaponSkill = character.getSkill(weaponSkillClass);
+                    Skill weaponSkill = individual.getSkill(weaponSkillClass);
                     if (weaponSkill.getRawLevel() > 0) {
                         parryLevel = (int) Math.floor(3 + weaponSkill.getLevel() / 2f);
                     }

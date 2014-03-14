@@ -1,12 +1,12 @@
 package net.mortiy.gurps.rules.traits.all;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.modifiers.SummandModifier;
 import net.mortiy.gurps.rules.table.Rolls;
 import net.mortiy.gurps.rules.traits.Advantage;
 import net.mortiy.gurps.rules.traits.Disadvantage;
 import net.mortiy.gurps.rules.traits.VariableTrait;
-import net.mortiy.gurps.rules.Character;
 import net.mortiy.gurps.rules.traits.categories.Physical;
 
 
@@ -42,8 +42,8 @@ public class Appearance extends VariableTrait implements Advantage, Disadvantage
     Modifier reactionModifier;
     private int reactionModifiers[] = new int[] {-6, -5, -4, -2, -1, 0, 1, 4, 6, 8, 0, 0, 0, 0};
 
-    public Appearance(Character character) {
-        super(character, "Appearance");
+    public Appearance(Individual individual) {
+        super(individual, "Appearance");
         //
         levelsCost = new int[]{-24, -20, -16, -8, -4, 0, 4, 12, 16, 20};
         reactionModifier = addModifier(Rolls.ReactionRoll, new SummandModifier(0));

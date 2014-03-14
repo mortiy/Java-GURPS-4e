@@ -22,7 +22,7 @@ public class DoNothingManeuver extends Maneuver {
 
     @Override
     public ManeuverResult resolve(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
-        Log.i("Do Nothing Maneuver", "%s doesn nothing.", fighter.getCharacter().getName());
+        Log.i("Do Nothing Maneuver", "%s doesn nothing.", fighter.getIndividual().getName());
         return new ManeuverResult(ManeuverResult.Status.Success);
     }
 }

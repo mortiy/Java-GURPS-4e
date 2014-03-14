@@ -1,7 +1,7 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.ModifiersList;
 import net.mortiy.gurps.rules.table.Rolls;
 import net.mortiy.gurps.rules.traits.all.Appearance;
@@ -17,41 +17,41 @@ import net.mortiy.gurps.rules.traits.all.OdiousPersonalHabits;
 public class TraitsTest extends TestCase {
 
 
-    public void testVariableTraits() throws Exception, Character.TraitNotFoundException, Character.CharacterAlreadyHasTraitException {
+    public void testVariableTraits() throws Exception, Individual.TraitNotFoundException, Individual.CharacterAlreadyHasTraitException {
 
-        Character character = new Character(Constants.MAX_CHARACTER_POINTS);
+        Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
 
-        Appearance appearance = new Appearance(character);
-        character.addTrait(appearance);
+        Appearance appearance = new Appearance(individual);
+        individual.addTrait(appearance);
             appearance.changeLevel(Appearance.Level.VeryBeautiful);
             assertTrue("Getting trait by name", appearance instanceof Appearance);
-            assertEquals("Check character cost with Very Beautiful Appearance", 16, appearance.getRawCost());
-            assertTrue(character.hasTrait("Appearance"));
+            assertEquals("Check individual cost with Very Beautiful Appearance", 16, appearance.getRawCost());
+            assertTrue(individual.hasTrait("Appearance"));
             assertEquals("Check current appearance level",
                     Appearance.Level.VeryBeautiful,
-                    ((Appearance) character.getTrait("Appearance")).getLevel()
+                    ((Appearance) individual.getTrait("Appearance")).getLevel()
             );
 
     }
 
-    public void testLevelTraits() throws Exception, Character.TraitNotFoundException, Character.CharacterAlreadyHasTraitException {
+    public void testLevelTraits() throws Exception, Individual.TraitNotFoundException, Individual.CharacterAlreadyHasTraitException {
 
-        Character character = new Character(Constants.MAX_CHARACTER_POINTS);
+        Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
 
-        OdiousPersonalHabits odiousPersonalHabits = new OdiousPersonalHabits(character);
-        character.addTrait(odiousPersonalHabits);
-        assertEquals("Character doesn't have OPH yet", 0, odiousPersonalHabits.getCurrentLevel());
+        OdiousPersonalHabits odiousPersonalHabits = new OdiousPersonalHabits(individual);
+        individual.addTrait(odiousPersonalHabits);
+        assertEquals("Individual doesn't have OPH yet", 0, odiousPersonalHabits.getCurrentLevel());
 
         odiousPersonalHabits.increaseLevel();
-        assertEquals("Character has OPH of the 1st level", 1, odiousPersonalHabits.getCurrentLevel());
-        assertEquals("OPH of 1st level costs character -5 points", -5, odiousPersonalHabits.getRawCost());
+        assertEquals("Individual has OPH of the 1st level", 1, odiousPersonalHabits.getCurrentLevel());
+        assertEquals("OPH of 1st level costs individual -5 points", -5, odiousPersonalHabits.getRawCost());
 
-        ModifiersList reactionModifier = character.getModifiersList(Rolls.ReactionRoll);
-        assertEquals("OPH of 1st level gives character -1 to Reaction Roll", -1f, reactionModifier.getTotalSummand());
+        ModifiersList reactionModifier = individual.getModifiersList(Rolls.ReactionRoll);
+        assertEquals("OPH of 1st level gives individual -1 to Reaction Roll", -1f, reactionModifier.getTotalSummand());
 
         odiousPersonalHabits.increaseLevel(2);
-        assertEquals("Character has OPH of the 3rd level", 3, odiousPersonalHabits.getCurrentLevel());
-        assertEquals("OPH of 3rd level gives character -3 to Reaction Roll", -3f, reactionModifier.getTotalSummand());
+        assertEquals("Individual has OPH of the 3rd level", 3, odiousPersonalHabits.getCurrentLevel());
+        assertEquals("OPH of 3rd level gives individual -3 to Reaction Roll", -3f, reactionModifier.getTotalSummand());
 
         odiousPersonalHabits.increaseLevel();
         assertEquals("Maximum possible OPH level is 3, so no change", 3, odiousPersonalHabits.getCurrentLevel());

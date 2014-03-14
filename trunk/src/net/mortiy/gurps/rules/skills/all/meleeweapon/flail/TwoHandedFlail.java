@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.flail;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
 
 /**
@@ -10,7 +11,7 @@ import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
  * To change this template use File | Settings | File Templates.
  */
 public class TwoHandedFlail extends MeleeWeapon {
-    public TwoHandedFlail(net.mortiy.gurps.rules.Character character) {
-        super(character, "Two-Handed Flail", Difficulty.Hard);
+    public TwoHandedFlail(Individual individual) {
+        super(individual, "Two-Handed Flail", Difficulty.Hard);
     }
 }

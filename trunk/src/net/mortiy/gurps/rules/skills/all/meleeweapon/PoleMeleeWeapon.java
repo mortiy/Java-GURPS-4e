@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
  * striking heads. All require two hands.
  */
 public class PoleMeleeWeapon extends MeleeWeapon {
-    public PoleMeleeWeapon(net.mortiy.gurps.rules.Character character, String name) {
-        super(character, name, Difficulty.Average);
+    public PoleMeleeWeapon(Individual individual, String name) {
+        super(individual, name, Difficulty.Average);
     }
 }

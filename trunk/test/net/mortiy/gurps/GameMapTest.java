@@ -1,7 +1,7 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.map.GameMap;
 
 /**
@@ -15,8 +15,8 @@ public class GameMapTest extends TestCase {
     public void testMap() throws Exception {
         GameMap gameMap = new GameMap();
 
-        Character tony = new Character(100);
-        Character terry = new Character(100);
+        Individual tony = new Individual(100);
+        Individual terry = new Individual(100);
 
         gameMap.putToken(tony, 10, 10);
         gameMap.putToken(terry, 20, 10);

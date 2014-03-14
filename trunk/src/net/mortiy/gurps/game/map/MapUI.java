@@ -2,6 +2,7 @@ package net.mortiy.gurps.game.map;
 
 import net.mortiy.gurps.game.map.hex.Hex;
 import net.mortiy.gurps.game.map.hex.HexMap;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.map.GameMap;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Input;
@@ -121,7 +122,7 @@ public class MapUI implements Observer {
                     mapLogic.getMover().moveTo(activeToken, path);
 
                 }
-                //activeToken.setRotationAngle((activeToken.getRotationAngle() + 60) % 360);
+                turnTokenClockwise();
             }
             if (button == Input.MOUSE_RIGHT_BUTTON) {
                 activeToken.setViewAngle(activeToken.getViewAngle() >= 90 ? 30 : activeToken.getViewAngle() + 15);
@@ -129,11 +130,16 @@ public class MapUI implements Observer {
         }
 
 //        if(obstacleMode){
-//            hexMap.putToken(mapUI.getActiveHex(), new net.mortiy.gurps.rules.Character(100));
+//            hexMap.putToken(mapUI.getActiveHex(), new Individual(100));
 //            path = pathfinder.getPath();
 //        } else {
 //
 //        }
+    }
+
+    private void turnTokenClockwise() {
+        float newAngle = (activeToken.getRotationAngle() + 60) % 360;
+        activeToken.setRotationAngle(newAngle);
     }
 
     @Override
@@ -144,5 +150,9 @@ public class MapUI implements Observer {
                 calcFacing();
             }
         }
+    }
+
+    public void keyReleased(int key, char c) {
+        //To change body of created methods use File | Settings | File Templates.
     }
 }

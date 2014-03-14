@@ -23,7 +23,7 @@ import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
  * one another at -3.
  */
 public class FlailMeleeWeapon extends MeleeWeapon {
-    public FlailMeleeWeapon(net.mortiy.gurps.rules.Character character, String name) {
-        super(character, name, Difficulty.Hard);
+    public FlailMeleeWeapon(Individual individual, String name) {
+        super(individual, name, Difficulty.Hard);
     }
 }

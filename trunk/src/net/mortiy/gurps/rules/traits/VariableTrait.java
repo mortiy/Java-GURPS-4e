@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * This is kind of traits which have several levels and may have different costs
@@ -15,8 +15,8 @@ public class VariableTrait extends Trait {
 
     protected int levelsCost[];
 
-    public VariableTrait(Character character, String name) {
-        super(character, name, CostType.Variable, 0);
+    public VariableTrait(Individual individual, String name) {
+        super(individual, name, CostType.Variable, 0);
     }
 
     public ITraitLevel getLevel() {

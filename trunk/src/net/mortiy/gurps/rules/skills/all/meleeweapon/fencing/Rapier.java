@@ -1,8 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.fencing;
 
-import net.mortiy.gurps.rules.attributes.Attribute;
-import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
 
 /**
@@ -12,8 +10,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
  * Any long (over1 yard), light thrusting sword.
  */
 public class Rapier extends FencingMeleeWeapon {
-    public Rapier(Character character) {
-        super(character, "Rapier");
+    public Rapier(Individual individual) {
+        super(individual, "Rapier");
         try {
             setDefault("Broadsword", -4);
         } catch (UnknownSkillDefaultSkillException e) {

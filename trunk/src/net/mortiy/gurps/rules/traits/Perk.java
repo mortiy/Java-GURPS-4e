@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * A “perk” is a very minor advantage, worth only 1 point.
@@ -16,8 +16,8 @@ import net.mortiy.gurps.rules.Character;
  */
 public class Perk extends Trait implements Advantage {
 
-    public Perk(Character character, String name) {
-        super(character, name, CostType.Fixed, 1);
+    public Perk(Individual individual, String name) {
+        super(individual, name, CostType.Fixed, 1);
     }
 
     @Override

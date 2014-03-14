@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.modifiers;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 public class Modifier {
 
@@ -17,14 +17,14 @@ public class Modifier {
     public interface IInfluential {}
 
     public IModifiable modifiedEntity;
-    private net.mortiy.gurps.rules.Character character;
+    private Individual individual;
     private ValueModifier modifierValue;
 
-    public Modifier(Character character, IModifiable modifiedEntity, ValueModifier modifierValue) {
-        this.character = character;
+    public Modifier(Individual individual, IModifiable modifiedEntity, ValueModifier modifierValue) {
+        this.individual = individual;
         this.modifiedEntity = modifiedEntity;
         this.modifierValue = modifierValue;
-        this.character.registerModifier(this);
+        this.individual.registerModifier(this);
     }
 
     public IModifiable getModifiedEntity() {
@@ -45,9 +45,9 @@ public class Modifier {
      * Removed
      */
     public void detach(){
-        if(character != null){
-            character.removeModifier(this);
-            character = null;
+        if(individual != null){
+            individual.removeModifier(this);
+            individual = null;
         }
     }
 

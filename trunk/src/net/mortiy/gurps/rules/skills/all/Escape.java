@@ -12,7 +12,7 @@ import net.mortiy.gurps.rules.skills.Skill;
  * To change this template use File | Settings | File Templates.
  */
 public class Escape extends Skill {
-    public Escape(net.mortiy.gurps.rules.Character character) {
-        super(character, "Escape", Attribute.Dexterity, Difficulty.Hard);
+    public Escape(Individual individual) {
+        super(individual, "Escape", Attribute.Dexterity, Difficulty.Hard);
     }
 }

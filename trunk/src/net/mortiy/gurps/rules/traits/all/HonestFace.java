@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Perk;
 
 /**
@@ -19,7 +19,7 @@ import net.mortiy.gurps.rules.traits.Perk;
  */
 public class HonestFace extends Perk {
 
-    public HonestFace(Character character) {
-        super(character, "Honest Face");
+    public HonestFace(Individual individual) {
+        super(individual, "Honest Face");
     }
 }

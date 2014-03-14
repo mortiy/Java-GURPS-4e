@@ -1,4 +1,4 @@
-package net.mortiy.gurps.rules.character;
+package net.mortiy.gurps.rules.individual;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,10 +12,12 @@ public class Body {
         Face(-5),
         Neck(-5),
         Groin(-3),
+        Arms(-2),
         LeftArm(-2),
         RightArm(-2),
         LeftHand(-4),
         RightHand(-4),
+        Legs(-2),
         LeftLeg(-2),
         RightLeg(-2),
         Feet(-4);

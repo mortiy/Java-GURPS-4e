@@ -1,11 +1,11 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.TechLevel;
 import net.mortiy.gurps.rules.World;
 import net.mortiy.gurps.rules.attributes.Attribute;
-import net.mortiy.gurps.rules.character.Build;
+import net.mortiy.gurps.rules.individual.Build;
 import net.mortiy.gurps.rules.equipment.weapon.statistics.MusclePoweredDamage;
 import net.mortiy.gurps.rules.skills.all.*;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.sword.Knife;
@@ -29,7 +29,7 @@ public class CharacterTest extends TestCase {
          * extraordinaire. We’ll create Dai as a full member of ISWAT.
          * As an established hero, he’ll have a base of 250 points.
          */
-        Character dai = new Character(250);
+        Individual dai = new Individual(250);
         dai.setName("Dai Blackthorn");
 
         // region Basic Attributes
@@ -148,7 +148,7 @@ public class CharacterTest extends TestCase {
          & free.
          */
         dai.setNativeLanguage(World.Language.Anglish);
-        dai.getLanguages().put(World.Language.English, Character.LanguageLevel.Accented);
+        dai.getLanguages().put(World.Language.English, Individual.LanguageLevel.Accented);
 
         /**
          * But Dai is also familiar with the culture of ISWAT’s world, Homeline,
@@ -425,7 +425,7 @@ public class CharacterTest extends TestCase {
     }
 
     public void testInvestigatorCharacter() throws Exception {
-        Character c = new Character(100);
+        Individual c = new Individual(100);
         c.setBasicAttribute(Attribute.Dexterity, 12);
         c.setBasicAttribute(Attribute.Intelligence, 12);
         c.setBasicAttribute(Attribute.Health, 10);

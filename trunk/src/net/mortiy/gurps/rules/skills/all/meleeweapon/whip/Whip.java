@@ -10,7 +10,7 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.WhipMeleeWeapon;
  * Any ordinary whip.
  */
 public class Whip extends WhipMeleeWeapon {
-    public Whip(net.mortiy.gurps.rules.Character character) {
-        super(character, "Whip", Difficulty.Average);
+    public Whip(Individual individual) {
+        super(individual, "Whip", Difficulty.Average);
     }
 }

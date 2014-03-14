@@ -25,7 +25,7 @@ public class ReadyManeuver extends Maneuver {
 
         if(preparable instanceof Weapon){
             fighter.getReadyList().add(preparable);
-            Log.i("Ready Maneuver", "'%s' prepared '%s'", fighter.getCharacter().getName(), ((Weapon) preparable).getName());
+            Log.i("Ready Maneuver", "'%s' prepared '%s'", fighter.getIndividual().getName(), ((Weapon) preparable).getName());
         }
         else if(preparable instanceof Trait){
 

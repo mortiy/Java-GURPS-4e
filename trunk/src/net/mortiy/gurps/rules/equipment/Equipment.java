@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.equipment;
 import net.mortiy.gurps.Log;
-import net.mortiy.gurps.rules.Character;
-import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.Individual;
+import net.mortiy.gurps.rules.individual.Body;
 import net.mortiy.gurps.rules.combat.Damage;
 
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ public class Equipment extends Container {
 
     public interface ItemType{};
 
-    private Character character;
+    private Individual individual;
     private Map<Body.Part, Item> equipment = new HashMap<>();
-    public Equipment(Character character) {
-        this.character = character;
+    public Equipment(Individual individual) {
+        this.individual = individual;
     }
 
     public void putAndEquipItem(Item item, Body.Part bodyPart){
@@ -33,14 +33,14 @@ public class Equipment extends Container {
             if(item instanceof ArmorItem){
                 ArmorItem armorItem = (ArmorItem) item;
                 if(!armorItem.isSuitableFor(bodyPart)){
-                    Log.w("Equipment", String.format("'%s' can't wear '%s' on '%s'.", character.getName(), item.getName(), bodyPart));
+                    Log.w("Equipment", String.format("'%s' can't wear '%s' on '%s'.", individual.getName(), item.getName(), bodyPart));
                     return false;
                 }
             }
             equipment.put(bodyPart, item);
             return true;
         }
-        Log.w("Equipment", String.format("'%s' doesn't own '%s' to equip it.", character.getName(), item.getName()));
+        Log.w("Equipment", String.format("'%s' doesn't own '%s' to equip it.", individual.getName(), item.getName()));
         return false;
     }
 
@@ -60,7 +60,7 @@ public class Equipment extends Container {
             equipment.remove(bodyPart);
             return true;
         } else {
-            Log.w("Equipment", String.format("'%s' has nothing equipped on '%s'.", character.getName(), bodyPart.toString()));
+            Log.w("Equipment", String.format("'%s' has nothing equipped on '%s'.", individual.getName(), bodyPart.toString()));
             return false;
         }
     }

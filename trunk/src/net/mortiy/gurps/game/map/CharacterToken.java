@@ -1,6 +1,6 @@
 package net.mortiy.gurps.game.map;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,8 +10,8 @@ import net.mortiy.gurps.rules.Character;
  * To change this template use File | Settings | File Templates.
  */
 public class CharacterToken extends Token {
-    Character character;
-    public CharacterToken(Character character) {
-        this.character = character;
+    Individual individual;
+    public CharacterToken(Individual individual) {
+        this.individual = individual;
     }
 }

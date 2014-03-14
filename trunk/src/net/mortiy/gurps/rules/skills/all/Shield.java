@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.skills.all;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
 
@@ -21,7 +20,7 @@ public class Shield extends Skill {
         Force
     }
 
-    public Shield(Character character, Speciality speciality) {
-        super(character, "Shield", speciality.toString(), Attribute.Dexterity, Difficulty.Easy);
+    public Shield(Individual individual, Speciality speciality) {
+        super(individual, "Shield", speciality.toString(), Attribute.Dexterity, Difficulty.Easy);
     }
 }

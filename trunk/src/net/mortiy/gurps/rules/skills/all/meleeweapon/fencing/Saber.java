@@ -1,8 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.fencing;
 
-import net.mortiy.gurps.rules.attributes.Attribute;
-import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
 
 /**
@@ -16,8 +14,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
  */
 public class Saber extends FencingMeleeWeapon {
 
-    public Saber(Character character) {
-        super(character, "Saber");
+    public Saber(Individual individual) {
+        super(individual, "Saber");
         try {
             setDefault("Broadsword", -4);
             setDefault("Shortsword", -4);

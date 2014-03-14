@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.sword;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.SwordMeleeWeapon;
 
 /**
@@ -14,8 +14,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.SwordMeleeWeapon;
  */
 public class Knife extends SwordMeleeWeapon {
 
-    public Knife(Character character) {
-        super(character, "Knife", Difficulty.Easy);
+    public Knife(Individual individual) {
+        super(individual, "Knife", Difficulty.Easy);
         try {
             setDefault("Force Sword", -3);
             setDefault("Main-Gauche", -3);

@@ -9,12 +9,10 @@ import net.mortiy.gurps.rules.attributes.basic.Health;
 import net.mortiy.gurps.rules.attributes.basic.Intelligence;
 import net.mortiy.gurps.rules.attributes.basic.Strength;
 import net.mortiy.gurps.rules.attributes.secondary.*;
-import net.mortiy.gurps.rules.character.Body;
-import net.mortiy.gurps.rules.character.Build;
-import net.mortiy.gurps.rules.character.Encumbrance;
-import net.mortiy.gurps.rules.character.Size;
-import net.mortiy.gurps.rules.combat.Damage;
-import net.mortiy.gurps.rules.equipment.ArmorItem;
+import net.mortiy.gurps.rules.individual.Body;
+import net.mortiy.gurps.rules.individual.Build;
+import net.mortiy.gurps.rules.individual.Encumbrance;
+import net.mortiy.gurps.rules.individual.Size;
 import net.mortiy.gurps.rules.equipment.Equipment;
 import net.mortiy.gurps.rules.equipment.Item;
 import net.mortiy.gurps.rules.exceptions.NotEnoughCharacterPointsException;
@@ -32,10 +30,11 @@ import java.util.*;
 
 /**
  * Character entity
+ * (used Individual class name to avoid interference with Java core Character class.
  * TODO: Age: Childhood & Elderly (p. 20)
  * TODO: Lifting, Running, Swimming (p. 353)
  */
-public class Character implements Modifier.IInfluential, GameMap.MapToken {
+public class Individual implements Modifier.IInfluential, GameMap.MapToken {
     @Override
     public Image getImage() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -134,7 +133,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
      *
      * @param startingPoints Starting points
      */
-    public Character(int startingPoints) {
+    public Individual(int startingPoints) {
         this.startingPoints = startingPoints;
 
         attributes.put(Attribute.Strength, new Strength());
@@ -408,7 +407,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
      */
     public Trait addTrait(Trait trait) {
         if (traits.containsKey(trait.getKey())) {
-            Log.w("Character", String.format("Character already has trait '%s'", trait.getKey()));
+            Log.w("Individual", String.format("Individual already has trait '%s'", trait.getKey()));
             return traits.get(trait.getKey());
         } else {
             traits.put(trait.getKey(), trait);
@@ -424,7 +423,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
                 Class traitClass = Trait.forName(traitKey);
                 return addTrait(traitClass);
             } catch (Exception e) {
-                Log.w("Character", String.format("Requested trait '%s' class was not found!", traitKey));
+                Log.w("Individual", String.format("Requested trait '%s' class was not found!", traitKey));
                 return new Trait(this, "Unknown", CostType.Fixed, 0);
             }
         }
@@ -432,7 +431,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
 
     private Trait addTrait(Class traitClass) throws TraitNotFoundException, CharacterAlreadyHasTraitException {
         try {
-            Constructor constructor = traitClass.getConstructor(Character.class);
+            Constructor constructor = traitClass.getConstructor(Individual.class);
             return (Trait) constructor.newInstance(this);
         } catch (Exception e) {
             throw new TraitNotFoundException(e);
@@ -480,7 +479,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
         }
         Skill skill = null;
         try {
-            skill = (Skill) skillClass.getConstructor(Character.class).newInstance(this);
+            skill = (Skill) skillClass.getConstructor(Individual.class).newInstance(this);
         } catch (Exception e) {
             e.printStackTrace();
             return new Skill(this, "Unknown Skill", Attribute.Unknown, Skill.Difficulty.Unknown);
@@ -496,7 +495,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
         if (learntSkills.containsKey(skillKey)) {
             return learntSkills.get(skillKey);
         } else try {
-            Skill skill = (Skill) Skill.forName(skillKey).getConstructor(Character.class).newInstance(this);
+            Skill skill = (Skill) Skill.forName(skillKey).getConstructor(Individual.class).newInstance(this);
             learntSkills.put(skill.getKey(), skill);
             return skill;
         } catch (Exception e) {
@@ -570,7 +569,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
         float attributeCost = characterAttribute.getLevelCost() * (modifier / characterAttribute.getLevelIncrement());
         float remainingPoints = getRemainingPoints();
         if (remainingPoints < attributeCost) {
-            Log.w("Character", String.format("Characters remaining %.1f points, but attribute cost is %.1f", remainingPoints, attributeCost));
+            Log.w("Individual", String.format("Characters remaining %.1f points, but attribute cost is %.1f", remainingPoints, attributeCost));
             // throw new NotEnoughCharacterPointsException(String.format("Characters remaining %.1f points, but attribute cost is %.1f", remainingPoints, attributeCost));
         }
         attributes.get(attribute).increase(modifier);
@@ -741,7 +740,7 @@ public class Character implements Modifier.IInfluential, GameMap.MapToken {
 
         // Notify if physical states changes:
         if(physicalStates.size() > physicalStatesCount){
-            Log.i("Character", String.format("%s is now %s", getName(), Arrays.toString(physicalStates.toArray())));
+            Log.i("Individual", String.format("%s is now %s", getName(), Arrays.toString(physicalStates.toArray())));
         }
 
     }

@@ -1,8 +1,8 @@
 package net.mortiy.gurps.rules.skills.all;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.Character;
 
 /**
  * Holdout
@@ -10,7 +10,7 @@ import net.mortiy.gurps.rules.Character;
  * Description:
  */
 public class Holdout extends Skill {
-    public Holdout(Character character) {
-        super(character, "Holdout", Attribute.Intelligence, Difficulty.Average);
+    public Holdout(Individual individual) {
+        super(individual, "Holdout", Attribute.Intelligence, Difficulty.Average);
     }
 }

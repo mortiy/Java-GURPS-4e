@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.equipment.weapon;
 
 import net.mortiy.gurps.Log;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.TechLevel;
 import net.mortiy.gurps.rules.equipment.weapon.statistics.MusclePoweredMeleeWeaponMode;
 import net.mortiy.gurps.rules.equipment.weapon.statistics.MusclePoweredDamage;
@@ -20,9 +20,9 @@ public class MeleeWeapon extends Weapon {
         super(name, techLevel, weaponModes, cost, weight);
     }
 
-    public RollFormula getDamageFormula(Character character) {
+    public RollFormula getDamageFormula(Individual individual) {
         try {
-            return getDamageFormula(character, ((MusclePoweredMeleeWeaponMode) activeWeaponMode).getBasicType());
+            return getDamageFormula(individual, ((MusclePoweredMeleeWeaponMode) activeWeaponMode).getBasicType());
         } catch (WeaponHasNoSuchDamageTypeException e) {
             String errorMessage = "Weapon was set active damage type which doesn't belongs to it.";
             Log.e("Weapon", errorMessage);
@@ -31,7 +31,7 @@ public class MeleeWeapon extends Weapon {
 
     }
 
-    public RollFormula getDamageFormula(Character character, MusclePoweredDamage.Type damageType) throws WeaponHasNoSuchDamageTypeException {
+    public RollFormula getDamageFormula(Individual individual, MusclePoweredDamage.Type damageType) throws WeaponHasNoSuchDamageTypeException {
         MusclePoweredMeleeWeaponMode musclePoweredDamage = null;
         List<MusclePoweredMeleeWeaponMode> damageTypes = (List<MusclePoweredMeleeWeaponMode>) getWeaponModes();
         for (MusclePoweredMeleeWeaponMode mpd : damageTypes) {
@@ -41,11 +41,11 @@ public class MeleeWeapon extends Weapon {
             }
         }
         if (musclePoweredDamage == null) {
-            Log.w("Fighter", String.format("'%s' can't '%s' with '%s' weapon", character.getName(), damageType, getName()));
+            Log.w("Fighter", String.format("'%s' can't '%s' with '%s' weapon", individual.getName(), damageType, getName()));
             throw new WeaponHasNoSuchDamageTypeException();
         }
 
-        RollFormula basicFormula = MusclePoweredDamage.getDamageFormula(character, damageType);
+        RollFormula basicFormula = MusclePoweredDamage.getDamageFormula(individual, damageType);
         RollFormula weaponPowerFormula = new RollFormula(
                 basicFormula.getDiceQuantity(),
                 basicFormula.getModifier() + musclePoweredDamage.getWeaponDamage().getDamageFormula().getModifier()

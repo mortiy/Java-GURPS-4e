@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.pole;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
 
 /**
@@ -12,8 +12,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
  * and fixed bayonets.
  */
 public class Spear extends PoleMeleeWeapon {
-    public Spear(Character character) {
-        super(character, "Spear");
+    public Spear(Individual individual) {
+        super(individual, "Spear");
         try {
             setDefault("Polearm", -4);
             setDefault("Staff", -2);

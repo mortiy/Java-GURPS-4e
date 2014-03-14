@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.traits;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +10,7 @@ import net.mortiy.gurps.rules.Character;
  * To change this template use File | Settings | File Templates.
  */
 public class Quirk extends FixedTrait implements Disadvantage {
-    public Quirk(Character character, String name) {
-        super(character, name, -1);
+    public Quirk(Individual individual, String name) {
+        super(individual, name, -1);
     }
 }

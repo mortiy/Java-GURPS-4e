@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.modifiers.SummandModifier;
 import net.mortiy.gurps.rules.traits.Disadvantage;
 import net.mortiy.gurps.rules.traits.FixedTrait;
@@ -19,12 +20,12 @@ import net.mortiy.gurps.rules.traits.FixedTrait;
  * TODO: Create posibility for modifier to limit basic attributes ("Your HT may not be above 15.")
  */
 public class Fat extends FixedTrait implements Disadvantage {
-    public Fat(net.mortiy.gurps.rules.Character character) {
-        super(character, "Fat", -3);
+    public Fat(Individual individual) {
+        super(individual, "Fat", -3);
 
-            addModifier(character.getSkill("Disguise"), new SummandModifier(-2));
-            addModifier(character.getSkill("Shadowing"), new SummandModifier(-2));
-            addModifier(character.getSkill("Swimming"), new SummandModifier(+3));
+            addModifier(individual.getSkill("Disguise"), new SummandModifier(-2));
+            addModifier(individual.getSkill("Shadowing"), new SummandModifier(-2));
+            addModifier(individual.getSkill("Swimming"), new SummandModifier(+3));
 
     }
 }

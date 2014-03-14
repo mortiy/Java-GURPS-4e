@@ -169,7 +169,7 @@ public class HexPathfinder {
 
     }
 
-    private List<Hex> getAdjacent(Hex hex){
+    private List<Hex> getAdjacent(final Hex hex){
         int hexX = hex.getPoint().getX();
         int hexY = hex.getPoint().getY();
 

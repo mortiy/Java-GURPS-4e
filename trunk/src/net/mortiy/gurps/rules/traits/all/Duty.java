@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.table.DiceRoller;
 import net.mortiy.gurps.rules.table.rolls.SimpleRoll;
 import net.mortiy.gurps.rules.traits.Disadvantage;
@@ -83,12 +83,12 @@ public class Duty extends VariableTrait implements Disadvantage, Social {
      */
     private Set<Hazard> hazards = new HashSet<Hazard>();
 
-    public Duty(Character character, Frequency frequency) {
-        this(character, frequency, Hazard.None);
+    public Duty(Individual individual, Frequency frequency) {
+        this(individual, frequency, Hazard.None);
     }
 
-    public Duty(Character character, Frequency frequency, Hazard hazard) {
-        super(character, "Duty");
+    public Duty(Individual individual, Frequency frequency, Hazard hazard) {
+        super(individual, "Duty");
         currentLevel = frequency;
         levelsCost = new int[]{-2, -5, -10, -15};
         addHazard(hazard);

@@ -51,7 +51,7 @@ public class Token extends Observable implements GameMap.MapToken {
 
     public void setRotationAngle(float rotationAngle) {
         this.rotationAngle = rotationAngle;
-        image.setRotation(rotationAngle - 60);
+        image.setRotation(rotationAngle);
         setChanged();
         notifyObservers(new TokenEvent(TokenEventType.RotationChange, rotationAngle));
     }

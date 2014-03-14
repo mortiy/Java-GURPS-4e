@@ -11,7 +11,7 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.WhipMeleeWeapon;
  * handle.
  */
 public class MonowireWhip extends WhipMeleeWeapon {
-    public MonowireWhip(net.mortiy.gurps.rules.Character character) {
-        super(character, "Monowire Whip", Difficulty.Hard);
+    public MonowireWhip(Individual individual) {
+        super(individual, "Monowire Whip", Difficulty.Hard);
     }
 }

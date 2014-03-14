@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.attributes.secondary;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
 
@@ -10,12 +11,12 @@ import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
  * TODO: You cannot raise Per past 20, or lower it by more than 4, without GM permission
  */
 public class Perception extends SecondaryCharacteristic {
-    public Perception(net.mortiy.gurps.rules.Character character) {
-        super(character);
+    public Perception(Individual individual) {
+        super(individual);
         levelCost = 5;
     }
 
     public float getValue(){
-        return level + character.getAttribute(Attribute.Intelligence).getValue();
+        return level + individual.getAttribute(Attribute.Intelligence).getValue();
     }
 }

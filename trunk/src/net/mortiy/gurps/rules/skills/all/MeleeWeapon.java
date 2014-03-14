@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.skills.all;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.skills.SkillDefault;
@@ -17,12 +18,12 @@ import net.mortiy.gurps.rules.skills.SkillDefault;
  */
 public class MeleeWeapon extends Skill {
 
-    public MeleeWeapon(net.mortiy.gurps.rules.Character character, String name, Difficulty difficulty) {
-        this(character, name, "", difficulty);
+    public MeleeWeapon(Individual individual, String name, Difficulty difficulty) {
+        this(individual, name, "", difficulty);
     }
 
-    public MeleeWeapon(net.mortiy.gurps.rules.Character character, String name, String speciality, Difficulty difficulty) {
-        super(character, name, speciality, Attribute.Dexterity, difficulty);
+    public MeleeWeapon(Individual individual, String name, String speciality, Difficulty difficulty) {
+        super(individual, name, speciality, Attribute.Dexterity, difficulty);
 
         skillDefaults.add(
                 new SkillDefault(Attribute.Dexterity, -(4 + difficulty.ordinal()))

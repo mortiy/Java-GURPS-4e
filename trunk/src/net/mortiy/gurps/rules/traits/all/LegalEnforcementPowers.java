@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Advantage;
 import net.mortiy.gurps.rules.traits.VariableTrait;
 import net.mortiy.gurps.rules.traits.categories.Social;
@@ -41,8 +41,8 @@ public class LegalEnforcementPowers extends VariableTrait implements Advantage, 
         Special,
     }
 
-    public LegalEnforcementPowers(Character character) {
-        super(character, "Legal Enforcement Powers");
+    public LegalEnforcementPowers(Individual individual) {
+        super(individual, "Legal Enforcement Powers");
         levelsCost = new int[]{5, 10, 15};
     }
 }

@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.table.DiceRoller;
 import net.mortiy.gurps.rules.table.Rolls;
 import net.mortiy.gurps.rules.table.rolls.SimpleRoll;
@@ -43,8 +43,8 @@ public class SelfControlDisadvantage extends FixedTrait implements Disadvantage,
     private int[] frequencyRoll = new int[]{6, 9, 12, 15};
     private Frequency frequency;
 
-    public SelfControlDisadvantage(Character character, String name, Integer cost, Frequency frequency) {
-        super(character, name, cost);
+    public SelfControlDisadvantage(Individual individual, String name, Integer cost, Frequency frequency) {
+        super(individual, name, cost);
         this.frequency = frequency;
     }
 
@@ -54,7 +54,7 @@ public class SelfControlDisadvantage extends FixedTrait implements Disadvantage,
     }
 
     public DiceRoller.RollResult performSelfControlRoll() {
-        int rollAgainst = (int) Math.floor(frequencyRoll[frequency.ordinal()] + character.getTotalModifier(Rolls.SelfControlRoll));
+        int rollAgainst = (int) Math.floor(frequencyRoll[frequency.ordinal()] + individual.getTotalModifier(Rolls.SelfControlRoll));
         return new SimpleRoll(rollAgainst).getResult();
     }
 

@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * Represents levelable trait.
@@ -26,35 +26,35 @@ public class LevelTrait extends Trait {
     /**
      * Create new levelable trait with variable level cost
      *
-     * @param character Character
+     * @param individual Character
      * @param name      Trait name
      */
-    public LevelTrait(Character character, String name) {
-        this(character, name, 0);
+    public LevelTrait(Individual individual, String name) {
+        this(individual, name, 0);
     }
 
     /**
      * Create new levelable trait with fixed level cost
      *
-     * @param character Character
+     * @param individual Character
      * @param name      Trait name
      * @param levelCost Level cost
      */
-    public LevelTrait(Character character, String name, int levelCost) {
-        super(character, name, CostType.Level, levelCost);
+    public LevelTrait(Individual individual, String name, int levelCost) {
+        super(individual, name, CostType.Level, levelCost);
     }
 
     /**
      * Create new levelable trait with fixed level cost and specifier maximum level
      *
-     * @param character Character
+     * @param individual Character
      * @param name      Trait name
      * @param levelCost Level cost
      * @param minLevel  Minimum possible trait's level
      * @param maxLevel  Maximum possible trait's level
      */
-    public LevelTrait(Character character, String name, int levelCost, int minLevel, int maxLevel) {
-        this(character, name, levelCost);
+    public LevelTrait(Individual individual, String name, int levelCost, int minLevel, int maxLevel) {
+        this(individual, name, levelCost);
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
     }
@@ -62,13 +62,13 @@ public class LevelTrait extends Trait {
     /**
      * Create new levelable trait with fixed level cost and specifier maximum level
      *
-     * @param character Character
+     * @param individual Character
      * @param name      Trait name
      * @param levelCost Level cost
      * @param maxLevel  Maximum possible trait's level
      */
-    public LevelTrait(Character character, String name, int levelCost, int maxLevel) {
-        this(character, name, levelCost, 0, maxLevel);
+    public LevelTrait(Individual individual, String name, int levelCost, int maxLevel) {
+        this(individual, name, levelCost, 0, maxLevel);
     }
 
 

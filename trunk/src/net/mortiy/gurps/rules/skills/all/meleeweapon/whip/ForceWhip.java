@@ -15,7 +15,7 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.WhipMeleeWeapon;
  * lash the target but not ensnare him.
  */
 public class ForceWhip extends WhipMeleeWeapon {
-    public ForceWhip(net.mortiy.gurps.rules.Character character) {
-        super(character, "Force Whip", Difficulty.Average);
+    public ForceWhip(Individual individual) {
+        super(individual, "Force Whip", Difficulty.Average);
     }
 }

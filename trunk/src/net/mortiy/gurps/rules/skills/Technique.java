@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.skills;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 
 /**
@@ -19,7 +19,7 @@ import net.mortiy.gurps.rules.attributes.Attribute;
  * TODO: Technique (p. 229)
  */
 public class Technique extends Skill {
-    public Technique(Character character, String name, Attribute attribute, Difficulty difficulty) {
-        super(character, name, attribute, difficulty);
+    public Technique(Individual individual, String name, Attribute attribute, Difficulty difficulty) {
+        super(individual, name, attribute, difficulty);
     }
 }

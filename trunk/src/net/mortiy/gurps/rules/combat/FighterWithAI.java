@@ -1,12 +1,12 @@
 package net.mortiy.gurps.rules.combat;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.combat.maneuver.DoNothingManeuver;
 
 public class FighterWithAI extends Fighter {
 
-    public FighterWithAI(Character character) {
-        super(character);
+    public FighterWithAI(Individual individual) {
+        super(individual);
     }
 
     @Override

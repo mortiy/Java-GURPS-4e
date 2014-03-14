@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.attributes.secondary;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
 
@@ -10,15 +11,15 @@ import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
  */
 public class HitPoints extends SecondaryCharacteristic {
 
-    public HitPoints(net.mortiy.gurps.rules.Character character) {
-        super(character);
+    public HitPoints(Individual individual) {
+        super(individual);
         attribute = Attribute.HitPoints;
         levelCost = 2;
         this.currentValue = getValue();
     }
 
     public float getValue() {
-        return level + character.getAttribute(Attribute.Strength).getValue();
+        return level + individual.getAttribute(Attribute.Strength).getValue();
     }
 
     @Override
@@ -28,7 +29,7 @@ public class HitPoints extends SecondaryCharacteristic {
     public float getCost() {
 
         // Size Modifier discount (p. 16)
-        int sizeModifier = character.getBody().getSizeModifier();
+        int sizeModifier = individual.getBody().getSizeModifier();
         float sizeDiscount = 1.0f;
         if (sizeModifier > 0) {
             if (sizeModifier > 8) {

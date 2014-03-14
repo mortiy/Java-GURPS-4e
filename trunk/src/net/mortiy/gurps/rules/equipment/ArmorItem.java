@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.equipment;
 
 import net.mortiy.gurps.rules.TechLevel;
-import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.individual.Body;
 import net.mortiy.gurps.rules.combat.Damage;
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package net.mortiy.gurps.rules.character;
+package net.mortiy.gurps.rules.individual;
 
 /**
  * TODO: Build p.18

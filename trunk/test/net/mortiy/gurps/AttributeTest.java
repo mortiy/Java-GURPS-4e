@@ -1,8 +1,7 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.Constants;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 
 /**
@@ -16,32 +15,32 @@ public class AttributeTest extends TestCase {
 
     public void testAttributes() throws Exception {
 
-        net.mortiy.gurps.rules.Character character = new Character(Constants.MAX_CHARACTER_POINTS);
+        Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
 
-        assertEquals(10, character.getBasicAttribute(Attribute.Dexterity).getLevel());
+        assertEquals(10, individual.getBasicAttribute(Attribute.Dexterity).getLevel());
 
-        character.increaseAttribute(Attribute.Dexterity); // 0 + 20 = 20
-        assertEquals(11, character.getBasicAttribute(Attribute.Dexterity).getLevel());
-        assertEquals(20f, character.getCharacterCost());
+        individual.increaseAttribute(Attribute.Dexterity); // 0 + 20 = 20
+        assertEquals(11, individual.getBasicAttribute(Attribute.Dexterity).getLevel());
+        assertEquals(20f, individual.getCharacterCost());
 
-        character.increaseAttribute(Attribute.Intelligence, 3); // 20 + 60 = 80
-        assertEquals(13, character.getBasicAttribute(Attribute.Intelligence).getLevel());
-        assertEquals(80f, character.getCharacterCost());
+        individual.increaseAttribute(Attribute.Intelligence, 3); // 20 + 60 = 80
+        assertEquals(13, individual.getBasicAttribute(Attribute.Intelligence).getLevel());
+        assertEquals(80f, individual.getCharacterCost());
 
-        character.decreaseAttribute(Attribute.Health, 5); // 80 - 50 = 30
-        assertEquals(5, character.getBasicAttribute(Attribute.Health).getLevel());
-        assertEquals(30f, character.getCharacterCost());
+        individual.decreaseAttribute(Attribute.Health, 5); // 80 - 50 = 30
+        assertEquals(5, individual.getBasicAttribute(Attribute.Health).getLevel());
+        assertEquals(30f, individual.getCharacterCost());
 
-        character.decreaseAttribute(Attribute.Strength, 2); // 30 - 20 = 10
-        assertEquals(8, character.getBasicAttribute(Attribute.Strength).getLevel());
-        assertEquals(10f, character.getCharacterCost());
+        individual.decreaseAttribute(Attribute.Strength, 2); // 30 - 20 = 10
+        assertEquals(8, individual.getBasicAttribute(Attribute.Strength).getLevel());
+        assertEquals(10f, individual.getCharacterCost());
 
-        assertEquals(Constants.MAX_CHARACTER_POINTS - character.getCharacterCost(), character.getRemainingPoints());
+        assertEquals(Constants.MAX_CHARACTER_POINTS - individual.getCharacterCost(), individual.getRemainingPoints());
 
-        assertEquals(11, character.getBasicAttribute(Attribute.Dexterity).getLevel());
-        assertEquals(13, character.getBasicAttribute(Attribute.Intelligence).getLevel());
-        assertEquals(5, character.getBasicAttribute(Attribute.Health).getLevel());
-        assertEquals(8, character.getBasicAttribute(Attribute.Strength).getLevel());
+        assertEquals(11, individual.getBasicAttribute(Attribute.Dexterity).getLevel());
+        assertEquals(13, individual.getBasicAttribute(Attribute.Intelligence).getLevel());
+        assertEquals(5, individual.getBasicAttribute(Attribute.Health).getLevel());
+        assertEquals(8, individual.getBasicAttribute(Attribute.Strength).getLevel());
 
     }
 }

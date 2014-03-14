@@ -1,7 +1,7 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.basic.Intelligence;
 import net.mortiy.gurps.rules.skills.Skill;
@@ -27,26 +27,26 @@ public class SkillTest extends TestCase {
 
     public void testSkillLearning() throws Exception {
 
-        Character character = new Character(Constants.MAX_CHARACTER_POINTS);
+        Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
 
-        character.increaseAttribute(Attribute.Intelligence, 5); // 15
-        character.increaseAttribute(Attribute.Dexterity, 2); // 12
+        individual.increaseAttribute(Attribute.Intelligence, 5); // 15
+        individual.increaseAttribute(Attribute.Dexterity, 2); // 12
 
-        Skill accounting = new Accounting(character); // IQ/Hard
-        assertFalse(character.hasLearntSkill("Accounting"));
-        Skill bicycling = new Bicycling(character); // DX/Easy
+        Skill accounting = new Accounting(individual); // IQ/Hard
+        assertFalse(individual.hasLearntSkill("Accounting"));
+        Skill bicycling = new Bicycling(individual); // DX/Easy
         bicycling.setLevel(5);
-        assertTrue(character.hasLearntSkill("Bicycling"));
-        Skill musicalInstrument = new Skill(character, "Musical Instrument", "Piano", Attribute.Intelligence, Skill.Difficulty.Hard);
+        assertTrue(individual.hasLearntSkill("Bicycling"));
+        Skill musicalInstrument = new Skill(individual, "Musical Instrument", "Piano", Attribute.Intelligence, Skill.Difficulty.Hard);
         musicalInstrument.setLevel(5);
-        assertTrue("Check if character can play piano.", character.hasLearntSkill("Musical Instrument (Piano)"));
+        assertTrue("Check if individual can play piano.", individual.hasLearntSkill("Musical Instrument (Piano)"));
 
         accounting.setLevel(10);
         bicycling.setLevel(10);
         musicalInstrument.setLevel(10);
 
-        int intelligenceLevel = character.getBasicAttribute(Attribute.Intelligence).getLevel();
-        int dexterityLevel = character.getBasicAttribute(Attribute.Dexterity).getLevel();
+        int intelligenceLevel = individual.getBasicAttribute(Attribute.Intelligence).getLevel();
+        int dexterityLevel = individual.getBasicAttribute(Attribute.Dexterity).getLevel();
 
         // IQ/Hard
         assertEquals("Cost of Hard skill 'Attribute-2'", 1, accounting.getCost(intelligenceLevel - 2));
@@ -64,8 +64,8 @@ public class SkillTest extends TestCase {
     }
 
     public void testLearningCost() throws Exception {
-        Character character = new Character(100);
-        new Accounting(character);
+        Individual individual = new Individual(100);
+        new Accounting(individual);
 
     }
 
@@ -73,17 +73,17 @@ public class SkillTest extends TestCase {
 
         int FINANCE_SKILL_LEVEL = 12;
 
-        Character character = new Character(Constants.MAX_CHARACTER_POINTS);
-        Intelligence intelligence = (Intelligence) character.getAttribute(Attribute.Intelligence);
-        character.increaseAttribute(Attribute.Intelligence, 2);
+        Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
+        Intelligence intelligence = (Intelligence) individual.getAttribute(Attribute.Intelligence);
+        individual.increaseAttribute(Attribute.Intelligence, 2);
         assertEquals("Check Intelligence level", 12, intelligence.getLevel());
 
-        Skill financeSkill = new Skill(character, "Finance", Attribute.Intelligence, Skill.Difficulty.Hard);
+        Skill financeSkill = new Skill(individual, "Finance", Attribute.Intelligence, Skill.Difficulty.Hard);
         financeSkill.setLevel(FINANCE_SKILL_LEVEL);
 
 
         // Accounting defaults (IQ-6, Finance-4)
-        Skill accountingSkill = new Accounting(character);
+        Skill accountingSkill = new Accounting(individual);
         SkillDefault bestSkillDefault;
         int bestDefaultLevel;
 
@@ -110,26 +110,26 @@ public class SkillTest extends TestCase {
 
         // Character IQ = 15
         // Finance Skill Level = 12
-        character.increaseAttribute(Attribute.Intelligence, 3);
-        int intelligenceLevel = character.getBasicAttribute(Attribute.Intelligence).getLevel();
+        individual.increaseAttribute(Attribute.Intelligence, 3);
+        int intelligenceLevel = individual.getBasicAttribute(Attribute.Intelligence).getLevel();
         bestSkillDefault = accountingSkill.findBestSkillDefault();
         assertEquals("Check that current best default is Intelligence Attribute", Attribute.Intelligence, ((Attribute) bestSkillDefault.skillDefault));
 
-        Mathematics mathematics = new Mathematics(character);
+        Mathematics mathematics = new Mathematics(individual);
 
         bestDefaultLevel = accountingSkill.getDefaultSkillLevel(bestSkillDefault);
         assertEquals("Intelligence level comparison", intelligenceLevel - 6, bestDefaultLevel);
     }
 
     public void testSkillUsage() {
-        Character character = new Character(Constants.MAX_CHARACTER_POINTS);
-        Accounting accountingSkill = new Accounting(character);
-        character.addSkill(accountingSkill);
+        Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
+        Accounting accountingSkill = new Accounting(individual);
+        individual.addSkill(accountingSkill);
         accountingSkill.setLevel(40);
         SuccessRoll successRoll = null;
         try {
-            successRoll = character.useSkill("Accounting");
-        } catch (Character.SkillNotFoundException e) {
+            successRoll = individual.useSkill("Accounting");
+        } catch (Individual.SkillNotFoundException e) {
             e.printStackTrace();
         }
         assertEquals(DiceRoller.RollResult.CriticalSuccess, successRoll.getRollResult());
@@ -138,10 +138,10 @@ public class SkillTest extends TestCase {
     }
 
     public void testSkillInstantiation(){
-        Character character = new Character(Constants.MAX_CHARACTER_POINTS);
-        character.addSkill(new Kusari(character), 15);
-        character.addSkill(new TwoHandedSword(character), 15);
-        character.getSkill("Two-Handed Sword");
-        character.getSkill("Jitte/Sai");
+        Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
+        individual.addSkill(new Kusari(individual), 15);
+        individual.addSkill(new TwoHandedSword(individual), 15);
+        individual.getSkill("Two-Handed Sword");
+        individual.getSkill("Jitte/Sai");
     }
 }

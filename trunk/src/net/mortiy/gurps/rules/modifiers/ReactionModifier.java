@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.modifiers;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.table.Rolls;
-import net.mortiy.gurps.rules.Character;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,26 +12,26 @@ import net.mortiy.gurps.rules.Character;
  */
 public class ReactionModifier extends Modifier {
     public interface ReactionDeterminator {
-        float determineReaction(Character character);
+        float determineReaction(Individual individual);
     }
 
     private ReactionDeterminator reactionDeterminator;
 
-    public ReactionModifier(Character character, final int reactionModifier) {
-        this(character, new ReactionDeterminator() {
+    public ReactionModifier(Individual individual, final int reactionModifier) {
+        this(individual, new ReactionDeterminator() {
             @Override
-            public float determineReaction(Character character) {
+            public float determineReaction(Individual individual) {
                 return reactionModifier;
             }
         });
     }
 
-    public ReactionModifier(Character character, ReactionDeterminator reactionDeterminator) {
-        super(character, Rolls.ReactionRoll, new SummandModifier(0));
+    public ReactionModifier(Individual individual, ReactionDeterminator reactionDeterminator) {
+        super(individual, Rolls.ReactionRoll, new SummandModifier(0));
         this.reactionDeterminator = reactionDeterminator;
     }
 
     public float getModifierValue(IInfluential influential) {
-        return reactionDeterminator.determineReaction((Character) influential);
+        return reactionDeterminator.determineReaction((Individual) influential);
     }
 }

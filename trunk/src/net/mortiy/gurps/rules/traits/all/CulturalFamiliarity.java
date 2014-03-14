@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Advantage;
 import net.mortiy.gurps.rules.traits.VariableTrait;
 
@@ -31,8 +30,8 @@ public class CulturalFamiliarity extends VariableTrait implements Advantage {
 
     int[] costs = new int[]{1, 2};
 
-    public CulturalFamiliarity(Character character) {
-        super(character, "Cultural Familiarity");
+    public CulturalFamiliarity(Individual individual) {
+        super(individual, "Cultural Familiarity");
     }
 
     public void learnCulture(String culture, CultureType cultureType) {

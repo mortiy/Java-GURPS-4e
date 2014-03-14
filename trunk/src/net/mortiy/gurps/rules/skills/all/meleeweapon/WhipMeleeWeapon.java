@@ -24,7 +24,7 @@ import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
  * one another at -3.
  */
 public class WhipMeleeWeapon extends MeleeWeapon {
-    public WhipMeleeWeapon(net.mortiy.gurps.rules.Character character, String name, Difficulty difficulty) {
-        super(character, name, difficulty);
+    public WhipMeleeWeapon(Individual individual, String name, Difficulty difficulty) {
+        super(individual, name, difficulty);
     }
 }

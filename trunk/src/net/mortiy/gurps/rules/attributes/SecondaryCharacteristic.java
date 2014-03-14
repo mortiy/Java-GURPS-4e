@@ -1,5 +1,5 @@
 package net.mortiy.gurps.rules.attributes;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.interfaces.ISkillDefault;
 
 /**
@@ -10,11 +10,11 @@ import net.mortiy.gurps.rules.skills.interfaces.ISkillDefault;
  * This does not affect the related attribute scores.
  */
 public class SecondaryCharacteristic extends CharacterAttribute implements ISkillDefault {
-    protected Character character;
+    protected Individual individual;
     protected float currentValue;
-    public SecondaryCharacteristic(Character character) {
+    public SecondaryCharacteristic(Individual individual) {
         super(Attribute.Unknown);
-        this.character = character;
+        this.individual = individual;
         this.currentValue = getValue();
     }
 

@@ -1,7 +1,7 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.CharacterAttribute;
 import net.mortiy.gurps.rules.attributes.secondary.BasicMove;
@@ -9,25 +9,25 @@ import net.mortiy.gurps.rules.attributes.secondary.BasicSpeed;
 import net.mortiy.gurps.rules.attributes.secondary.Dodge;
 
 public class SecondaryCharacteristicsTest extends TestCase {
-    Character character = new Character(Constants.MAX_CHARACTER_POINTS);
+    Individual individual = new Individual(Constants.MAX_CHARACTER_POINTS);
 
     public void testBasicSpeedAndMove() throws Exception {
 
-        BasicSpeed basicSpeed = character.getBasicSpeed();
-        BasicMove basicMove = character.getBasicMove();
-        Dodge dodge = character.getDodge();
+        BasicSpeed basicSpeed = individual.getBasicSpeed();
+        BasicMove basicMove = individual.getBasicMove();
+        Dodge dodge = individual.getDodge();
 
         assertEquals("Basic Speed at DX 10 and HT 10", 5.0f, basicSpeed.getValue());
-        character.increaseAttribute(Attribute.Dexterity, 2);
-        character.increaseAttribute(Attribute.Health, 4);
+        individual.increaseAttribute(Attribute.Dexterity, 2);
+        individual.increaseAttribute(Attribute.Health, 4);
         assertEquals("Basic Speed at DX 12 and HT 14", 6.5f, basicSpeed.getValue());
         assertEquals("Dodge at Basic Speed 6.5", 9.0f, dodge.getValue());
 
-        character.increaseAttribute(Attribute.BasicSpeed, 1.5f);
+        individual.increaseAttribute(Attribute.BasicSpeed, 1.5f);
         assertEquals("Basic Speed at DX 12 and HT 14 + 1.5 trained", 8.0f, basicSpeed.getValue());
         assertEquals("Cost of +1.5 Basic Speed points", 30f, basicSpeed.getCost());
 
-        character.increaseAttribute(Attribute.BasicSpeed, 0.25f);
+        individual.increaseAttribute(Attribute.BasicSpeed, 0.25f);
         assertEquals("Basic Move at Basic Speed 8.25", 8.0f, basicMove.getValue());
 
         assertEquals("Dodge at Basic Speed 8.25", 11.0f, dodge.getValue());
@@ -36,33 +36,33 @@ public class SecondaryCharacteristicsTest extends TestCase {
 
     public void testBasicLift() throws Exception {
 
-        CharacterAttribute basicLift = character.getBasicLift();
+        CharacterAttribute basicLift = individual.getBasicLift();
 
         assertEquals("Basic Lift at ST 10", 20f, basicLift.getValue());
-        character.increaseAttribute(Attribute.Strength, 5);
+        individual.increaseAttribute(Attribute.Strength, 5);
         assertEquals("Basic Lift at ST 15", 45f, basicLift.getValue());
 
     }
 
     public void testHitPoints() throws  Exception {
-        CharacterAttribute hitPoints = character.getHitpoints();
+        CharacterAttribute hitPoints = individual.getHitpoints();
         assertEquals("Hit Points at ST 10", 10f, hitPoints.getValue());
 
-        character.increaseAttribute(Attribute.Strength, 5);
+        individual.increaseAttribute(Attribute.Strength, 5);
         assertEquals("Hit Points at ST 15", 15f, hitPoints.getValue());
 
-        character.increaseAttribute(Attribute.HitPoints, 5);
+        individual.increaseAttribute(Attribute.HitPoints, 5);
         assertEquals("Hit points at ST 15 + 5 bought", 20f, hitPoints.getValue());
         assertEquals("Cost of +5 Hit Points", 10f, hitPoints.getCost());
 
-        character.getBody().setSizeModifier(4);
+        individual.getBody().setSizeModifier(4);
         assertEquals("Cost with Size Modifier +4", 6f, hitPoints.getCost());
 
     }
 
     public void testWillAndPerception() throws Exception {
-        CharacterAttribute will = character.getWill();
-        CharacterAttribute perception = character.getPerception();
+        CharacterAttribute will = individual.getWill();
+        CharacterAttribute perception = individual.getPerception();
 
         assertEquals("Will at IQ 10", 10f, will.getValue());
         assertEquals("Perception at IQ 10", 10f, perception.getValue());

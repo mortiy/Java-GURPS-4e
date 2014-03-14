@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.pole;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
 
 /**
@@ -14,8 +14,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
  * score.
  */
 public class Staff extends PoleMeleeWeapon {
-    public Staff(Character character) {
-        super(character, "Staff");
+    public Staff(Individual individual) {
+        super(individual, "Staff");
         try {
             setDefault("Polearm", -4);
             setDefault("Spear", -2);

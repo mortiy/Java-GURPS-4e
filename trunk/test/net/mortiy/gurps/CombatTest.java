@@ -1,10 +1,10 @@
 package net.mortiy.gurps;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.combat.*;
 import net.mortiy.gurps.rules.attributes.Attribute;
-import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.individual.Body;
 import net.mortiy.gurps.rules.combat.exceptions.FighterHasNoManueverException;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
 import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
@@ -32,7 +32,7 @@ public class CombatTest extends TestCase {
     public void testRulebookScenario() throws NotEnoughCharacterPointsException, FighterHasNoManueverException, RoundIsOverException, ImpossibleManeuverException, IsNotReadyException {
 
         // Louis:
-        Character louis = new Character(100);
+        Individual louis = new Individual(100);
         louis.setBasicAttribute(Attribute.Strength, 11);
         louis.setName("Louis LeBlanc");
         louis.getEquipment().putAndEquipItem(new ShortswordWeapon(), Body.Part.RightHand);
@@ -41,7 +41,7 @@ public class CombatTest extends TestCase {
         louis.addSkill(new Shortsword(louis), 15);
 
         // Pierre:
-        Character pierre = new Character(100);
+        Individual pierre = new Individual(100);
         pierre.setName("Pierre");
         pierre.getEquipment().putAndEquipItem(new ShortswordWeapon(), Body.Part.RightHand);
         pierre.getEquipment().putAndEquipItem(new SmallShield(), Body.Part.LeftHand);
@@ -64,8 +64,8 @@ public class CombatTest extends TestCase {
         Fighter pierreFighter = fighters.get(1);
 
         // Check that we have correct fighters:
-        assertEquals(louis, louisFighter.getCharacter());
-        assertEquals(pierre, pierreFighter.getCharacter());
+        assertEquals(louis, louisFighter.getIndividual());
+        assertEquals(pierre, pierreFighter.getIndividual());
 
         // Pierre has a Dodge of 8, Shield-12 (giving him a Block of 9)
         Defense piereDefense = pierreFighter.getDefense();
@@ -112,10 +112,10 @@ public class CombatTest extends TestCase {
      */
     public void testManeuverAvailableMoves() throws Exception {
 
-        Character c1 = new Character(100);
+        Individual c1 = new Individual(100);
         c1.setName("Alpha");
 
-        Character c2 = new Character(100);
+        Individual c2 = new Individual(100);
         c2.setName("Beta");
 
         int basicMove = (int) c1.getBasicMove().getValue();
@@ -135,7 +135,7 @@ public class CombatTest extends TestCase {
         fighter.setNextManeuver(new MoveManeuver());
         assertEquals(basicMove, fighter.getAvailableMoves());
 
-        fighter.setNextManeuver(new ChangePostureManeuver(Character.Posture.Crawling));
+        fighter.setNextManeuver(new ChangePostureManeuver(Individual.Posture.Crawling));
         assertEquals(0, fighter.getAvailableMoves());
 
         fighter.setNextManeuver(new AimManeuver());
@@ -234,7 +234,7 @@ public class CombatTest extends TestCase {
         List<Fighter> fighters = combat.getFighters();
 
         Fighter alpha = fighters.get(0);
-        Equipment equipment = alpha.getCharacter().getEquipment();
+        Equipment equipment = alpha.getIndividual().getEquipment();
 
         equipment.putAndEquipItem(new ShortswordWeapon(), Body.Part.RightHand);
         equipment.putAndEquipItem(new LargeShield(), Body.Part.LeftHand);
@@ -250,8 +250,8 @@ public class CombatTest extends TestCase {
         assertEquals(4, alpha.getAttackModifier(ManeuverType.AllOutAttack, equippedWeapon));
         assertEquals(-4, alpha.getAttackModifier(ManeuverType.MoveAndAttack, equippedWeapon));
 
-        assertEquals("Check Short Sword required minimum character's strength", 8, equippedWeapon.getMinStrength());
-        alpha.getCharacter().setBasicAttribute(Attribute.Strength, 6);
+        assertEquals("Check Short Sword required minimum individual's strength", 8, equippedWeapon.getMinStrength());
+        alpha.getIndividual().setBasicAttribute(Attribute.Strength, 6);
 
         assertEquals("Low strength should give [6 - 8 = -2]", -2, alpha.getAttackModifier(ManeuverType.Attack, equippedWeapon));
 
@@ -270,7 +270,7 @@ public class CombatTest extends TestCase {
         combatManager.turn(); // Skip Fighters 2 turn;
 
         f1.setNextManeuver(new AttackManeuver(f2, AttackManeuver.Type.Melee, f1.getActiveWeapon()));
-        while (f2.getCharacter().getHitpoints().getCurrentValue() > 0) {
+        while (f2.getIndividual().getHitpoints().getCurrentValue() > 0) {
             combatManager.turn();
             if (combatManager.isRoundOver()) {
                 combatManager.startNewRound();
@@ -281,15 +281,15 @@ public class CombatTest extends TestCase {
 
     private Combat createTestCombat() throws Exception {
 
-        Character c1 = new Character(150);
+        Individual c1 = new Individual(150);
         c1.setBasicAttribute(Attribute.Dexterity, 16);
         c1.setName("Alpha Fast");
 
-        Character c2 = new Character(150);
+        Individual c2 = new Individual(150);
         c2.setBasicAttribute(Attribute.Intelligence, 16);
         c2.setName("Beta Smart");
 
-        Character c3 = new Character(150);
+        Individual c3 = new Individual(150);
         c3.setBasicAttribute(Attribute.Strength, 16);
         c3.setName("Gamma Strong");
 

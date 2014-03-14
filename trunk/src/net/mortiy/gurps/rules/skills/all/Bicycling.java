@@ -3,7 +3,7 @@ package net.mortiy.gurps.rules.skills.all;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.skills.SkillDefault;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 /**
  * Created with IntelliJ IDEA.
  * User: oleksandr.sidko
@@ -12,10 +12,8 @@ import net.mortiy.gurps.rules.Character;
  * To change this template use File | Settings | File Templates.
  */
 public class Bicycling extends Skill {
-    public Bicycling(Character character) {
-        super(character, "Bicycling", Attribute.Dexterity, Difficulty.Easy);
-        attribute = Attribute.Dexterity;
-        difficulty = Difficulty.Easy;
+    public Bicycling(Individual individual) {
+        super(individual, "Bicycling", Attribute.Dexterity, Difficulty.Easy);
 
         // region "Skill Defaults"
         skillDefaults.add(
@@ -24,7 +22,7 @@ public class Bicycling extends Skill {
 
         skillDefaults.add(
                 new SkillDefault(
-                        new Skill(character, "Driving", "Motorcycle", Attribute.Dexterity, Difficulty.Average), -4)
+                        new Skill(individual, "Driving", "Motorcycle", Attribute.Dexterity, Difficulty.Average), -4)
         );
 
         // endregion

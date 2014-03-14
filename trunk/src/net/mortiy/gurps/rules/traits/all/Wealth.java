@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.*;
 import net.mortiy.gurps.rules.traits.categories.Social;
 
@@ -21,8 +20,8 @@ public class Wealth extends VariableTrait implements Advantage, Disadvantage, So
 
     private float multipliers[] = new float[]{0f, 0.2f, 0.5f, 1.0f, 2.0f, 5.0f, 20.0f};
 
-    public Wealth(Character character) {
-        super(character, "Wealth");
+    public Wealth(Individual individual) {
+        super(individual, "Wealth");
         levelsCost = new int[]{-25, -15, -10, 0, 10, 20, 30, 50, 75, 100, 125, 150, 175, 200, 225, 250};
         changeLevel(Levels.Average);
     }

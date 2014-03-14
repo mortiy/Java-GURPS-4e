@@ -1,4 +1,5 @@
 package net.mortiy.gurps.rules.attributes.secondary;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
 
 /**
@@ -10,16 +11,16 @@ import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
  * TODO: Home Gravity (p. 17)
  */
 public class BasicMove extends SecondaryCharacteristic {
-    public BasicMove(net.mortiy.gurps.rules.Character character) {
-        super(character);
+    public BasicMove(Individual individual) {
+        super(individual);
         levelCost = 5;
     }
 
     @Override
     public float getValue() {
         // Encumbrance influence (p. 17)
-        float modifier = 1.0f - character.getEncumbrance().ordinal() * 0.2f;
-        float value = (level + character.getBasicSpeed().getValue()) * modifier;
+        float modifier = 1.0f - individual.getEncumbrance().ordinal() * 0.2f;
+        float value = (level + individual.getBasicSpeed().getValue()) * modifier;
         // Encumbrance can never reduce Move or Dodge below 1.
         if (value < 1.0f) {
             value = 1.0f;

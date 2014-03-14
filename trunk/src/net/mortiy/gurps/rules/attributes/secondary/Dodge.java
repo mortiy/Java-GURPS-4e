@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.attributes.secondary;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
 
 /**
@@ -10,13 +11,13 @@ import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
  * To change this template use File | Settings | File Templates.
  */
 public class Dodge extends SecondaryCharacteristic {
-    public Dodge(net.mortiy.gurps.rules.Character character) {
-        super(character);
+    public Dodge(Individual individual) {
+        super(individual);
     }
 
     @Override
     public float getValue() {
-        return (int) Math.floor(character.getBasicSpeed().getValue()) + 3 - character.getEncumbrance().ordinal();
+        return (int) Math.floor(individual.getBasicSpeed().getValue()) + 3 - individual.getEncumbrance().ordinal();
     }
 
 }

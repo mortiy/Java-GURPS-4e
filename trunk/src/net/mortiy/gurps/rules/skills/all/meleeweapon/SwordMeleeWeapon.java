@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
 
 /**
@@ -14,11 +14,11 @@ import net.mortiy.gurps.rules.skills.all.MeleeWeapon;
  */
 public class SwordMeleeWeapon extends MeleeWeapon {
 
-    public SwordMeleeWeapon(Character character, String name) {
-        this(character, name, Difficulty.Average);
+    public SwordMeleeWeapon(Individual individual, String name) {
+        this(individual, name, Difficulty.Average);
     }
 
-    public SwordMeleeWeapon(Character character, String name, Difficulty difficulty) {
-        super(character, name, difficulty);
+    public SwordMeleeWeapon(Individual individual, String name, Difficulty difficulty) {
+        super(individual, name, difficulty);
     }
 }

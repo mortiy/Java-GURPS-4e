@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Disadvantage;
 import net.mortiy.gurps.rules.traits.FixedTrait;
 
@@ -19,7 +19,7 @@ import net.mortiy.gurps.rules.traits.FixedTrait;
  * have Mistaken Identity.
  */
 public class MistakenIdentity extends FixedTrait implements Disadvantage {
-    public MistakenIdentity(Character character) {
-        super(character, "Mistaken Identity", -5);
+    public MistakenIdentity(Individual individual) {
+        super(individual, "Mistaken Identity", -5);
     }
 }

@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.attributes.secondary;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
 
@@ -10,14 +11,14 @@ import net.mortiy.gurps.rules.attributes.SecondaryCharacteristic;
  * By default, Will is equal to IQ.
  */
 public class Will extends SecondaryCharacteristic {
-    public Will(net.mortiy.gurps.rules.Character character) {
-        super(character);
+    public Will(Individual individual) {
+        super(individual);
         attribute = Attribute.Will;
         levelCost = 5;
     }
 
     public float getValue(){
-        return level + character.getAttribute(Attribute.Intelligence).getValue();
+        return level + individual.getAttribute(Attribute.Intelligence).getValue();
     }
 
 }

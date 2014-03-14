@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.skills.all.meleeweapon.fencing;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
 
 /**
@@ -13,8 +13,8 @@ import net.mortiy.gurps.rules.skills.all.meleeweapon.FencingMeleeWeapon;
  * arnis, escrima, and kali).
  */
 public class Smallsword extends FencingMeleeWeapon {
-    public Smallsword(Character character) {
-        super(character, "Smallsword");
+    public Smallsword(Individual individual) {
+        super(individual, "Smallsword");
         try {
             setDefault("Shortsword", -4);
         } catch (UnknownSkillDefaultSkillException e) {

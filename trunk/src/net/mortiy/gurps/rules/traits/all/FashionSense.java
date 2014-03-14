@@ -1,4 +1,5 @@
 package net.mortiy.gurps.rules.traits.all;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.modifiers.SummandModifier;
 import net.mortiy.gurps.rules.table.Rolls;
@@ -22,8 +23,8 @@ public class FashionSense extends FixedTrait implements Advantage {
 
     Modifier reactionModifier;
 
-    public FashionSense(net.mortiy.gurps.rules.Character character) {
-        super(character, "Fashion Sense", 5);
+    public FashionSense(Individual individual) {
+        super(individual, "Fashion Sense", 5);
         reactionModifier = addModifier(Rolls.ReactionRoll, new SummandModifier(+1));
     }
 }

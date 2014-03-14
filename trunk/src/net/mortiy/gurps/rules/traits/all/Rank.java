@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Advantage;
 import net.mortiy.gurps.rules.traits.LevelTrait;
 
@@ -37,8 +36,8 @@ public class Rank extends LevelTrait implements Advantage {
 
     private Map<RankType, Integer> ranks = new HashMap<RankType, Integer>();
 
-    public Rank(Character character) {
-        super(character, "Rank");
+    public Rank(Individual individual) {
+        super(individual, "Rank");
     }
 
     public void setRank(RankType type, int rankLevel) {
@@ -57,7 +56,7 @@ public class Rank extends LevelTrait implements Advantage {
 
     @Override
     protected int getLevelCost() {
-        if(character.hasTrait("Status")){
+        if(individual.hasTrait("Status")){
             return 5;
         } else {
             return 10;

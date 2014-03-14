@@ -1,7 +1,7 @@
 package net.mortiy.gurps.traits.advantages.mental;
 
 import junit.framework.TestCase;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.all.Magery;
 
 /**
@@ -13,7 +13,7 @@ import net.mortiy.gurps.rules.traits.all.Magery;
  */
 public class MageryTest extends TestCase {
     public void testMagery() throws Exception {
-        Character c = new Character(100);
+        Individual c = new Individual(100);
         Magery magery = new Magery(c);
         c.addTrait(magery);
 

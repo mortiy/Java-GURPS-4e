@@ -1,7 +1,6 @@
 package net.mortiy.gurps.rules.skills.all;
 
-import net.mortiy.gurps.rules.*;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
 
@@ -13,7 +12,7 @@ import net.mortiy.gurps.rules.skills.Skill;
  * To change this template use File | Settings | File Templates.
  */
 public class Stealth extends Skill {
-    public Stealth(Character character) {
-        super(character, "Stealth", Attribute.Dexterity, Difficulty.Average);
+    public Stealth(Individual individual) {
+        super(individual, "Stealth", Attribute.Dexterity, Difficulty.Average);
     }
 }

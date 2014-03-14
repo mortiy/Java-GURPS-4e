@@ -1,8 +1,8 @@
 package net.mortiy.gurps.rules.combat.maneuver;
 
 import net.mortiy.gurps.Log;
-import net.mortiy.gurps.rules.Character;
-import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.Individual;
+import net.mortiy.gurps.rules.individual.Body;
 import net.mortiy.gurps.rules.combat.*;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
 import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
@@ -37,17 +37,17 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
 
     @Override
     public ManeuverResult resolve(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
-        Character fighterCharacter = fighter.getCharacter();
+        Individual fighterIndividual = fighter.getIndividual();
         Fighter targetFighter = getTargetFigher();
 
         if(fighter.equals(targetFighter)){
-            Log.i("Attack Maneuver", "%s attacks himself!", fighterCharacter.getName());
+            Log.i("Attack Maneuver", "%s attacks himself!", fighterIndividual.getName());
 
         }
 
         Item weapon = fighter.getActiveWeapon();
         if (weapon == null) {
-            throw new ImpossibleManeuverException("'%s' has no equipped weapon.", fighterCharacter.getName());
+            throw new ImpossibleManeuverException("'%s' has no equipped weapon.", fighterIndividual.getName());
         }
         if (!fighter.getReadyList().contains(weapon)) {
             throw new IsNotReadyException();
@@ -104,8 +104,8 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
     private Damage damageRoll(Fighter fighter) throws ImpossibleManeuverException {
 
         Weapon weapon = fighter.getActiveWeapon();
-        Character fighterCharacter = fighter.getCharacter();
-        String fighterName = fighterCharacter.getName();
+        Individual fighterIndividual = fighter.getIndividual();
+        String fighterName = fighterIndividual.getName();
 
         int basicDamage;
         RollFormula damageFormula;
@@ -115,7 +115,7 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
             MusclePoweredDamage.Type physicalDamageType = meeleeWeapon.getActiveWeaponMode().getBasicType();
             damageType = meeleeWeapon.getActiveWeaponMode().getWeaponDamage().getDamageType();
             try {
-                damageFormula = meeleeWeapon.getDamageFormula(fighterCharacter, physicalDamageType);
+                damageFormula = meeleeWeapon.getDamageFormula(fighterIndividual, physicalDamageType);
             } catch (MeleeWeapon.WeaponHasNoSuchDamageTypeException e) {
                 throw new ImpossibleManeuverException("'%s' has no '%s' damage type.", fighterName, physicalDamageType);
             }
@@ -134,13 +134,13 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
     }
 
     public DiceRoller.RollResult attackRoll(Fighter fighter) {
-        Character fighterCharacter = fighter.getCharacter();
-        String fighterName = fighterCharacter.getName();
+        Individual fighterIndividual = fighter.getIndividual();
+        String fighterName = fighterIndividual.getName();
         // Calculate Attack roll modifierse:
         // Get characters skill level for used weapon:
         Weapon weapon = fighter.getActiveWeapon();
         Class weaponSkillClass = weapon.getRequiredSkillClass();
-        Skill weaponSkill = fighter.getCharacter().getSkill(weaponSkillClass);
+        Skill weaponSkill = fighter.getIndividual().getSkill(weaponSkillClass);
         Integer skillLevel = weaponSkill.getSkillLevel();
 
         _log("'%s' has weapon skill '%s' level at %d", fighterName, weaponSkill.getName(), skillLevel);
@@ -177,7 +177,7 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
         // TODO: Defence Roll
 
         Maneuver activeManeuver = targetFighter.getNextManeuver();
-        String targetFighterName = targetFighter.getCharacter().getName();
+        String targetFighterName = targetFighter.getIndividual().getName();
 
         // Defense is unavailable for fighter who already performed AllOutAttack this turn:
         if (activeManeuver.getType() == ManeuverType.AllOutAttack) {

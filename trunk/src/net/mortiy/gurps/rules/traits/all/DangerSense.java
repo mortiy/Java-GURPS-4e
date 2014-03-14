@@ -1,6 +1,6 @@
 package net.mortiy.gurps.rules.traits.all;
 
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.traits.Advantage;
 import net.mortiy.gurps.rules.traits.FixedTrait;
 import net.mortiy.gurps.rules.traits.categories.Mental;
@@ -13,7 +13,7 @@ import net.mortiy.gurps.rules.traits.categories.Mental;
  * To change this template use File | Settings | File Templates.
  */
 public class DangerSense extends FixedTrait implements Advantage, Mental {
-    public DangerSense(Character character) {
-        super(character, "Danger Sense", 15);
+    public DangerSense(Individual individual) {
+        super(individual, "Danger Sense", 15);
     }
 }

@@ -1,8 +1,8 @@
 package net.mortiy.gurps.rules.skills.all;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.Character;
 
 /**
  * Navigation
@@ -10,7 +10,7 @@ import net.mortiy.gurps.rules.Character;
  * Description:
  */
 public class Navigation extends Skill {
-    public Navigation(Character character) {
-        super(character, "Navigation", Attribute.Intelligence, Difficulty.Average);
+    public Navigation(Individual individual) {
+        super(individual, "Navigation", Attribute.Intelligence, Difficulty.Average);
     }
 }

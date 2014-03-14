@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.traits;
 
 import net.mortiy.gurps.Reflection;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.combat.Preparable;
 import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.modifiers.ValueModifier;
@@ -15,14 +15,14 @@ import java.util.*;
  */
 public class Trait implements Preparable {
 
-    private String name;
+    private final String name;
     private String description;
-    protected Character character;
+    protected final Individual individual;
     private CostType costType;
     protected int cost;
-    private Map<Modifier.IModifiable, Modifier> modifiers = new HashMap<Modifier.IModifiable, Modifier>();
-    private List<TraitLimitation> traitLimitations = new ArrayList<TraitLimitation>();
-    private List<TraitModifier> traitModifiers = new ArrayList<TraitModifier>();
+    private final Map<Modifier.IModifiable, Modifier> modifiers = new HashMap<Modifier.IModifiable, Modifier>();
+    private final List<TraitLimitation> traitLimitations = new ArrayList<TraitLimitation>();
+    private final List<TraitModifier> traitModifiers = new ArrayList<TraitModifier>();
     private static Map<String, Class> traitsClassesMap = new HashMap<String, Class>();
 
     static {
@@ -38,8 +38,8 @@ public class Trait implements Preparable {
         }
     }
 
-    public Trait(Character character, String name, CostType costType, int cost) {
-        this.character = character;
+    public Trait(Individual individual, String name, CostType costType, int cost) {
+        this.individual = individual;
         this.name = name;
         this.costType = costType;
         this.cost = cost;
@@ -74,7 +74,7 @@ public class Trait implements Preparable {
     }
 
     protected Modifier addModifier(Modifier.IModifiable modifiedEntity, ValueModifier valueModifier) {
-        Modifier modifier = new Modifier(character, modifiedEntity, valueModifier);
+        Modifier modifier = new Modifier(individual, modifiedEntity, valueModifier);
         addModifier(modifier);
         return modifier;
     }

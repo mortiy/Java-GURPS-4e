@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.skills.all;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.skills.SkillDefault;
@@ -12,8 +13,8 @@ import net.mortiy.gurps.rules.skills.SkillDefault;
  and similar criminal activity.
  */
 public class Accounting extends Skill {
-    public Accounting(net.mortiy.gurps.rules.Character character) {
-        super(character, "Accounting", Attribute.Intelligence, Difficulty.Hard);
+    public Accounting(Individual individual) {
+        super(individual, "Accounting", Attribute.Intelligence, Difficulty.Hard);
 
         // region "Skill Defaults"
         skillDefaults.add(

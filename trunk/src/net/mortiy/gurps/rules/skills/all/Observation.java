@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.skills.all;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * Observation
@@ -9,7 +9,7 @@ import net.mortiy.gurps.rules.Character;
  * Description:
  */
 public class Observation extends Skill {
-    public Observation(Character character) {
-        super(character, "Observation", Attribute.Perception, Difficulty.Average);
+    public Observation(Individual individual) {
+        super(individual, "Observation", Attribute.Perception, Difficulty.Average);
     }
 }

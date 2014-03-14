@@ -1,9 +1,9 @@
 package net.mortiy.gurps.rules.combat;
 
 import net.mortiy.gurps.Log;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
-import net.mortiy.gurps.rules.character.Body;
+import net.mortiy.gurps.rules.individual.Body;
 import net.mortiy.gurps.rules.combat.maneuver.AllOutDefenseManeuver;
 import net.mortiy.gurps.rules.combat.maneuver.WaitManeuver;
 import net.mortiy.gurps.rules.equipment.TwoHanded;
@@ -19,7 +19,7 @@ import java.util.List;
  * Represents Character who takes part in combat
  */
 public class Fighter implements GameMap.MapToken {
-    private Character character;
+    private Individual individual;
     private Maneuver nextManeuver;
     private Defense defense;
     private boolean isActive = true;
@@ -27,13 +27,13 @@ public class Fighter implements GameMap.MapToken {
 
     private List<Preparable> readyList = new ArrayList<>();
 
-    public Fighter(Character character) {
-        this.character = character;
+    public Fighter(Individual individual) {
+        this.individual = individual;
         this.defense = new Defense(this);
     }
 
-    public Character getCharacter() {
-        return character;
+    public Individual getIndividual() {
+        return individual;
     }
 
     public void setNextManeuver(Maneuver maneuver) {
@@ -74,7 +74,7 @@ public class Fighter implements GameMap.MapToken {
 
     private int getAvailableMovesForManeuver(Maneuver maneuver){
         int totalMoves = 0;
-        int basicMove = (int) character.getBasicMove().getValue();
+        int basicMove = (int) individual.getBasicMove().getValue();
         float basicStep = basicMove / 10f;
         int fighterStep = (basicStep < 1) ? 1 : (int) Math.floor(basicStep);
 
@@ -90,7 +90,7 @@ public class Fighter implements GameMap.MapToken {
                 break;
             case Aim:
                 // If character has equiped two handed or braced weapon than he can't step:
-                if(character.getEquipment().getItemsByType(TwoHanded.class).size() > 0){
+                if(individual.getEquipment().getItemsByType(TwoHanded.class).size() > 0){
                     totalMoves = 0;
                 } else {
                     totalMoves = fighterStep;
@@ -147,12 +147,12 @@ public class Fighter implements GameMap.MapToken {
             attackModifiers += 4;
         }
         // Holding a large shield: -2
-        if(character.getEquipment().hasEquipped(LargeShield.class)){
+        if(individual.getEquipment().hasEquipped(LargeShield.class)){
             attackModifiers -= 2;
         }
 
         // ST below that required for weapon: -1 per point of deficit
-        int strengthDeficit = weapon.getMinStrength() - character.getBasicAttribute(Attribute.Strength).getLevel();
+        int strengthDeficit = weapon.getMinStrength() - individual.getBasicAttribute(Attribute.Strength).getLevel();
         if(strengthDeficit > 0){
             attackModifiers -= strengthDeficit;
         }
@@ -178,12 +178,12 @@ public class Fighter implements GameMap.MapToken {
         // TODO: Improve target fighter DR
 
         // Calc penetrating damage:
-        int damageResistance = character.getEquipment().getResistance(bodyPart, damage.getDamageType());
+        int damageResistance = individual.getEquipment().getResistance(bodyPart, damage.getDamageType());
 
-        Log.i("Fighter", "'%s' got %s", getCharacter().getName(), damage);
+        Log.i("Fighter", "'%s' got %s", getIndividual().getName(), damage);
 
         if(damageResistance > 0){
-            Log.i("Fighter", "'%s' armor absorbs %d damage", getCharacter().getName(), damageResistance);
+            Log.i("Fighter", "'%s' armor absorbs %d damage", getIndividual().getName(), damageResistance);
         }
 
         int penetratingDamage = damage.getDamageAmount() - damageResistance;
@@ -212,12 +212,12 @@ public class Fighter implements GameMap.MapToken {
         int injury = (int) Math.floor(penetratingDamage * woundingMultiplier);
         int actualInjury = injury < 1 ? 1 : injury;
 
-        character.injure(actualInjury);
-        Log.i("Fighter", "'%s' injured by %d and has %.1f HP now", getCharacter().getName(), actualInjury, getCharacter().getHitpoints().getCurrentValue());
+        individual.injure(actualInjury);
+        Log.i("Fighter", "'%s' injured by %d and has %.1f HP now", getIndividual().getName(), actualInjury, getIndividual().getHitpoints().getCurrentValue());
     }
 
     public Weapon getActiveWeapon() {
-        return (Weapon) character.getEquipment().getEquipedItem(Body.Part.RightHand);
+        return (Weapon) individual.getEquipment().getEquipedItem(Body.Part.RightHand);
     }
 
 
@@ -228,6 +228,6 @@ public class Fighter implements GameMap.MapToken {
 
     @Override
     public String toString() {
-        return String.format("Fighter '%s'", character.getName());
+        return String.format("Fighter '%s'", individual.getName());
     }
 }

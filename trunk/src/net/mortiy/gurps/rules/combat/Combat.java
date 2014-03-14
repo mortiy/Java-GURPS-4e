@@ -1,7 +1,7 @@
 package net.mortiy.gurps.rules.combat;
 
 import net.mortiy.gurps.Log;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.combat.exceptions.ImpossibleManeuverException;
 import net.mortiy.gurps.rules.combat.exceptions.IsNotReadyException;
@@ -16,17 +16,17 @@ public class Combat {
 
     private List<Fighter> fighters = new ArrayList<>();
 
-    public Combat(Character... fighters) {
+    public Combat(Individual... fighters) {
         this(Arrays.asList(fighters));
     }
 
-    public Combat(List<Character> characters) {
+    public Combat(List<Individual> individuals) {
 
         /**
          * Determine turns order by character's Basic Speed:
          */
-        Collections.sort(characters, new Comparator<Character>() {
-            public int compare(Character c1, Character c2) {
+        Collections.sort(individuals, new Comparator<Individual>() {
+            public int compare(Individual c1, Individual c2) {
                 int result = c2.getBasicSpeed().compareTo(c1.getBasicSpeed());
                 if (result == 0) {
                     return c2.getBasicAttribute(Attribute.Dexterity).compareTo(c1.getBasicAttribute(Attribute.Dexterity));
@@ -38,8 +38,8 @@ public class Combat {
         /**
          * Initialize fighters and their starting maneuvers:
          */
-        for (Character character : characters) {
-            Fighter fighter = new Fighter(character);
+        for (Individual individual : individuals) {
+            Fighter fighter = new Fighter(individual);
             fighter.setNextManeuver(new DoNothingManeuver());
             this.fighters.add(fighter);
         }
@@ -56,11 +56,11 @@ public class Combat {
     /**
      * Removes character from the combat
      *
-     * @param character
+     * @param individual
      */
-    public void leaveCombat(Character character) {
+    public void leaveCombat(Individual individual) {
         for (Fighter fighter : fighters) {
-            if (fighter.getCharacter() == character) {
+            if (fighter.getIndividual() == individual) {
                 leaveCombat(fighter);
             }
         }
@@ -80,8 +80,8 @@ public class Combat {
     ManeuverResult resolveManeuver(Fighter fighter) throws ImpossibleManeuverException, IsNotReadyException {
         Maneuver maneuver = fighter.getNextManeuver();
 
-        Character fighterCharacter = fighter.getCharacter();
-        String fighterName = fighterCharacter.getName();
+        Individual fighterIndividual = fighter.getIndividual();
+        String fighterName = fighterIndividual.getName();
 
         _log("'%s' performs <%s>", fighterName, maneuver.getType());
 

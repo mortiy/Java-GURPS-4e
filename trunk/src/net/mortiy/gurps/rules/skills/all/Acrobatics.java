@@ -2,7 +2,7 @@ package net.mortiy.gurps.rules.skills.all;
 
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
-import net.mortiy.gurps.rules.Character;
+import net.mortiy.gurps.rules.Individual;
 
 /**
  * Acrobatics
@@ -10,7 +10,7 @@ import net.mortiy.gurps.rules.Character;
  * Description:
  */
 public class Acrobatics extends Skill {
-    public Acrobatics(Character character) {
-        super(character, "Acrobatics", Attribute.Dexterity, Difficulty.Hard);
+    public Acrobatics(Individual individual) {
+        super(individual, "Acrobatics", Attribute.Dexterity, Difficulty.Hard);
     }
 }

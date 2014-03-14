@@ -1,5 +1,5 @@
 package net.mortiy.gurps.rules.table.rolls;
- import net.mortiy.gurps.rules.Character;
+ import net.mortiy.gurps.rules.Individual;
  import net.mortiy.gurps.rules.table.DiceRoller;
  import net.mortiy.gurps.rules.table.Rolls;
 
@@ -11,12 +11,12 @@ package net.mortiy.gurps.rules.table.rolls;
  * To change this template use File | Settings | File Templates.
  */
 public class ReactionRoll {
-    Character character;
-    public ReactionRoll(Character character) {
-        this.character = character;
+    Individual individual;
+    public ReactionRoll(Individual individual) {
+        this.individual = individual;
     }
-    public DiceRoller.RollResult against(Character character){
-        float totalReactionModifier = character.getTotalModifier(Rolls.ReactionRoll);
+    public DiceRoller.RollResult against(Individual individual){
+        float totalReactionModifier = individual.getTotalModifier(Rolls.ReactionRoll);
         return DiceRoller.RollResult.Failure;
     }
 }

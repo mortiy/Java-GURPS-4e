@@ -6,13 +6,6 @@ import net.mortiy.gurps.rules.table.DiceRoller;
 import net.mortiy.gurps.rules.table.RollFormula;
 import net.mortiy.gurps.rules.table.rolls.SuccessRoll;
 
-/**
- * Created with IntelliJ IDEA.
- * User: oleksandr.sidko
- * Date: 08.12.12
- * Time: 19:52
- * To change this template use File | Settings | File Templates.
- */
 public class DiceRollerTest extends TestCase {
     DiceRoller diceRoller = DiceRoller.getInstance();
 

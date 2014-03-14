@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.skills.all;
 
+import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.skills.Skill;
 
@@ -12,7 +13,7 @@ import net.mortiy.gurps.rules.skills.Skill;
  */
 // TODO: Shotgun skill
 public class Shotgun extends Skill {
-    public Shotgun(net.mortiy.gurps.rules.Character character, String name, Attribute attribute, Difficulty difficulty) {
-        super(character, name, attribute, difficulty);
+    public Shotgun(Individual individual, String name, Attribute attribute, Difficulty difficulty) {
+        super(individual, name, attribute, difficulty);
     }
 }
