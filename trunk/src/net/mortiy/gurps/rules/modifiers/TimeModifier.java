@@ -1,8 +1,9 @@
-package net.mortiy.gurps.rules;
+package net.mortiy.gurps.rules.modifiers;
 
 
-import net.mortiy.gurps.rules.modifiers.Modifier;
-import net.mortiy.gurps.rules.modifiers.SummandModifier;
+import net.mortiy.gurps.rules.Individual;
+import net.mortiy.gurps.rules.Time;
+import net.mortiy.gurps.rules.World;
 
 import java.util.TimerTask;
 
@@ -32,7 +33,7 @@ public class TimeModifier extends Modifier {
 
     @Override
     public void detach() {
-        super.detach();    //To change body of overridden methods use File | Settings | File Templates.
+        super.detach();
         timerTask.cancel();
     }
 

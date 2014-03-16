@@ -24,7 +24,6 @@ public class Modifier {
         this.individual = individual;
         this.modifiedEntity = modifiedEntity;
         this.modifierValue = modifierValue;
-        this.individual.registerModifier(this);
     }
 
     public IModifiable getModifiedEntity() {

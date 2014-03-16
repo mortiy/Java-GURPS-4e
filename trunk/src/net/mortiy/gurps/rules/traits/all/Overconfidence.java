@@ -23,7 +23,7 @@ public class Overconfidence extends SelfControlDisadvantage implements Disadvant
     public Overconfidence(Individual individual, Frequency frequency) {
         super(individual, "Overconfidence", -5, frequency);
 
-        addModifier(
+        registerModifier(
                 new ReactionModifier(individual, new ReactionModifier.ReactionDeterminator() {
                     @Override
                     public float determineReaction(Individual individual) {

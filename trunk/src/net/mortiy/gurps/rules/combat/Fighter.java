@@ -212,7 +212,7 @@ public class Fighter implements GameMap.MapToken {
         int injury = (int) Math.floor(penetratingDamage * woundingMultiplier);
         int actualInjury = injury < 1 ? 1 : injury;
 
-        individual.injure(actualInjury);
+        individual.injure(actualInjury, damage.getDamageType());
         Log.i("Fighter", "'%s' injured by %d and has %.1f HP now", getIndividual().getName(), actualInjury, getIndividual().getHitpoints().getCurrentValue());
     }
 

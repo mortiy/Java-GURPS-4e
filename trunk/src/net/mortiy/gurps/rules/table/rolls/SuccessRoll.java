@@ -1,5 +1,6 @@
 package net.mortiy.gurps.rules.table.rolls;
 
+import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.table.DiceRoller;
 import net.mortiy.gurps.rules.table.DiceRoller.RollResult;
 
@@ -29,7 +30,7 @@ import net.mortiy.gurps.rules.table.DiceRoller.RollResult;
  *      • Daily work at a mundane, nonadventuring job. (To evaluate job
  * performance, make monthly “job rolls”; see Jobs, p. 516.)
  */
-public class SuccessRoll {
+public class SuccessRoll implements Modifier.IModifiable {
     private RollResult rollResult = DiceRoller.RollResult.Failure;
     private int effectiveSkill;
     private int diceRoll;
@@ -83,4 +84,5 @@ public class SuccessRoll {
     public int getDiceRoll() {
         return diceRoll;
     }
+
 }

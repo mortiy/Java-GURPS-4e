@@ -18,8 +18,8 @@ public class Flexibility extends FixedTrait implements Advantage, Physical {
     public Flexibility(Individual individual) {
         super(individual, "Flexibility", 5);
 
-        addModifier(individual.getSkill("Climbing"), new SummandModifier(3));
-        addModifier(individual.getSkill("Escape"), new SummandModifier(3));
+        registerModifier(individual.getSkill("Climbing"), new SummandModifier(3));
+        registerModifier(individual.getSkill("Escape"), new SummandModifier(3));
 
     }
 }

@@ -28,7 +28,7 @@ public class Pitiable extends FixedTrait implements Advantage {
 
     public Pitiable(Individual individual) {
         super(individual, "Pitiable", 5);
-        reactionModifier = addModifier(Rolls.ReactionRoll, new SummandModifier(0));
+        reactionModifier = registerModifier(Rolls.ReactionRoll, new SummandModifier(0));
     }
 
 }

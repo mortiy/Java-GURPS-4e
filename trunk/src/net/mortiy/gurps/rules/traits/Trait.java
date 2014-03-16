@@ -20,10 +20,10 @@ public class Trait implements Preparable {
     protected final Individual individual;
     private CostType costType;
     protected int cost;
-    private final Map<Modifier.IModifiable, Modifier> modifiers = new HashMap<Modifier.IModifiable, Modifier>();
-    private final List<TraitLimitation> traitLimitations = new ArrayList<TraitLimitation>();
-    private final List<TraitModifier> traitModifiers = new ArrayList<TraitModifier>();
-    private static Map<String, Class> traitsClassesMap = new HashMap<String, Class>();
+    private final Map<Modifier.IModifiable, Modifier> modifiers = new HashMap<>();
+    private final List<TraitLimitation> traitLimitations = new ArrayList<>();
+    private final List<TraitModifier> traitModifiers = new ArrayList<>();
+    private static Map<String, Class> traitsClassesMap = new HashMap<>();
 
     static {
         try {
@@ -65,25 +65,6 @@ public class Trait implements Preparable {
         return name;
     }
 
-    public Map<Modifier.IModifiable, Modifier> getModifiers() {
-        return modifiers;
-    }
-
-    protected Modifier getModifier(Modifier.IModifiable modifiedEntity) {
-        return modifiers.get(modifiedEntity);
-    }
-
-    protected Modifier addModifier(Modifier.IModifiable modifiedEntity, ValueModifier valueModifier) {
-        Modifier modifier = new Modifier(individual, modifiedEntity, valueModifier);
-        addModifier(modifier);
-        return modifier;
-    }
-
-    protected void addModifier(Modifier modifier) {
-        modifiers.put(modifier.getModifiedEntity(), modifier);
-    }
-
-
     // region Trait Limitations
     public void addLimitation(TraitLimitation limitation){
         traitLimitations.add(limitation);
@@ -92,25 +73,9 @@ public class Trait implements Preparable {
     public void removeLimitation(TraitLimitation limitation){
         traitLimitations.remove(limitation);
     }
+
     public boolean hasLimitation(TraitLimitation limitation){
         return traitLimitations.contains(limitation);
-    }
-    // endregion
-
-    // region Trait Modifiers
-    public void addModifier(TraitModifier modifier){
-        traitModifiers.add(modifier);
-    }
-
-    public void removeModifier(TraitModifier modifier){
-        traitModifiers.remove(modifier);
-    }
-    public boolean hasModifier(TraitModifier modifier){
-        return traitModifiers.contains(modifier);
-    }
-
-    public int getCostPercent(){
-        return getTotalLimitation() + getTotalModifiers();
     }
 
     private int getTotalLimitation(){
@@ -119,6 +84,35 @@ public class Trait implements Preparable {
             totalLimitPercent += t.percent;
         }
         return totalLimitPercent;
+    }
+    // endregion
+
+    // region Trait Modifiers
+
+    public void addModifier(TraitModifier modifier){
+        traitModifiers.add(modifier);
+    }
+
+    public void removeModifier(TraitModifier modifier){
+        traitModifiers.remove(modifier);
+    }
+
+    public boolean hasModifier(TraitModifier modifier){
+        return traitModifiers.contains(modifier);
+    }
+
+    public Map<Modifier.IModifiable, Modifier> getModifiers() {
+        return modifiers;
+    }
+
+    protected Modifier registerModifier(Modifier.IModifiable modifiedEntity, ValueModifier valueModifier) {
+        Modifier modifier = individual.addModifier(modifiedEntity, valueModifier);
+        registerModifier(modifier);
+        return modifier;
+    }
+
+    protected void registerModifier(Modifier modifier) {
+        modifiers.put(modifier.getModifiedEntity(), modifier);
     }
 
     private int getTotalModifiers(){
@@ -129,6 +123,10 @@ public class Trait implements Preparable {
         return totalModifiersPercent;
     }
     // endregion
+
+    public int getCostPercent(){
+        return getTotalLimitation() + getTotalModifiers();
+    }
 
     public static Class forName(String traitName) throws ClassNotFoundException {
         int bracketIndex = traitName.indexOf("(");

@@ -6,13 +6,6 @@ import net.mortiy.gurps.rules.modifiers.SummandModifier;
 
 import java.util.LinkedList;
 
-/**
-* Created with IntelliJ IDEA.
-* User: oleksandr.sidko
-* Date: 10.12.12
-* Time: 23:45
-* To change this template use File | Settings | File Templates.
-*/
 public class ModifiersList extends LinkedList<Modifier> {
     public float getTotal(){
         float total = 0.0f;

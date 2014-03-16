@@ -23,9 +23,9 @@ public class Fat extends FixedTrait implements Disadvantage {
     public Fat(Individual individual) {
         super(individual, "Fat", -3);
 
-            addModifier(individual.getSkill("Disguise"), new SummandModifier(-2));
-            addModifier(individual.getSkill("Shadowing"), new SummandModifier(-2));
-            addModifier(individual.getSkill("Swimming"), new SummandModifier(+3));
+            registerModifier(individual.getSkill("Disguise"), new SummandModifier(-2));
+            registerModifier(individual.getSkill("Shadowing"), new SummandModifier(-2));
+            registerModifier(individual.getSkill("Swimming"), new SummandModifier(+3));
 
     }
 }

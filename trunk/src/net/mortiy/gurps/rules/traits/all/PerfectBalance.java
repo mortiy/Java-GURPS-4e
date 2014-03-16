@@ -16,7 +16,7 @@ import net.mortiy.gurps.rules.traits.categories.Physical;
 public class PerfectBalance extends FixedTrait implements Advantage, Physical {
     public PerfectBalance(Individual individual) {
         super(individual, "Perfect Balance", 15);
-        addModifier(individual.getSkill("Climbing"), new SummandModifier(1));
-        addModifier(individual.getSkill("Acrobatics"), new SummandModifier(1));
+        registerModifier(individual.getSkill("Climbing"), new SummandModifier(1));
+        registerModifier(individual.getSkill("Acrobatics"), new SummandModifier(1));
     }
 }

@@ -9,6 +9,7 @@ import net.mortiy.gurps.rules.attributes.basic.Health;
 import net.mortiy.gurps.rules.attributes.basic.Intelligence;
 import net.mortiy.gurps.rules.attributes.basic.Strength;
 import net.mortiy.gurps.rules.attributes.secondary.*;
+import net.mortiy.gurps.rules.combat.Damage;
 import net.mortiy.gurps.rules.individual.Body;
 import net.mortiy.gurps.rules.individual.Build;
 import net.mortiy.gurps.rules.individual.Encumbrance;
@@ -19,6 +20,7 @@ import net.mortiy.gurps.rules.exceptions.NotEnoughCharacterPointsException;
 import net.mortiy.gurps.rules.map.GameMap;
 import net.mortiy.gurps.rules.modifiers.Modifier;
 import net.mortiy.gurps.rules.modifiers.MultiplierModifier;
+import net.mortiy.gurps.rules.modifiers.TimeModifier;
 import net.mortiy.gurps.rules.modifiers.ValueModifier;
 import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.table.rolls.SuccessRoll;
@@ -311,7 +313,22 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
     }
 
     public Modifier addModifier(Modifier.IModifiable modifiedEntity, ValueModifier valueModifier) {
-        return new Modifier(this, modifiedEntity, valueModifier);
+        return addModifier(new Modifier(this, modifiedEntity, valueModifier));
+    }
+
+    public Modifier addModifier(Modifier modifier) {
+        registerModifier(modifier);
+        return modifier;
+    }
+
+    private void registerModifier(Modifier modifier) {
+        if (!modifiers.containsKey(modifier.modifiedEntity)) {
+            modifiers.put(modifier.modifiedEntity, new ModifiersList());
+        }
+        ModifiersList modifiersList = modifiers.get(modifier.modifiedEntity);
+        if (!modifiersList.contains(modifier)) {
+            modifiers.get(modifier.modifiedEntity).add(modifier);
+        }
     }
 
     public void removeModifier(Modifier modifier) {
@@ -321,18 +338,9 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
     }
 
     public TimeModifier addTimeModifier(Modifier.IModifiable modifiedEntity, float modifierValue, int timeInMilliseconds) {
-        return new TimeModifier(this, modifiedEntity, modifierValue, timeInMilliseconds);
-
-    }
-
-    public void registerModifier(Modifier modifier) {
-        if (!modifiers.containsKey(modifier.modifiedEntity)) {
-            modifiers.put(modifier.modifiedEntity, new ModifiersList());
-        }
-        ModifiersList modifiersList = modifiers.get(modifier.modifiedEntity);
-        if (!modifiersList.contains(modifier)) {
-            modifiers.get(modifier.modifiedEntity).add(modifier);
-        }
+        TimeModifier timeModifier = new TimeModifier(this, modifiedEntity, modifierValue, timeInMilliseconds);
+        registerModifier(timeModifier);
+        return timeModifier;
     }
 
     // endregion
@@ -645,7 +653,7 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
      *
      * @param injury
      */
-    public void injure(int injury) {
+    public void injure(int injury, Damage.Type damageType) {
         // TODO: Calculate wound effect;
         HitPoints HP = getHitpoints();
         HP.modifyValue(-injury);
@@ -665,11 +673,11 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
 
         // Check for Major wound:
         // TODO: Knockdown (p. 30)
-        if(injury > maxHP / 2){
+        if (injury > maxHP / 2) {
             SuccessRoll woundRoll = rollHP.roll();
-            switch (woundRoll.getRollResult()){
+            switch (woundRoll.getRollResult()) {
                 case Failure:
-                    if(woundRoll.getMargin() >= 5){
+                    if (woundRoll.getMargin() >= 5) {
                         physicalStates.add(PhysicalState.Unconscious);
                     }
                     break;
@@ -680,7 +688,6 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
                     break;
             }
         }
-
 
 
         if (currentHP <= Math.floor(maxHP / 3f)) {
@@ -739,7 +746,7 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
         }
 
         // Notify if physical states changes:
-        if(physicalStates.size() > physicalStatesCount){
+        if (physicalStates.size() > physicalStatesCount) {
             Log.i("Individual", String.format("%s is now %s", getName(), Arrays.toString(physicalStates.toArray())));
         }
 

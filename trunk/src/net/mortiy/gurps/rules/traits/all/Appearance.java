@@ -46,7 +46,7 @@ public class Appearance extends VariableTrait implements Advantage, Disadvantage
         super(individual, "Appearance");
         //
         levelsCost = new int[]{-24, -20, -16, -8, -4, 0, 4, 12, 16, 20};
-        reactionModifier = addModifier(Rolls.ReactionRoll, new SummandModifier(0));
+        reactionModifier = registerModifier(Rolls.ReactionRoll, new SummandModifier(0));
         changeLevel(Level.Average);
     }
 

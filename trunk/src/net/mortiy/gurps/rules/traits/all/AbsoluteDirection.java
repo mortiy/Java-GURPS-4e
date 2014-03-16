@@ -13,8 +13,8 @@ import net.mortiy.gurps.rules.traits.categories.Physical;
 public class AbsoluteDirection extends FixedTrait implements Advantage, Physical {
     public AbsoluteDirection(Individual individual) {
         super(individual, "Absolute Direction", 5);
-            addModifier(individual.getSkill("Body Sense"), new SummandModifier(3));
-            addModifier(individual.getSkill("Navigation"), new SummandModifier(3));
+            registerModifier(individual.getSkill("Body Sense"), new SummandModifier(3));
+            registerModifier(individual.getSkill("Navigation"), new SummandModifier(3));
 
     }
 }

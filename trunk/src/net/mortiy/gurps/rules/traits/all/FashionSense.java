@@ -25,6 +25,6 @@ public class FashionSense extends FixedTrait implements Advantage {
 
     public FashionSense(Individual individual) {
         super(individual, "Fashion Sense", 5);
-        reactionModifier = addModifier(Rolls.ReactionRoll, new SummandModifier(+1));
+        reactionModifier = registerModifier(Rolls.ReactionRoll, new SummandModifier(+1));
     }
 }

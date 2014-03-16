@@ -8,6 +8,7 @@ import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.CharacterAttribute;
 import net.mortiy.gurps.rules.exceptions.NotEnoughCharacterPointsException;
 import net.mortiy.gurps.rules.skills.interfaces.ISkillDefault;
+import net.mortiy.gurps.rules.table.Rolls;
 import net.mortiy.gurps.rules.table.rolls.SuccessRoll;
 
 import java.io.IOException;
@@ -146,8 +147,8 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
     public SuccessRoll successRoll(int modifiers) {
 
         int baseSkillLevel = getSkillLevel();
-
-        int effectiveSkill = baseSkillLevel + modifiers;
+        int individualModifiers = (int) Math.floor(individual.getTotalModifier(Rolls.SkillRoll));
+        int effectiveSkill = baseSkillLevel + modifiers + individualModifiers;
 
         return new SuccessRoll(effectiveSkill).roll();
     }
@@ -293,6 +294,26 @@ public class Skill implements ISkillDefault, Modifier.IModifiable {
         return "Skill{" +
                 "name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Skill skill = (Skill) o;
+
+        if (!name.equals(skill.name)) return false;
+        if (!speciality.equals(skill.speciality)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + speciality.hashCode();
+        return result;
     }
 
     protected class UnknownSkillDefaultSkillException extends Throwable {

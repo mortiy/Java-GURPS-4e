@@ -2,7 +2,7 @@ package net.mortiy.gurps.rules.traits.all;
 
 import net.mortiy.gurps.rules.Individual;
 import net.mortiy.gurps.rules.modifiers.Modifier;
-import net.mortiy.gurps.rules.TimeModifier;
+import net.mortiy.gurps.rules.modifiers.TimeModifier;
 import net.mortiy.gurps.rules.attributes.Attribute;
 import net.mortiy.gurps.rules.attributes.basic.Intelligence;
 import net.mortiy.gurps.rules.table.DiceRoller;
@@ -116,7 +116,7 @@ public class Warp extends FixedTrait implements Advantage, Exotic, Modifier.IMod
      */
     public void warpFail() {
         TimeModifier timeModifier = new TimeModifier(individual, this, -5, 10 * 60f);
-        addModifier(timeModifier);
+        registerModifier(timeModifier);
     }
 
 }

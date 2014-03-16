@@ -1,12 +1,6 @@
 package net.mortiy.gurps.rules.modifiers;
 
-/**
- * Created with IntelliJ IDEA.
- * User: oleksandr.sidko
- * Date: 10.02.13
- * Time: 21:20
- * To change this template use File | Settings | File Templates.
- */
+
 public class MultiplierModifier extends ValueModifier {
     public enum  Mode {
         RoundUp,
