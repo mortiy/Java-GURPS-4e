@@ -4,8 +4,10 @@ import net.mortiy.gurps.rules.modifiers.Modifier;
 
 public enum Rolls implements Modifier.IModifiable {
     SenseRoll,
-    SuccessRoll,
     SkillRoll,
+    SuccessRoll,
+    DefenseRoll,
     ReactionRoll,
+    AttributeRoll,
     SelfControlRoll
 }

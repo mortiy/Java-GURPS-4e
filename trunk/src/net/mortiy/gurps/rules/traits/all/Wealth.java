@@ -22,7 +22,6 @@ public class Wealth extends VariableTrait implements Advantage, Disadvantage, So
 
     public Wealth(Individual individual) {
         super(individual, "Wealth");
-        levelsCost = new int[]{-25, -15, -10, 0, 10, 20, 30, 50, 75, 100, 125, 150, 175, 200, 225, 250};
         changeLevel(Levels.Average);
     }
 
@@ -40,14 +39,14 @@ public class Wealth extends VariableTrait implements Advantage, Disadvantage, So
          * wearing. Either you are unable to work
          * or there are no jobs to be found
          */
-        DeadBroke,
+        DeadBroke(-25),
         /**
          * Your starting wealth is only
          * 1/5 of the average for your society.
          * Some jobs are not available to you, and
          * no job you find pays very well.
          */
-        Poor,
+        Poor(-15),
         /**
          * Your starting wealth is
          * only 1/2 of the average for your society.
@@ -57,49 +56,60 @@ public class Wealth extends VariableTrait implements Advantage, Disadvantage, So
          * appropriate if you are, for instance, a
          * 21st-century student
          */
-        Struggling,
+        Struggling(-10),
         /**
          * The default wealth level, as
          * explained above
          */
-        Average,
+        Average(0),
         /**
          * You work for a living,
          * but your lifestyle is better than most.
          * Your starting wealth is twice the average
          */
-        Comfortable,
+        Comfortable(10),
         /**
          * Your starting wealth is five
          * times average; you live very well
          * indeed
          */
-        Wealthy,
+        Wealthy(20),
         /**
          * Your starting wealth is
          * 20 times the average.
          */
-        VeryWealthy,
+        VeryWealthy(30),
         /**
          * Your starting wealth is
          * 100 times average. You can buy almost
          * anything you want without considering
          * the cost.
          */
-        FilthyRich,
+        FilthyRich(50),
         /**
          * “Filthy rich”
          * doesn’t even begin to describe your
          * wealth!
          */
-        Multimillionaire_1,
-        Multimillionaire_2,
-        Multimillionaire_3,
-        Multimillionaire_4,
-        Multimillionaire_5,
-        Multimillionaire_6,
-        Multimillionaire_7,
-        Multimillionaire_8
+        Multimillionaire_1(75),
+        Multimillionaire_2(100),
+        Multimillionaire_3(125),
+        Multimillionaire_4(150),
+        Multimillionaire_5(175),
+        Multimillionaire_6(200),
+        Multimillionaire_7(225),
+        Multimillionaire_8(250);
+
+        private final int cost;
+
+        Levels(int cost) {
+            this.cost = cost;
+        }
+
+        @Override
+        public int getCost() {
+            return cost;
+        }
     }
 
 }

@@ -14,8 +14,8 @@ public class Drunk extends Affliction {
     @Override
     public int affect() {
 
-        addModifier(c.getBasicAttribute(Attribute.Dexterity), new SummandModifier(-2f));
-        addModifier(c.getBasicAttribute(Attribute.Intelligence), new SummandModifier(-2f));
+        addModifier(Attribute.Dexterity, new SummandModifier(-2f));
+        addModifier(Attribute.Intelligence, new SummandModifier(-2f));
         addModifier(Rolls.SelfControlRoll, new SummandModifier(-4));
 
         return 0;

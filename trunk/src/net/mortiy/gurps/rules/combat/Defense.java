@@ -10,6 +10,7 @@ import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.PoleMeleeWeapon;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.WhipMeleeWeapon;
 import net.mortiy.gurps.rules.skills.all.meleeweapon.whip.Kusari;
+import net.mortiy.gurps.rules.table.Rolls;
 
 //import net.mortiy.gurps.rules.equipment.weapon.all.KusariWeapon;
 
@@ -125,7 +126,7 @@ public class Defense {
     }
 
     public int getDefenseLevel() {
-        return getBestStrategyLevel();
+        return getBestStrategyLevel() + (int) fighter.getIndividual().getTotalModifier(Rolls.DefenseRoll);
     }
 
     public enum Strategy {

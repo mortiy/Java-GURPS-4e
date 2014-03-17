@@ -26,23 +26,32 @@ public class LegalEnforcementPowers extends VariableTrait implements Advantage, 
          * right to carry a concealed weapon.
          * Examples: a Victorian bobby or a modern policeman.
          */
-        Local,
+        Local(5),
         /**
-         * <div>As Local, but you also have national or international jurisdiction,
+         * As Local, but you also have national or international jurisdiction,
          * or are not obligated to respect the civil rights of others, or are free to engage
-         * in covert investigations,  or may kill with relative impunity<br/>
-         * <b>Examples:</b> an FBI agent or a medieval Royal Guardsman
-         * </div>
+         * in covert investigations,  or may kill with relative impunity
+         * Examples: an FBI agent or a medieval Royal Guardsman
          */
-        National,
+        National(10),
         /**
          * You have three or more of <b>Local</b> or <b>National</b> abilities.
          */
-        Special,
+        Special(15);
+
+        private final int cost;
+
+        Level(int cost) {
+            this.cost = cost;
+        }
+
+        @Override
+        public int getCost() {
+            return cost;
+        }
     }
 
     public LegalEnforcementPowers(Individual individual) {
         super(individual, "Legal Enforcement Powers");
-        levelsCost = new int[]{5, 10, 15};
     }
 }

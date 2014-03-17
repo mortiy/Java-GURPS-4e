@@ -20,22 +20,33 @@ public class Appearance extends VariableTrait implements Advantage, Disadvantage
 
     public static enum Level implements ITraitLevel {
                         // Reaction Roll:
-        Horrific,       // -6
-        Monstrous,      // -5
-        Hideous,        // -4
-        Ugly,           // -2
-        Unattractive,   // -1
-        Average,        //  0
-        Attractive,     // +1
-        Beautiful,      // +4
-        VeryBeautiful,  // +6
-        Transcendent,    // +8
+        Horrific(-24),       // -6
+        Monstrous(-20),      // -5
+        Hideous(-16),        // -4
+        Ugly(-8),           // -2
+        Unattractive(-4),   // -1
+        Average(0),        //  0
+        Attractive(4),     // +1
+        Beautiful(12),      // +4
+        VeryBeautiful(16),  // +6
+        Transcendent(20),    // +8
 
         // Specials:
-        Androgynous,
-        Impressive,
-        Universal,
-        OffTheShelfLook
+        Androgynous(0),
+        Impressive(0),
+        Universal(0),
+        OffTheShelfLook(0);
+
+        private final int cost;
+
+        Level(int cost) {
+            this.cost = cost;
+        }
+
+        @Override
+        public int getCost() {
+            return cost;
+        }
 
     }
 
@@ -45,7 +56,6 @@ public class Appearance extends VariableTrait implements Advantage, Disadvantage
     public Appearance(Individual individual) {
         super(individual, "Appearance");
         //
-        levelsCost = new int[]{-24, -20, -16, -8, -4, 0, 4, 12, 16, 20};
         reactionModifier = registerModifier(Rolls.ReactionRoll, new SummandModifier(0));
         changeLevel(Level.Average);
     }

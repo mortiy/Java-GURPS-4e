@@ -14,6 +14,7 @@ import net.mortiy.gurps.rules.equipment.weapon.statistics.MusclePoweredDamage;
 import net.mortiy.gurps.rules.skills.Skill;
 import net.mortiy.gurps.rules.table.DiceRoller;
 import net.mortiy.gurps.rules.table.RollFormula;
+import net.mortiy.gurps.rules.table.Rolls;
 import net.mortiy.gurps.rules.table.rolls.SuccessRoll;
 
 public class AttackManeuver extends Maneuver implements ManeuverResolver {
@@ -177,7 +178,8 @@ public class AttackManeuver extends Maneuver implements ManeuverResolver {
         // TODO: Defence Roll
 
         Maneuver activeManeuver = targetFighter.getNextManeuver();
-        String targetFighterName = targetFighter.getIndividual().getName();
+        Individual character = targetFighter.getIndividual();
+        String targetFighterName = character.getName();
 
         // Defense is unavailable for fighter who already performed AllOutAttack this turn:
         if (activeManeuver.getType() == ManeuverType.AllOutAttack) {

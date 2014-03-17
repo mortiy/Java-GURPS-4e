@@ -16,8 +16,8 @@ public class Euphoria extends Affliction {
 
         SummandModifier summandModifier = new SummandModifier(-3);
 
-        addModifier(c.getBasicAttribute(Attribute.Dexterity), summandModifier);
-        addModifier(c.getBasicAttribute(Attribute.Intelligence), summandModifier);
+        addModifier(Attribute.Dexterity, summandModifier);
+        addModifier(Attribute.Intelligence, summandModifier);
         addModifier(Rolls.SelfControlRoll, summandModifier);
         addModifier(Rolls.SkillRoll, summandModifier);
         return 0;

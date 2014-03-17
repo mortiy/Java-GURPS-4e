@@ -30,14 +30,14 @@ public class ModifiersTest extends TestCase {
 
         Appearance appearance = new Appearance(individual);
         appearance.changeLevel(Appearance.Level.VeryBeautiful);
-        assertEquals("Ensure that Very Beautiful appearance gave individual +6 Reaction Roll", 6f, individual.getTotalModifier(Rolls.ReactionRoll));
+        assertEquals("Ensure that Very Beautiful appearance gave individual +6 Reaction Roll", 6, (int) individual.getTotalModifier(Rolls.ReactionRoll));
 
         FashionSense fashionSense = new FashionSense(individual);
-        assertEquals("Ensure that Fashion Sense gave individual +1 Reaction Roll", 7f, individual.getTotalModifier(Rolls.ReactionRoll));
+        assertEquals("Ensure that Fashion Sense gave individual +1 Reaction Roll", 7, (int) individual.getTotalModifier(Rolls.ReactionRoll));
 
         OdiousPersonalHabits odiousPersonalHabits = new OdiousPersonalHabits(individual);
         odiousPersonalHabits.increaseLevel(3);
-        assertEquals("Individual get -3 Reaction Roll for Odious Personal Habbits of 3rd level", 4f, individual.getTotalModifier(Rolls.ReactionRoll));
+        assertEquals("Individual get -3 Reaction Roll for Odious Personal Habbits of 3rd level", 4, (int) individual.getTotalModifier(Rolls.ReactionRoll));
 
     }
 

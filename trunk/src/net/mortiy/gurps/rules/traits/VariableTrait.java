@@ -7,29 +7,54 @@ import net.mortiy.gurps.rules.Individual;
  */
 public class VariableTrait extends Trait {
 
+    public enum Level implements ITraitLevel {
+        Disabled;
+
+        @Override
+        public int getCost() {
+            return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+    }
+
     protected interface ITraitLevel {
         int ordinal();
+        int getCost();
     }
 
     protected ITraitLevel currentLevel;
-
-    protected int levelsCost[];
 
     public VariableTrait(Individual individual, String name) {
         super(individual, name, CostType.Variable, 0);
     }
 
     public ITraitLevel getLevel() {
-        return currentLevel;
+        ITraitLevel level = currentLevel;
+        if (individual.hasModifier(this)) {
+            int levelIndex = level.ordinal();
+            ITraitLevel levels[] = getLevels();
+            int traitModifier = (int) individual.getTotalModifier(this);
+            levelIndex += traitModifier;
+            if (levelIndex < 0 || levelIndex >= levels.length) {
+                level = levelIndex < 0 ? Level.Disabled : levels[levels.length - 1];
+            } else {
+                level = levels[levelIndex];
+            }
+        }
+
+        return level;
+    }
+
+    public ITraitLevel[] getLevels(){
+        return currentLevel.getClass().getEnumConstants();
     }
 
     @Override
     public int getRawCost() {
-        return levelsCost[((Enum) currentLevel).ordinal()];
+        return currentLevel.getCost();
     }
 
     public int getCost(ITraitLevel level) {
-        return levelsCost[((Enum) level).ordinal()];
+        return level.getCost();
     }
 
 
@@ -38,7 +63,7 @@ public class VariableTrait extends Trait {
         onLevelChange(this.currentLevel);
     }
 
-    public void onLevelChange(ITraitLevel level){
+    public void onLevelChange(ITraitLevel level) {
 
     }
 }

@@ -26,24 +26,35 @@ public class Duty extends VariableTrait implements Disadvantage, Social {
         /**
          * Quite rarely (roll of 6 or less): -2 points.
          */
-        QuiteRarely,
+        QuiteRarely(-2),
         /**
          * Fairly often (roll of 9 or less): -5 points.
          */
-        FairlyOften,
+        FairlyOften(-5),
         /**
          * Quite often (roll of 12 or less): -10 points
          */
-        QuiteOften,
+        QuiteOften(-10),
         /**
          * Almost all the time (roll of 15 or less): -15 points.
          * At this level, the GM may rule that you are always on duty.
          */
-        Always
+        Always(-15);
+
+        private final int cost;
+
+        Frequency(int cost) {
+            this.cost = cost;
+        }
+
+        @Override
+        public int getCost() {
+            return cost;
+        }
     }
 
-    public static enum Hazard {
-        None,
+    public static enum Hazard implements ITraitLevel {
+        None(0),
         /**
          * Your Duty never requires  you to risk your life. This
          * option is mutually exclusive with Extremely Hazardous.
@@ -51,7 +62,7 @@ public class Duty extends VariableTrait implements Disadvantage, Social {
          * points or more, the obligation is too
          * trivial to qualify as a Duty.)
          */
-        Nonhazardous,
+        Nonhazardous(5),
         /**
          * Your Duty is enforced by threats to you or your loved ones,
          * or is imposed by exotic mind control, a curse, etc. This is unrelated to how
@@ -59,20 +70,27 @@ public class Duty extends VariableTrait implements Disadvantage, Social {
          * will happen if you don’t carry it out! A Duty can be Involuntary and either
          * Extremely Hazardous or Nonhazardous
          */
-        Involuntary,
+        Involuntary(-5),
         /**
          * You are always at risk of death or serious injury when your Duty comes up.
          * There are significant penalties if you refuse to take these risks: dismissal in
          * disgrace, imprisonment, perhaps even death. The GM has the final say as to
          * whether a given Duty is “extremely hazardous” in his campaign.
          */
-        ExtremelyHazardous,
+        ExtremelyHazardous(-5);
+
+        private final int cost;
+
+        Hazard(int cost) {
+            this.cost = cost;
+        }
+
+        @Override
+        public int getCost() {
+            return cost;
+        }
     }
 
-    /**
-     * Cost of different duty hazards
-     */
-    private int[] hazardCost = new int[]{0, 5, -5, -5};
     /**
      * Frequency rolls
      */
@@ -81,7 +99,7 @@ public class Duty extends VariableTrait implements Disadvantage, Social {
     /**
      * Set of duty hazards
      */
-    private Set<Hazard> hazards = new HashSet<Hazard>();
+    private Set<Hazard> hazards = new HashSet<>();
 
     public Duty(Individual individual, Frequency frequency) {
         this(individual, frequency, Hazard.None);
@@ -90,15 +108,14 @@ public class Duty extends VariableTrait implements Disadvantage, Social {
     public Duty(Individual individual, Frequency frequency, Hazard hazard) {
         super(individual, "Duty");
         currentLevel = frequency;
-        levelsCost = new int[]{-2, -5, -10, -15};
         addHazard(hazard);
     }
 
-    public void addHazard(Hazard hazard){
+    public void addHazard(Hazard hazard) {
         hazards.add(hazard);
     }
 
-    public void removeHazard(Hazard hazard){
+    public void removeHazard(Hazard hazard) {
         hazards.remove(hazard);
     }
 
@@ -112,7 +129,7 @@ public class Duty extends VariableTrait implements Disadvantage, Social {
         int totalCost = 0;
         totalCost += getCost(currentLevel);
         for (Hazard h : hazards) {
-            totalCost += hazardCost[h.ordinal()];
+            totalCost += h.getCost();
         }
         return totalCost;
     }

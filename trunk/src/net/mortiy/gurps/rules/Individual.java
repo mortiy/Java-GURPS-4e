@@ -36,7 +36,7 @@ import java.util.*;
  * TODO: Age: Childhood & Elderly (p. 20)
  * TODO: Lifting, Running, Swimming (p. 353)
  */
-public class Individual implements Modifier.IInfluential, GameMap.MapToken {
+public class Individual implements Modifier.IInfluential, GameMap.MapToken, Event.Emitter {
     @Override
     public Image getImage() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -127,6 +127,10 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
      */
     Equipment equipment = new Equipment(this);
 
+    /**
+     * Event Listener
+     */
+    Map<Action, List<Event.Listener>> listeners = new HashMap<>();
 
     // region Constructors
 
@@ -298,6 +302,12 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
         return modifiers.containsKey(modifiedEntity) && modifiers.get(modifiedEntity).size() > 0;
     }
 
+    /**
+     * Get sum of all modifiers for specified modifiable entity
+     *
+     * @param modifiedEntity
+     * @return
+     */
     public float getTotalModifier(Modifier.IModifiable modifiedEntity) {
         if (!modifiers.containsKey(modifiedEntity)) {
             return 0f;
@@ -761,6 +771,21 @@ public class Individual implements Modifier.IInfluential, GameMap.MapToken {
         return posture;
     }
     // endregion
+
+    public boolean perform(Action action) {
+        for (Event.Listener listener : listeners.get(action)) {
+            listener.emit();
+        }
+        return true;
+    }
+
+    @Override
+    public void listen(Action action, Event.Listener listener) {
+        if (!listeners.containsKey(action)) {
+            listeners.put(action, new ArrayList<Event.Listener>());
+        }
+        listeners.get(action).add(listener);
+    }
 
     // region Exceptions
 

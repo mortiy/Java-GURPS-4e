@@ -13,7 +13,7 @@ import java.util.*;
  * Represents character's Advantages and Disadvantes.
  * Trait is assigned to character immediately during instantiation.
  */
-public class Trait implements Preparable {
+public class Trait implements Preparable, Modifier.IModifiable {
 
     private final String name;
     private String description;
@@ -137,4 +137,20 @@ public class Trait implements Preparable {
         return traitsClassesMap.get(traitClassName);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Trait trait = (Trait) o;
+
+        if (!name.equals(trait.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
